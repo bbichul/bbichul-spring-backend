@@ -52,17 +52,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .formLogin()
                 .loginPage("/")
-                .failureUrl("/user/login/error")
-                .loginProcessingUrl("/")
-                .defaultSuccessUrl("/")
                 .permitAll()
                 .and()
                 .logout()
                 .logoutUrl("/user/logout")
-                .permitAll()
+//                .permitAll()
                 .and()
-                .exceptionHandling()
-                .accessDeniedPage("/user/forbidden");
+                .exceptionHandling();
+
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }

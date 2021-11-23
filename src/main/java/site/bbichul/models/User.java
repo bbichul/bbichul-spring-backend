@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+
 @Setter
 @Getter // get 함수를 일괄적으로 만들어줍니다.
 @NoArgsConstructor // 기본 생성자를 만들어줍니다.
@@ -16,18 +17,20 @@ public class User extends TimeStamped {
     @Id
     private Long id;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 50)
     private Long kakaoId;
 
     // 반드시 값을 가지도록 합니다.
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String email;
+
+
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)

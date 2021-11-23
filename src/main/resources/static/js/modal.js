@@ -138,7 +138,7 @@ function loginWithKakao() {
 //로그아웃
 function log_out() {
     localStorage.removeItem('token');
-    // deleteCookie('access_token')
+    localStorage.removeItem("username");
     alert('로그아웃 되었습니다')
     location.href ="/";
 }
@@ -164,4 +164,7 @@ function nickname_check() {
         }
     });
 }
+//유저이름 가져오기
+
+$("#username").html(localStorage.getItem("username"));
 
