@@ -29,26 +29,26 @@ var setCookie = function(name, value, exp) {
     var date = new Date();
     date.setTime(date.getTime() + exp*24*60*60*1000);
     document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
-    };
+};
 
 //쿠키 가져오기
 var getCookie = function(name) {
     var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
     return value? value[2] : null;
-    };
+};
 
 //쿠키 삭제하기
 var deleteCookie = function(name) {
     document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
-    }
+}
 
 
 // 메인페이지 진입전 로그인 확인 기능
 function main_login_check() {
-    if(getCookie("access_token") == null){
+    if(localStorage.getItem("token") == null){
         alert('로그인 해주세요')
         location.href ="/";
-    } else { location.href = "/main"; }
+    } else { location.href = "/main_page.html"; }
 }
 
 
@@ -111,14 +111,37 @@ function login() {
         }
     });
 }
-
+//소셜 로그인 기능
+Kakao.init('774a0c1c031cc69d814adaba2a2d299d');
+function loginWithKakao() {
+    Kakao.Auth.login({
+        success: function(authObj) {
+            $.ajax({
+                type: 'POST',
+                url: `/login/kakao`,
+                contentType: "application/json",
+                data: JSON.stringify({'token':authObj['access_token']}),
+                success: function (response) {
+                    alert("카카오 로그인완료")
+                    localStorage.setItem("token", response['token']);
+                    localStorage.setItem("username", response['username']);
+                    location.href = '/';
+                }
+            })
+        },
+        fail: function(err) {
+            alert(JSON.stringify(err))
+        },
+    })
+}
 
 //로그아웃
 function log_out() {
-        deleteCookie('access_token')
-        alert('로그아웃 되었습니다')
-        location.href ="/";
-    }
+    localStorage.removeItem('token');
+    // deleteCookie('access_token')
+    alert('로그아웃 되었습니다')
+    location.href ="/";
+}
 
 // 회원가입시 닉네임 중복확인 기능
 function nickname_check() {

@@ -268,25 +268,33 @@ document.getElementById('reset-btn').addEventListener('click', () => {
 // 공부시작 눌렀을시
 function check_in() {
     let present_time = $("#Clock").text()
+    let date_list = $("#Clockday").text().split(' ')
+    let year = date_list[0]
+    let month = date_list[1]
+    let day = date_list[2]
+    let week = date_list[3]
+    let study_time = (hour + minute + seconds)
 
+
+    let time = {"year":sol(year), "month":sol(month), "day":sol(day), "weekday":sol(week),"study_time":sol(study_time)}
     $.ajax({
         type: "POST",
-        url: "/check-in",
-        headers: {
-            Authorization: getCookie('access_token')
-        },
-        data: {
-            start_time: present_time,
-            status: "출근",
+        url: "/time",
+        contentType: 'application/json',
+        // headers: {
+        //     Authorization: getCookie('access_token')
+        // },
+        data: JSON.stringify(time),
 
-        },
         success: function (response) {
 
 
         }
     })
+
 }
 
+const sol = timedate => parseInt(timedate.replace(/[^0-9]/g,""));
 // 공부 종료 눌렀을시
 function check_out() {
     let present_time = $("#Clock").text()
@@ -297,28 +305,19 @@ function check_out() {
     let week = date_list[3]
     let study_time = (hour + minute + seconds)
 
-
+    let time = {"year":sol(year), "month":sol(month), "day":sol(day), "weekday":sol(week),"study_time":sol(study_time)}
     $.ajax({
         type: "POST",
-        url: "/check-out",
-        headers: {
-            Authorization: getCookie('access_token')
-        },
-        data: {
-            stop_time: present_time,
-            status: "퇴근",
-            study_time: study_time,
-            year: year,
-            month: month,
-            day: day,
-            week: week,
-
-        },
+        url: "/time",
+        contentType: 'application/json',
+        // headers: {
+        //     Authorization: getCookie('access_token')
+        // },
+        data: JSON.stringify(time),
 
         success: function (response) {
 
-            alert(response["msg"]);
-
+            alert("좋아 오늘도 성장했어");
         }
     })
 
