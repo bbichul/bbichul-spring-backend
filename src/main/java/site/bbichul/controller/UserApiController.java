@@ -31,17 +31,6 @@ public class UserApiController {
     @Autowired
     private KakaoOAuth2 kakaoOAuth2;
 
-
-    //일반 로그인
-//    @PostMapping(value = "/login")
-//    public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginDto userDto) throws Exception {
-//        authenticate(userDto.getUsername(), userDto.getPassword());
-//        final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
-//        final String token = jwtTokenUtil.generateToken(userDetails);
-//        return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
-//    }
-
-
     // 카카오 로그인 정보
     @PostMapping(value = "/login/kakao")
     public ResponseEntity<?> createAuthenticationTokenByKakao(@RequestBody SocialLoginDto socialLoginDto) throws Exception {
@@ -50,16 +39,6 @@ public class UserApiController {
         final String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
     }
-
-    // 일반 로그인
-//    @PostMapping(value = "/signup")
-//    public ResponseEntity<?> createUser(@RequestBody SignupRequestDto userDto) throws Exception {
-//        userService.registerUser(userDto);
-//        authenticate(userDto.getUsername(), userDto.getPassword());
-//        final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
-//        final String token = jwtTokenUtil.generateToken(userDetails);
-//        return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
-//    }
 
     private void authenticate(String username, String password) throws Exception {
         try {

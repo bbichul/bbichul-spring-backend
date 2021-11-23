@@ -111,7 +111,7 @@ function login() {
         }
     });
 }
-//소셜 로그인 기능
+//카카오 소셜 로그인 기능
 Kakao.init('774a0c1c031cc69d814adaba2a2d299d');
 function loginWithKakao() {
     Kakao.Auth.login({

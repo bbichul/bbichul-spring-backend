@@ -11,12 +11,6 @@ public class UserController {
 
     private final UserService userService;
 
-//    // 회원 로그인 페이지
-//    @GetMapping("/user/login")
-//    public String login() {
-//        return "index";
-//    }
-
 
     @GetMapping("/user/kakao/callback")
     public String kakaoLogin(String code) {
