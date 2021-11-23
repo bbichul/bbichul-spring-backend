@@ -30,7 +30,14 @@ public class User extends TimeStamped {
     @Column(nullable = false, length = 50)
     private String email;
 
+    @Column(nullable = true, length = 50)
+    private boolean status;
 
+    @Column(nullable = true, length = 50)
+    private String teamId;
+
+    @Column(nullable = true, length = 50)
+    private String position;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
