@@ -48,7 +48,7 @@ function team_check() {
         type: "GET",
         url: "/team",
         headers: {
-            Authorization: getCookie('access_token')
+            // Authorization: getCookie('access_token')
         },
         data: {},
         success: function (response) {
@@ -80,7 +80,7 @@ function hide_teamname() {
 // 팀 만들기 기능
 function create_team() {
     my_team = $('#team-name').val()
-
+    let teamname = {teamname : my_team}
         // hidden input의 value로 중복확인 버튼을 눌렀는지 안눌렀는지 확인
     if ($("input[name=checked-team]").val() != 'y') {
         alert("중복확인을 통과한 경우만 만들 수 있습니다.")
@@ -88,13 +88,9 @@ function create_team() {
     } else {
         $.ajax({
             type: "POST",
-            url: "/create-team",
-            headers: {
-                Authorization: getCookie('access_token')
-            },
-            data: {
-                team: my_team
-            },
+            url: "/team",
+            contentType: "application/json",
+            data: JSON.stringify(teamname),
             success: function (response) {
                 if (response["msg"] == '팀 만들기 완료') {
                     alert(response["msg"]);
@@ -123,7 +119,7 @@ function invite_team() {
     } else {
         $.ajax({
             type: "POST",
-            url: "/invite-team",
+            url: "/team",
             headers: {
                 Authorization: getCookie('access_token')
             },
@@ -158,7 +154,7 @@ function teamname_check() {
     } else {
         $.ajax({
             type: "POST",
-            url: "/teamname",
+            url: "/team",
             headers: {
                 Authorization: getCookie('access_token')
             },
@@ -192,7 +188,7 @@ function show_task(my_team) {
     let team = my_team
     $.ajax({
         type: "GET",
-        url: "/task-show",
+        url: "/team",
         headers: {
             Authorization: getCookie('access_token')
         },
@@ -227,7 +223,7 @@ function findteam() {
     if (window.event.keyCode == 13 && $(".txt").val() != "") {
         $.ajax({
             type: "GET",
-            url: "/get-teamname",
+            url: "/team",
             headers: {
                 Authorization: getCookie('access_token')
             },
@@ -251,7 +247,7 @@ function addlist(my_team) {
 
     $.ajax({
         type: "POST",
-        url: "/team-todo",
+        url: "/team",
         headers: {
             Authorization: getCookie('access_token')
         },
@@ -272,7 +268,7 @@ function addlist(my_team) {
 function deletetask(team, task) {
     $.ajax({
         type: "POST",
-        url: `/task-delete`,
+        url: `/team`,
         headers: {
             Authorization: getCookie('access_token')
         },
@@ -295,7 +291,7 @@ function deletetask(team, task) {
 function changedone(team, task, done) {
     $.ajax({
         type: "POST",
-        url: `/change-done`,
+        url: `/team`,
         headers: {
             Authorization: getCookie('access_token')
         },
@@ -319,7 +315,7 @@ function changedone(team, task, done) {
 function checkstatus() {
     $.ajax({
         type: "GET",
-        url: "/check-status",
+        url: "/team",
         headers: {
             Authorization: getCookie('access_token')
         },
