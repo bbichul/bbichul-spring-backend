@@ -344,6 +344,11 @@ function midnight() {
     })
 }
 //유저이름 가져오기
-
 $("#username").html(localStorage.getItem("username"));
 
+// ajax 시 헤더 부분에 토큰 넣어주고 코드를 줄일 수 있다
+$.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+    if(localStorage.getItem('token')) {
+        jqXHR.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    }
+});
