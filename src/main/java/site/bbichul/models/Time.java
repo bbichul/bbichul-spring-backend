@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Time extends TimeStamped{
+public class Time extends TimeStamped {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
@@ -34,14 +34,14 @@ public class Time extends TimeStamped{
     @Column(nullable = false)
     private Long userId;
 
-//    public Time(TimeRequestDto timeRequestDto, Long userId) {
-//        // 로그인 되어있는  ID 저장
-//        this.userId = userId;
-//        this.year = timeRequestDto.getYear();
-//        this.month = timeRequestDto.getMonth();
-//        this.day = timeRequestDto.getDay();
-//        this.weekday = timeRequestDto.getWeekday();
-//        this.study_time = timeRequestDto.getStudy_time();
+    public Time(TimeRequestDto timeRequestDto, Long userId) {
+        // 로그인 되어있는  ID 저장
+        this.userId = userId;
+        this.year = timeRequestDto.getYear();
+        this.month = timeRequestDto.getMonth();
+        this.day = timeRequestDto.getDay();
+        this.weekday = timeRequestDto.getWeekday();
+        this.study_time = timeRequestDto.getStudy_time();
 
     }
-
+}
