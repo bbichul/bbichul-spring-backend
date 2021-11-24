@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script><meta charset="UTF-8">
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -73,11 +74,26 @@
                 </li>
                 <li><a id="logout-button" onclick="log_out()" class="getstarted scrollto" href="#" data-toggle="modal" data-target="#loginModal">Log Out</a>
                 </li>
+
+
+
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
 
     </div>
+
+    <!--    <button id="login-kakao-btn"-->
+    <!--            onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=c01aecc3987f6343cabe8f20d933c648&redirect_uri=http://localhost:8080/user/kakao/callback&response_type=code'">-->
+    <!--        카카오로 로그인하기-->
+    <!--    </button>-->
+    <span id="username"> 님의</span>
+    <button id="login-kakao-btn" onclick="loginWithKakao()">
+        카카오로 로그인하기
+    </button>
+    <a href="/user/logout" id="logout-text" onclick="log_out()">
+        로그아웃
+    </a>
 </header><!-- End Header -->
 
 <!-- ======= Hero Section ======= -->
@@ -280,6 +296,7 @@
         </div>
     </div>
 </div>
+<
 
 <!-- sign up Modal -->
 <div class="modal fade" id="signupModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
