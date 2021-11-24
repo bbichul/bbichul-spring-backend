@@ -42,7 +42,8 @@ public class UserService {
 
         // 패스워드 인코딩
         String password = passwordEncoder.encode(requestDto.getPassword());
-        String email = requestDto.getEmail();
+//        String email = requestDto.getEmail();
+
         // 사용자 ROLE 확인
         UserRole role = UserRole.USER;
         if (requestDto.isAdmin()) {
@@ -52,7 +53,8 @@ public class UserService {
             role = UserRole.ADMIN;
         }
 
-        User user = new User(username, password, email, role);
+        //        email,
+        User user = new User(username, password, role);
         userRepository.save(user);
     }
 
@@ -61,7 +63,8 @@ public class UserService {
         KakaoUserInfo userInfo = kakaoOAuth2.getUserInfo(token);
         Long kakaoId = userInfo.getId();
         String nickname = userInfo.getNickname();
-        String email = userInfo.getEmail();
+
+        //   String email = userInfo.getEmail();
 
         // 우리 DB 에서 회원 Id 와 패스워드
         // 회원 Id = 카카오 nickname
@@ -80,7 +83,8 @@ public class UserService {
             // ROLE = 사용자
             UserRole role = UserRole.USER;
 
-            kakaoUser = new User(nickname, encodedPassword, email, role, kakaoId);
+            //            email,
+            kakaoUser = new User(nickname, encodedPassword, role, kakaoId);
             userRepository.save(kakaoUser);
         }
 
