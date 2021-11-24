@@ -2,9 +2,7 @@ package site.bbichul.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import site.bbichul.dto.TimeRequestDto;
 import site.bbichul.models.Time;
 import site.bbichul.security.UserDetailsImpl;
@@ -24,7 +22,7 @@ public class TimeController {
         Long userId = userDetails.getUser().getId();
         LocalDate localDate = LocalDate.now();
 
-
+        // 날짜 쪼개서 저장하기
         int year = localDate.getYear();
         timeRequestDto.setYear(year);
 
@@ -37,10 +35,12 @@ public class TimeController {
         int weekday = localDate.getDayOfWeek().getValue();
         timeRequestDto.setWeekday(weekday);
 
-        Time time = timeService.createTime(timeRequestDto, userId);
+        Time time = timeService.upsertTime(timeRequestDto, userId);
 
         return time;
 
 
     }
+
+
 }

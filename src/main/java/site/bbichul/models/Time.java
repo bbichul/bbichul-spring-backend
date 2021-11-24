@@ -44,4 +44,7 @@ public class Time extends TimeStamped {
         this.study_time = timeRequestDto.getStudy_time();
 
     }
+    public void updateStudyTime(int study_time){
+        this.study_time = study_time;
+    }
 }
