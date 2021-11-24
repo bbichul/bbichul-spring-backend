@@ -17,26 +17,26 @@ public class User extends TimeStamped {
     @Id
     private Long id;
 
-    @Column(nullable = true, length = 50)
+    @Column(nullable = true, length = 500)
     private Long kakaoId;
 
     // 반드시 값을 가지도록 합니다.
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 500)
     private String username;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 1000)
     private String password;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = true, length = 500)
     private String email;
 
-    @Column(nullable = true, length = 50)
+    @Column(nullable = true, length = 500)
     private boolean status;
 
-    @Column(nullable = true, length = 50)
+    @Column(nullable = true, length = 500)
     private String teamId;
 
-    @Column(nullable = true, length = 50)
+    @Column(nullable = true, length = 500)
     private String position;
 
     @Column(nullable = false)
