@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface CalendarRepository extends JpaRepository<CalendarMemo, Long> {
-    CalendarMemo findByDateData(String dateData);
+    Optional<CalendarMemo> findByDateData(String dateData);
 }

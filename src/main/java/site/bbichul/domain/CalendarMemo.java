@@ -23,6 +23,7 @@ public class CalendarMemo extends Timestamped{
     private String contents;
 
 
+
     public CalendarMemo(CalendarMemoDto calendarMemoDto) {
         this.dateData = calendarMemoDto.getDateData();
         this.contents = calendarMemoDto.getContents();
@@ -32,4 +33,5 @@ public class CalendarMemo extends Timestamped{
         this.dateData = calendarMemoDto.getDateData();
         this.contents = calendarMemoDto.getContents();
     }
+
 }

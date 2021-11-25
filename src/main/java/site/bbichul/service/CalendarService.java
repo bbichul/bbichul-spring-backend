@@ -17,9 +17,16 @@ public class CalendarService {
 
     public CalendarMemo getMemoClickedDay(String dateData) {
         try{
-            return calendarRepository.findByDateData(dateData);
+            CalendarMemo calendarMemo = calendarRepository.findByDateData(dateData).orElseThrow(
+                    ()-> new NullPointerException()
+            );
+            return calendarMemo;
         }catch (NullPointerException e){
-            return new CalendarMemo();
+            CalendarMemoDto calendarMemoDto = new CalendarMemoDto();
+            calendarMemoDto.setDateData(dateData);
+            calendarMemoDto.setContents("");
+            System.out.println(calendarMemoDto);
+            return new CalendarMemo(calendarMemoDto);
         }
 
     }
@@ -27,7 +34,9 @@ public class CalendarService {
     @Transactional
     public void updateMemo(CalendarMemoDto calendarMemoDto) {
         try{
-            CalendarMemo getMemo = calendarRepository.findByDateData(calendarMemoDto.getDateData());
+            CalendarMemo getMemo = calendarRepository.findByDateData(calendarMemoDto.getDateData()).orElseThrow(
+                    ()-> new NullPointerException()
+            );
             getMemo.updateMemo(calendarMemoDto);
         }catch (NullPointerException e){
             CalendarMemo calendarMemo = new CalendarMemo(calendarMemoDto);
