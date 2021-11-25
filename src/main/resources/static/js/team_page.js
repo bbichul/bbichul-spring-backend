@@ -1,6 +1,11 @@
+//유저이름 가져오기
+$("#username").html(localStorage.getItem("username"));
+let user = localStorage.getItem("username")
+
 let my_team = ""
+
 $(document).ready(function () {
-    team_check();
+    teamCheck(user);
     $("input[name=checked-team]").val('')
     /*    pieChartDraw();*/
     $('.progress-value > span').each(function () {
@@ -43,14 +48,14 @@ function get_progressbar() {
 }
 
 // 팀 소속 여부 확인
-function team_check() {
+function teamCheck(user) {
+    let username = user
     $.ajax({
         type: "GET",
-        url: "/team",
+        url: "/team/${username}",
         headers: {
             // Authorization: getCookie('access_token')
         },
-        data: {},
         success: function (response) {
             let user_data = response['user_data']
             my_team = user_data[0]['team']
@@ -334,7 +339,4 @@ function checkstatus() {
         }
     });
 }
-//유저이름 가져오기
-
-$("#username").html(localStorage.getItem("username"));
 

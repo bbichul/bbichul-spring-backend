@@ -1,6 +1,11 @@
 package site.bbichul.dto;
 
-public class TeamRequestDto {
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
+public class TeamRequestDto {
     private String teamname;
+    private Integer team_id;
 }
