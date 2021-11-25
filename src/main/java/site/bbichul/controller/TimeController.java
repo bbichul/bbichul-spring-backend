@@ -1,12 +1,18 @@
 package site.bbichul.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.method.P;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import site.bbichul.dto.TimeRequestDto;
 import site.bbichul.models.Time;
+import site.bbichul.models.User;
+
 import site.bbichul.security.UserDetailsImpl;
 import site.bbichul.service.TimeService;
+import site.bbichul.service.UserService;
 
 import java.time.LocalDate;
 
@@ -15,6 +21,7 @@ import java.time.LocalDate;
 public class TimeController {
 
     private final TimeService timeService;
+    private final UserService userService;
 
     @PostMapping("/time")
     public Time createTime(@RequestBody TimeRequestDto timeRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
@@ -38,8 +45,6 @@ public class TimeController {
         Time time = timeService.upsertTime(timeRequestDto, userId);
 
         return time;
-
-
     }
 
 

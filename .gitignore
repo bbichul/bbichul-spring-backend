@@ -41,7 +41,8 @@ gradlew.bat
 settings.gradle
 
 ### 키 값 저장되어 있는 파일 노출되면 안 됨!
-env.properties
+src/main/resources/app.properties
+
 
 ### VS Code ###
 .vscode/

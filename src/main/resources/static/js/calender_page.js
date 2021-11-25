@@ -310,6 +310,4 @@ $("#calenderNote").on("propertychange change keyup paste input", function () {
 $("#username").html(localStorage.getItem("username"));
 
 
-
-
 //TODO: 메모 타이틀 넣어서 노션 캘린더 비스무리하게 만들기,,

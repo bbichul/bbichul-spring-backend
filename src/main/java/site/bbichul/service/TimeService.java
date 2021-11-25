@@ -2,9 +2,12 @@ package site.bbichul.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import site.bbichul.dto.SignupRequestDto;
 import site.bbichul.dto.TimeRequestDto;
 import site.bbichul.models.Time;
+import site.bbichul.models.User;
 import site.bbichul.repository.TimeRepository;
+import site.bbichul.repository.UserRepository;
 
 import javax.transaction.Transactional;
 
@@ -13,6 +16,7 @@ import javax.transaction.Transactional;
 public class TimeService {
 
     private final TimeRepository timeRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public Time upsertTime(TimeRequestDto timeRequestDto, Long userId) {
@@ -24,21 +28,18 @@ public class TimeService {
         time.setWeekday(timeRequestDto.getWeekday());
 
         // Repository에 찾은 정보 가져와서 확인하기
-        Time time1 = timeRepository.findByUserIdAndYearAndMonthAndDay(userId, timeRequestDto.getYear(), timeRequestDto.getMonth(), timeRequestDto.getDay()).orElseThrow(
-                () -> new NullPointerException("그럴리가 없쥬")
+        Time time1 = timeRepository.findByUserIdAndYearAndMonthAndDay(userId, timeRequestDto.getYear(), timeRequestDto.getMonth(), timeRequestDto.getDay()).orElse( null
+
         );
         if (time1 == null) {
+
             time.setStudy_time(timeRequestDto.getStudy_time());
             timeRepository.save(time);
 
         } else {
-//            time1.setStudy_time(timeRequestDto.getStudy_time() + time1.getStudy_time());
-//            timeRepository.save(time1);
             time1.updateStudyTime(timeRequestDto.getStudy_time() + time1.getStudy_time());
         }
-
         return time;
     }
-
 
 }
