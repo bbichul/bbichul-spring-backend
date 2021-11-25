@@ -326,7 +326,6 @@ function midnight() {
         }
     })
 }
-
 //유저이름 가져오기
 $("#username").html(localStorage.getItem("username"));
 

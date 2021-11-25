@@ -1,4 +1,5 @@
-package site.bbichul.security.kakao;
+package site.bbichul.security;
+
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

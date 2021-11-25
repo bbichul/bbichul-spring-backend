@@ -1,4 +1,4 @@
-package site.bbichul.security.kakao;
+package site.bbichul.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -62,4 +62,4 @@ public class UserDetailsImpl implements UserDetails {
 
         return authorities;
     }
-    }
+}

@@ -1,4 +1,4 @@
-package site.bbichul.security.kakao;
+package site.bbichul.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -38,9 +38,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // user 폴더를 login 없이도 사용
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
+
                 .antMatchers("/login").permitAll()
                 // 모든 html 사용
                 .antMatchers("/**.html").permitAll()
+                //카카오 로그인 사용
+                .antMatchers("/login/kakao").permitAll()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
@@ -49,7 +52,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .formLogin()
                 .loginPage("/")
-                .defaultSuccessUrl("/")
                 .permitAll()
                 .and()
                 .logout()

@@ -29,18 +29,18 @@ var setCookie = function(name, value, exp) {
     var date = new Date();
     date.setTime(date.getTime() + exp*24*60*60*1000);
     document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
-    };
+};
 
 //쿠키 가져오기
 var getCookie = function(name) {
     var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
     return value? value[2] : null;
-    };
+};
 
 //쿠키 삭제하기
 var deleteCookie = function(name) {
     document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
-    }
+}
 
 
 // 메인페이지 진입전 로그인 확인 기능
@@ -129,6 +129,8 @@ function nickname_check() {
         }
     });
 }
+//유저이름 가져오기
+$("#username").html(localStorage.getItem("username"));
 
 
 // ajax 시 헤더 부분에 토큰 넣어주고 코드를 줄일 수 있다

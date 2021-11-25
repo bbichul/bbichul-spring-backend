@@ -13,5 +13,4 @@ public class TimeRequestDto {
     private int day;
     private int weekday;
     private int study_time;
-
 }

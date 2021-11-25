@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import site.bbichul.dto.TimeRequestDto;
 import site.bbichul.models.Time;
 import site.bbichul.models.User;
-import site.bbichul.security.kakao.UserDetailsImpl;
+
+import site.bbichul.security.UserDetailsImpl;
 import site.bbichul.service.TimeService;
 import site.bbichul.service.UserService;
 
