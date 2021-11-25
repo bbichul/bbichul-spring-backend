@@ -1,10 +1,9 @@
 package site.bbichul.controller;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import site.bbichul.domain.CalendarMemo;
+import site.bbichul.models.CalendarMemo;
 import site.bbichul.dto.CalendarMemoDto;
 import site.bbichul.service.CalendarService;
 

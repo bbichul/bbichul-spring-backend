@@ -2,7 +2,7 @@ package site.bbichul.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import site.bbichul.domain.CalendarMemo;
+import site.bbichul.models.CalendarMemo;
 import site.bbichul.dto.CalendarMemoDto;
 import site.bbichul.repository.CalendarRepository;
 

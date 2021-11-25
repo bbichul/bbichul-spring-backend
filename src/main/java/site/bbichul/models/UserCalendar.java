@@ -1,4 +1,4 @@
-package site.bbichul.domain;
+package site.bbichul.models;
 
 public class UserCalendar {
 }

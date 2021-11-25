@@ -1,4 +1,4 @@
-package site.bbichul.domain;
+package site.bbichul.models;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class Timestamped {
+public class TimeStamped {
 
     @CreatedDate
     private LocalDateTime createdAt;

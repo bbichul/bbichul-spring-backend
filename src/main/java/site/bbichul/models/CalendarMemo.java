@@ -1,4 +1,4 @@
-package site.bbichul.domain;
+package site.bbichul.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-public class CalendarMemo extends Timestamped{
+public class CalendarMemo extends TimeStamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

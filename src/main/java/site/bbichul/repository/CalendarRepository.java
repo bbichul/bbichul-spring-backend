@@ -3,7 +3,7 @@ package site.bbichul.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import site.bbichul.domain.CalendarMemo;
+import site.bbichul.models.CalendarMemo;
 
 import java.util.Optional;
 
