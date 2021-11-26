@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 public class UserCalendar {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 

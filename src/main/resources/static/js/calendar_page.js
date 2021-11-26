@@ -70,7 +70,7 @@ const renderCalendar = () => {
 
 
         dates[i] = `<div class="date">
-                        <button id="${viewYear}Y${getMonth}M${date}" onclick="dayClick(this)" class="${condition}">${date} <span id="${viewYear}Y${getMonth}M${date}text" class="date-on-text"></span></button>
+                        <button id="${viewYear}Y${getMonth}M${date}" onclick="clickedDayGetMemo(this)" class="${condition}">${date} <span id="${viewYear}Y${getMonth}M${date}text" class="date-on-text"></span></button>
                     </div>`;
 
     })
@@ -241,21 +241,22 @@ const goToday = () => {
 }
 
 
-function dayClick(obj) {
+function clickedDayGetMemo(obj) {
     btn_year_month_day = $(obj).attr('id'); // 달력 날짜를 클릭 했을 때 받아온 날짜 ID 를 변수에 초기화.
     let memo_text_day = btn_year_month_day.replace("Y", "년 ").replace("M", "월 ") + "일";
     $('.select-date').text(memo_text_day);
 
     $.ajax({
-        type: "POST",
-        headers: {
-            Authorization: getCookie('access_token')
-        },
-        url: "/click-day",
-        data: {date_give: btn_year_month_day, select_cal_give: selected_cal_now},
+        type: "GET",
+        // headers: {
+        //     Authorization: getCookie('access_token')
+        // },
+        url: `/calendar/memo?dateData=${btn_year_month_day}`,
+        // data: {date_give: btn_year_month_day, select_cal_give: selected_cal_now},
         success: function (response) {
-            let receive_date_memo = response['resend_date_memo'];
-            $('#calenderNote').text(receive_date_memo);
+            console.log(response);
+            let receive_memo = response.contents;
+            $('#calenderNote').text(receive_memo);
         }
     })
 
@@ -266,15 +267,21 @@ function dayClick(obj) {
 function updateText() {
     let varMemoText = $('#calenderNote').val();
 
+    let doc = {
+        "contents" : varMemoText,
+        "dateData" : btn_year_month_day
+    }
+
+    //TODO selected_cal_now
     $.ajax({
-        type: "POST",
-        headers: {
-            Authorization: getCookie('access_token')
-        },
-        url: "/change-memo-text",
-        data: {change_memo_give: varMemoText, key_class_give: btn_year_month_day, select_cal_give: selected_cal_now},
+        type: "PUT",
+        // headers: {
+        //     Authorization: getCookie('access_token')
+        // },
+        url: "/calendar/memo",
+        contentType: "application/json",
+        data: JSON.stringify(doc),
         success: function (response) {
-            console.log(response['msg'])
         }
     })
 
