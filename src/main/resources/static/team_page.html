@@ -52,9 +52,9 @@
         <nav id="navbar" class="navbar">
             <ul>
                 <li><a class="nav-link scrollto active" href="/">Home</a></li>
-                <li><a class="nav-link scrollto" href="/main">main</a></li>
-                <li><a href="/calender">Schedule</a></li>
-                <li><a class="nav-link scrollto" href="/my-page">My Page</a></li>
+                <li><a class="nav-link scrollto" href="/main_page.html">main</a></li>
+                <li><a href="/calendar_page.html">Schedule</a></li>
+                <li><a class="nav-link scrollto" href="/my-page.html">My Page</a></li>
                 <li><a id="login-button" class="getstarted scrollto" href="#" data-toggle="modal"
                        data-target="#loginModal">Log In</a>
                 </li>
@@ -66,7 +66,7 @@
         </nav><!-- .navbar -->
 
     </div>
-
+    <span id="username" style="color: white"></span>님
 </header><!-- End Header -->
 
 <div id="team-page">
@@ -74,7 +74,7 @@
         <div class="not-exist">
             <h1 id="team-alert"></h1>
             <a id="team-check-btn" onclick="hide_teamname()" href="#" data-toggle="modal"
-                    data-target="#create-teamModal">팀 만들기
+               data-target="#create-teamModal">팀 만들기
             </a>
         </div>
         <div class="team-exist">
@@ -95,13 +95,13 @@
                     </table>
                 </div>
                 <div class="progress-div">
-                <h3 class="progress-title">체크 리스트 진행상황</h3>
-                <div class="progress-outer">
-                    <div class="progress">
-                        <div id="percent-bar" class="progress-bar progress-bar-striped progress-bar-danger" style="width:10%;"></div>
-                        <div class="progress-value"></div>
+                    <h3 class="progress-title">체크 리스트 진행상황</h3>
+                    <div class="progress-outer">
+                        <div class="progress">
+                            <div id="percent-bar" class="progress-bar progress-bar-striped progress-bar-danger" style="width:10%;"></div>
+                            <div class="progress-value"></div>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
             <div class="right-body">

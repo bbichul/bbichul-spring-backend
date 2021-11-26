@@ -29,50 +29,45 @@ var setCookie = function(name, value, exp) {
     var date = new Date();
     date.setTime(date.getTime() + exp*24*60*60*1000);
     document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
-    };
+};
 
 //쿠키 가져오기
 var getCookie = function(name) {
     var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
     return value? value[2] : null;
-    };
+};
 
 //쿠키 삭제하기
 var deleteCookie = function(name) {
     document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
-    }
+}
 
 
 // 메인페이지 진입전 로그인 확인 기능
 function main_login_check() {
-    if(getCookie("access_token") == null){
+    if(localStorage.getItem("token") == null){
         alert('로그인 해주세요')
         location.href ="/";
-    } else { location.href = "/main"; }
+    } else { location.href = "/main_page.html"; }
 }
 
 
 // 회원가입 기능
 function sign_up() {
-    let nick_name = $('#nickname').val()
-    let password = $('#signup_password').val()
+    let info = {
+        username:$('#nickname').val(),
+        password:$('#signup_password').val(),
+        email: $("#email").val()
+    }
 
     $.ajax({
-        type: "POST",
-        url: "/sign-up",
-        data: {
-            nick_name: nick_name,
-            password : password
-        },
+        type: 'POST',
+        url: `/signup`,
+        contentType: "application/json",
+        data: JSON.stringify(info),
         success: function (response) {
-            if (response["msg"] == '저장완료') {
-                alert(response["msg"]);
-                $('#signup_close').click()
-            }else if (response["msg"] == '중복된 닉네임') {
-                alert(response["msg"]);
-            }else if (response['msg'] == "영어 또는 숫자로 6글자 이상으로 작성해주세요") {
-                alert(response["msg"]);
-            }
+            alert("회원가입이 완료되었습니다!!");
+            location.href = '/';
         }
     })
 }
@@ -87,35 +82,28 @@ function hide_nickname() {
 
 // 로그인 기능
 function login() {
-    let nick_name = $('#login_nickname').val()
-    let password = $('#login_password').val()
-
+    let info = {
+        username: $('#login_nickname').val(),
+        password: $('#login_password').val()
+    }
     $.ajax({
-        type: "POST",
-        url: "/login",
-        data: {
-            nick_name: nick_name,
-            password: password
-        },
+        type: 'POST',
+        url: `/login`,
+        contentType: "application/json",
+        data: JSON.stringify(info),
         success: function (response) {
-            if (response['msg'] == "SUCCESS") {
-                alert('로그인에 성공하셨습니다.')
-                $('#login_close').click()
-                window.location.reload();
-                setCookie("access_token", response["access_token"], 1)
-            } else if (response['msg'] == "INVALID_NICKNAME") {
-                alert("닉네임이 틀렸습니다.")
-            } else if (response['msg'] == "INVALID_PASSWORD") {
-                alert("비밀번호가 틀렸습니다.")
-            }
+            alert("로그인완료")
+            localStorage.setItem("token", response['token']);
+            localStorage.setItem("username", response['username']);
+            location.href = '/';
         }
-    });
+    })
 }
-
 
 //로그아웃
 function log_out() {
-        deleteCookie('access_token')
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
         alert('로그아웃 되었습니다')
         location.href ="/";
     }
@@ -141,4 +129,13 @@ function nickname_check() {
         }
     });
 }
+//유저이름 가져오기
+$("#username").html(localStorage.getItem("username"));
 
+
+// ajax 시 헤더 부분에 토큰 넣어주고 코드를 줄일 수 있다
+$.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+    if(localStorage.getItem('token')) {
+        jqXHR.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    }
+});
