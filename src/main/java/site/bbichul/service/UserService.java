@@ -8,10 +8,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import site.bbichul.dto.SignupRequestDto;
+import site.bbichul.dto.UserDto;
 import site.bbichul.models.User;
 import site.bbichul.models.UserRole;
 import site.bbichul.repository.UserRepository;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -49,6 +51,14 @@ public class UserService {
 
         return user;
     }
+    @Transactional
+    public void setStudy(UserDto userDto, String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new NullPointerException("그럴리가 없쥬")
+        );
+        user.updateStudy(userDto);
+    }
+
 
 
 }
