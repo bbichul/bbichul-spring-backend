@@ -3,6 +3,7 @@ package site.bbichul.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import site.bbichul.dto.UserDto;
 
 import javax.persistence.*;
 
@@ -37,8 +38,9 @@ public class User extends TimeStamped {
     private boolean isStudying;
 
     // 팀 아이디(외래키) MANYTOONE
-    @Column(nullable = true)
-    private Long teamId;
+    @ManyToOne
+    @JoinColumn(name = "team_id",nullable = true )
+    private Team team;
 
     // 팀장 팀원 역할
     @Column(nullable = true, length = 100)
@@ -48,5 +50,14 @@ public class User extends TimeStamped {
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
+
+
+    public User(UserDto userDto, Long userId) {
+        this.isStudying = userDto.isIsstudying();
+
+    }
+    public void updateStudy(UserDto userDto){
+        this.isStudying = userDto.isIsstudying();
+    }
 
 }
