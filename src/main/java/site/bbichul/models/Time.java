@@ -31,6 +31,11 @@ public class Time extends TimeStamped {
     @Column(nullable = false)
     private int study_time;
 
+//
+//    @ManyToOne
+//    @JoinColumn(name = "user_id",nullable = false)
+//    private User user;
+
     @Column(nullable = false)
     private Long userId;
 

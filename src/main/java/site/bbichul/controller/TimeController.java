@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import site.bbichul.dto.TimeRequestDto;
+import site.bbichul.dto.UserDto;
 import site.bbichul.models.Time;
 import site.bbichul.models.User;
 
@@ -44,8 +45,12 @@ public class TimeController {
 
         Time time = timeService.upsertTime(timeRequestDto, userId);
 
-        return time;
+        return time; 
+
     }
-
-
+    @PostMapping("/user")
+    public void startstudy(@RequestBody UserDto userDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        String username = userDetails.getUsername();
+        userService.setStudy(userDto, username);
+    }
 }

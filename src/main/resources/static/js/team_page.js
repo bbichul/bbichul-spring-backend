@@ -65,8 +65,9 @@ function teamCheck(user) {
             // Authorization: getCookie('access_token')
         },
         success: function (response) {
-            let user_data = response['user_data']
-            my_team = user_data[0]['team']
+            console.log(response)
+            // let user_data = response['user_data']
+            my_team = response['team']
             if (my_team != null) {
                 $('.not-exist').hide()
                 let team = `${my_team}`

@@ -41,5 +41,14 @@ public class TimeService {
         }
         return time;
     }
+    @Transactional
+    public void upstudy(TimeRequestDto timeRequestDto, String username){
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new NullPointerException("그럴리가 없쥬")
+        );
+    }
+
+
+
 
 }

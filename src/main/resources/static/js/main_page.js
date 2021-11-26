@@ -188,14 +188,14 @@ $('#play-next').click(function () {
 
 
 // 메인페이지 공부 종료 눌렀을때
-function checkout_choice() {
-
-    if (getCookie('yesterday_study_time') != undefined) {
-        midnight();
-    } else {
-        check_out();
-    }
-}
+// function checkout_choice() {
+//
+//     if (getCookie('yesterday_study_time') != undefined) {
+//         midnight();
+//     } else {
+//         check_out();
+//     }
+// }
 
 
 // 내가 끝을 누르기 전까지 공부시간 체크(스톱워치)
@@ -267,7 +267,7 @@ document.getElementById('reset-btn').addEventListener('click', () => {
 
 // 공부시작 눌렀을시
 function check_in() {
-    let start = true
+    let start = {"isstudying": true}
 
     $.ajax({
         type: "POST",
@@ -287,17 +287,19 @@ const sol = timedate => parseInt(timedate.replace(/[^0-9]/g,""));
 // 공부 종료 눌렀을시
 function check_out() {
     let study_time = (hour + minute + seconds)
-    let stop = false
+    // let stop = false
 
-    let time = {"study_time":sol(study_time)}
+    let stop = {"study_time":sol(study_time), "isstudying": false}
+    console.log(stop)
 
     $.ajax({
         type: "POST",
         url: "/time",
         contentType: 'application/json',
-        data: JSON.stringify(time,stop),
+        data: JSON.stringify(stop),
 
         success: function (response) {
+
 
             alert("좋아 오늘도 성장했어");
         }
@@ -307,25 +309,26 @@ function check_out() {
 
 
 // 00시 기준 공부를 전날에 시작해 다음날 끝날때의 함수
-function midnight() {
-    let study_time = (hour + minute + seconds)
-    $.ajax({
-        type: "POST",
-        url: "/midnight",
-        headers: {
-            Authorization: getCookie('access_token')
-        },
-        data: {
-            yesterday_study_time: getCookie('yesterday_study_time'),
-            total_study_time: study_time,
-            status: "퇴근",
-        },
-        success: function (response) {
-            alert(response["msg"]);
-            deleteCookie('yesterday_study_time')
-        }
-    })
-}
+// function midnight() {
+//     let study_time = (hour + minute + seconds)
+//     $.ajax({
+//         type: "POST",
+//         url: "/midnight",
+//         headers: {
+//             Authorization: getCookie('access_token')
+//         },
+//         data: {
+//             yesterday_study_time: getCookie('yesterday_study_time'),
+//             total_study_time: study_time,
+//             status: "퇴근",
+//         },
+//         success: function (response) {
+//             alert(response["msg"]);
+//             deleteCookie('yesterday_study_time')
+//         }
+//     })
+// }
+
 //유저이름 가져오기
 $("#username").html(localStorage.getItem("username"));
 

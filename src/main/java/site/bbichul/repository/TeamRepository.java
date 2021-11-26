@@ -7,8 +7,10 @@ import site.bbichul.models.User;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
-public interface TeamRepository extends JpaRepository<Team, String> {
+public interface TeamRepository extends JpaRepository<User, String> {
+    @Transactional
+    Optional<User> findByUsername(String username);
 
 //    @Transactional
-//    Optional<User> findByUsernameAndTeamId(String username, Long teamId);
+//    Optional<User>findById(Long id);
 }

@@ -7,5 +7,4 @@ import lombok.Setter;
 @Getter
 public class TeamRequestDto {
     private String teamname;
-    private Integer team_id;
 }
