@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Data
 public class TimeRequestDto {
+    private Long id;
     private int year;
     private int month;
     private int day;

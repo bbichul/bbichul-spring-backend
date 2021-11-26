@@ -59,6 +59,4 @@ public class UserService {
         user.updateStudy(userDto);
     }
 
-
-
 }

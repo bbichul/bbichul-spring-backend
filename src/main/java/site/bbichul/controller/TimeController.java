@@ -24,10 +24,10 @@ public class TimeController {
     private final TimeService timeService;
     private final UserService userService;
 
+    // 공부시간 및 유저 테이블 공부 끝 post
     @PostMapping("/time")
     public Time createTime(@RequestBody TimeRequestDto timeRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         // 로그인이 되어 있는 ID
-        Long userId = userDetails.getUser().getId();
         LocalDate localDate = LocalDate.now();
 
         // 날짜 쪼개서 저장하기
@@ -43,11 +43,12 @@ public class TimeController {
         int weekday = localDate.getDayOfWeek().getValue();
         timeRequestDto.setWeekday(weekday);
 
-        Time time = timeService.upsertTime(timeRequestDto, userId);
+        Time time = timeService.upsertTime(timeRequestDto, userDetails.getUser());
 
         return time;
 
     }
+    // 유저 테이블 공부 중 post
     @PostMapping("/user")
     public void startstudy(@RequestBody UserDto userDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         String username = userDetails.getUsername();
