@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
+
 public class UserDto {
     private String username;
     private String password;

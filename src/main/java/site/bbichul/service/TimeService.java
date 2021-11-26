@@ -19,18 +19,21 @@ public class TimeService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Time upsertTime(TimeRequestDto timeRequestDto, Long userId) {
+    public Time upsertTime(TimeRequestDto timeRequestDto, User user) {
 
-        Time time = new Time(timeRequestDto, userId);
+        Time time = new Time(timeRequestDto, user);
         time.setYear(timeRequestDto.getYear());
         time.setMonth(timeRequestDto.getMonth());
         time.setDay(timeRequestDto.getDay());
         time.setWeekday(timeRequestDto.getWeekday());
 
         // Repository에 찾은 정보 가져와서 확인하기
-        Time time1 = timeRepository.findByUserIdAndYearAndMonthAndDay(userId, timeRequestDto.getYear(), timeRequestDto.getMonth(), timeRequestDto.getDay()).orElse( null
-
+        Time time1 = timeRepository.findByUserIdAndYearAndMonthAndDay(user.getId(), timeRequestDto.getYear(), timeRequestDto.getMonth(), timeRequestDto.getDay()).orElse( null
         );
+        User findUser = userRepository.findById(user.getId()).orElseThrow(
+                () -> new NullPointerException("그럴리가 없쥬")
+        );
+        findUser.setStudying(timeRequestDto.isIsstudying());
         if (time1 == null) {
 
             time.setStudy_time(timeRequestDto.getStudy_time());
@@ -41,14 +44,4 @@ public class TimeService {
         }
         return time;
     }
-    @Transactional
-    public void upstudy(TimeRequestDto timeRequestDto, String username){
-        User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new NullPointerException("그럴리가 없쥬")
-        );
-    }
-
-
-
-
 }
