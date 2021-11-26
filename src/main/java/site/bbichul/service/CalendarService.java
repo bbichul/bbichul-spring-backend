@@ -28,7 +28,7 @@ public class CalendarService {
             CalendarMemo calendarMemo = calendarRepository.findByUserIdAndDateData(user.getId(), dateData).orElseThrow(
                     ()-> new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
             return calendarMemo;
-        }catch (NullPointerException e){
+        }catch (BbichulException e){
             CalendarMemoDto calendarMemoDto = new CalendarMemoDto();
             calendarMemoDto.setDateData(dateData);
             calendarMemoDto.setContents("");
@@ -48,7 +48,7 @@ public class CalendarService {
             CalendarMemo getMemo = calendarRepository.findByUserIdAndDateData(user.getId(), calendarMemoDto.getDateData()).orElseThrow(
                 () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
             getMemo.updateMemo(calendarMemoDto);
-        }catch (NullPointerException e){
+        }catch (BbichulException e){
             CalendarMemo calendarMemo = new CalendarMemo(calendarMemoDto, user);
             calendarRepository.save(calendarMemo);
         }
