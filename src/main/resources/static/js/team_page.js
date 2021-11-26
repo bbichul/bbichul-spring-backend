@@ -1,6 +1,19 @@
+//유저이름 가져오기
+let user = localStorage.getItem("username")
+$("#username").html(user);
+
+
+// ajax 시 헤더 부분에 토큰 넣어주고 코드를 줄일 수 있다
+// $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+//     if(localStorage.getItem('token')) {
+//         jqXHR.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+//     }
+// });
+
 let my_team = ""
+
 $(document).ready(function () {
-    team_check();
+    teamCheck(user);
     $("input[name=checked-team]").val('')
     /*    pieChartDraw();*/
     $('.progress-value > span').each(function () {
@@ -43,17 +56,18 @@ function get_progressbar() {
 }
 
 // 팀 소속 여부 확인
-function team_check() {
+function teamCheck(user) {
+    let username = user
     $.ajax({
         type: "GET",
-        url: "/team",
+        url: `/team_page/${username}`,
         headers: {
-            Authorization: getCookie('access_token')
+            // Authorization: getCookie('access_token')
         },
-        data: {},
         success: function (response) {
-            let user_data = response['user_data']
-            my_team = user_data[0]['team']
+            console.log(response)
+            // let user_data = response['user_data']
+            my_team = response['team']
             if (my_team != null) {
                 $('.not-exist').hide()
                 let team = `${my_team}`
@@ -80,7 +94,7 @@ function hide_teamname() {
 // 팀 만들기 기능
 function create_team() {
     my_team = $('#team-name').val()
-
+    let teamname = {teamname : my_team}
         // hidden input의 value로 중복확인 버튼을 눌렀는지 안눌렀는지 확인
     if ($("input[name=checked-team]").val() != 'y') {
         alert("중복확인을 통과한 경우만 만들 수 있습니다.")
@@ -88,13 +102,9 @@ function create_team() {
     } else {
         $.ajax({
             type: "POST",
-            url: "/create-team",
-            headers: {
-                Authorization: getCookie('access_token')
-            },
-            data: {
-                team: my_team
-            },
+            url: "/team",
+            contentType: "application/json",
+            data: JSON.stringify(teamname),
             success: function (response) {
                 if (response["msg"] == '팀 만들기 완료') {
                     alert(response["msg"]);
@@ -123,7 +133,7 @@ function invite_team() {
     } else {
         $.ajax({
             type: "POST",
-            url: "/invite-team",
+            url: "/team",
             headers: {
                 Authorization: getCookie('access_token')
             },
@@ -158,7 +168,7 @@ function teamname_check() {
     } else {
         $.ajax({
             type: "POST",
-            url: "/teamname",
+            url: "/team",
             headers: {
                 Authorization: getCookie('access_token')
             },
@@ -192,7 +202,7 @@ function show_task(my_team) {
     let team = my_team
     $.ajax({
         type: "GET",
-        url: "/task-show",
+        url: "/team",
         headers: {
             Authorization: getCookie('access_token')
         },
@@ -227,7 +237,7 @@ function findteam() {
     if (window.event.keyCode == 13 && $(".txt").val() != "") {
         $.ajax({
             type: "GET",
-            url: "/get-teamname",
+            url: "/team",
             headers: {
                 Authorization: getCookie('access_token')
             },
@@ -251,7 +261,7 @@ function addlist(my_team) {
 
     $.ajax({
         type: "POST",
-        url: "/team-todo",
+        url: "/team",
         headers: {
             Authorization: getCookie('access_token')
         },
@@ -272,7 +282,7 @@ function addlist(my_team) {
 function deletetask(team, task) {
     $.ajax({
         type: "POST",
-        url: `/task-delete`,
+        url: `/team`,
         headers: {
             Authorization: getCookie('access_token')
         },
@@ -295,7 +305,7 @@ function deletetask(team, task) {
 function changedone(team, task, done) {
     $.ajax({
         type: "POST",
-        url: `/change-done`,
+        url: `/team`,
         headers: {
             Authorization: getCookie('access_token')
         },
@@ -319,7 +329,7 @@ function changedone(team, task, done) {
 function checkstatus() {
     $.ajax({
         type: "GET",
-        url: "/check-status",
+        url: "/team",
         headers: {
             Authorization: getCookie('access_token')
         },
@@ -338,5 +348,4 @@ function checkstatus() {
         }
     });
 }
-//유저이름 가져오기
-$("#username").html(localStorage.getItem("username"));
+
