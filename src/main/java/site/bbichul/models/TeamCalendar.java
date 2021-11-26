@@ -11,7 +11,7 @@ import javax.persistence.*;
 
 public class TeamCalendar {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
