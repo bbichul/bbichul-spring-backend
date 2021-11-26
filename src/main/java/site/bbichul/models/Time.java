@@ -31,17 +31,15 @@ public class Time extends TimeStamped {
     @Column(nullable = false)
     private int study_time;
 
-//
-//    @ManyToOne
-//    @JoinColumn(name = "user_id",nullable = false)
-//    private User user;
 
-    @Column(nullable = false)
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
+    private User user;
+;
 
-    public Time(TimeRequestDto timeRequestDto, Long userId) {
+    public Time(TimeRequestDto timeRequestDto, User user) {
         // 로그인 되어있는  ID 저장
-        this.userId = userId;
+        this.user = user;
         this.year = timeRequestDto.getYear();
         this.month = timeRequestDto.getMonth();
         this.day = timeRequestDto.getDay();
