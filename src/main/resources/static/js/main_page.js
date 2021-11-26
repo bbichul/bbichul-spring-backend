@@ -267,53 +267,35 @@ document.getElementById('reset-btn').addEventListener('click', () => {
 
 // 공부시작 눌렀을시
 function check_in() {
-    // let present_time = $("#Clock").text()
-    // let date_list = $("#Clockday").text().split(' ')
-    // let year = date_list[0]
-    // let month = date_list[1]
-    // let day = date_list[2]
-    // let week = date_list[3]
-    // let study_time = (hour + minute + seconds)
-    //
-    //
-    // let time = {"year":sol(year), "month":sol(month), "day":sol(day), "weekday":sol(week),"study_time":sol(study_time)}
-    // $.ajax({
-    //     type: "POST",
-    //     url: "/time",
-    //     contentType: 'application/json',
-    //     // headers: {
-    //     //     Authorization: getCookie('access_token')
-    //     // },
-    //     data: JSON.stringify(time),
-    //
-    //     success: function (response) {
-    //
-    //
-    //     }
-    // })
+    let start = true
 
+    $.ajax({
+        type: "POST",
+        url: "/user",
+        contentType: 'application/json',
+        data: JSON.stringify(start),
+
+        success: function (response) {
+        }
+    })
 }
 
+
+// 가져온 공부시간 int 로 형변환
 const sol = timedate => parseInt(timedate.replace(/[^0-9]/g,""));
+
 // 공부 종료 눌렀을시
 function check_out() {
-    // let present_time = $("#Clock").text()
-    // let date_list = $("#Clockday").text().split(' ')
-    // let year = date_list[0]
-    // let month = date_list[1]
-    // let day = date_list[2]
-    // let week = date_list[3]
     let study_time = (hour + minute + seconds)
-    // "year":sol(year), "month":sol(month), "day":sol(day), "weekday":sol(week),
+    let stop = false
+
     let time = {"study_time":sol(study_time)}
+
     $.ajax({
         type: "POST",
         url: "/time",
         contentType: 'application/json',
-        // headers: {
-        //     Authorization: getCookie('access_token')
-        // },
-        data: JSON.stringify(time),
+        data: JSON.stringify(time,stop),
 
         success: function (response) {
 
@@ -322,6 +304,7 @@ function check_out() {
     })
 
 }
+
 
 // 00시 기준 공부를 전날에 시작해 다음날 끝날때의 함수
 function midnight() {
@@ -352,3 +335,4 @@ $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
         jqXHR.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
     }
 });
+

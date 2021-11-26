@@ -1,14 +1,15 @@
 package site.bbichul.models;
+import java.time.LocalDateTime;
 
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.EntityListeners;
-import javax.persistence.MappedSuperclass;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
 @Setter
 @Getter // get 함수를 자동 생성합니다.

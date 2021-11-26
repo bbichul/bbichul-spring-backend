@@ -15,8 +15,9 @@ public class TeamController {
 
     private final TeamService teamService;
 
-    @GetMapping("/team/{username}")
+    @GetMapping("/team_page/{username}")
     public Team teamCheck(@PathVariable String username) {
+        System.out.println(username);
         return teamService.teamCheck(username);
 
 //    @GetMapping("/team/{teamname}")

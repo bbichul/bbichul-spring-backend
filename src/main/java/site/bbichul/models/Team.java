@@ -17,12 +17,8 @@ public class Team {
     private Long id;
 
     // 반드시 값을 가지도록 합니다.
-    @Column(nullable = false)
+    @Column(nullable = false, length = 200)
     private String teamname;
-
-//    @Column(nullable = false)
-//    @Enumerated(value = EnumType.STRING)
-//    private UserRole role;
 
     public Team(String teamname) {
         this.teamname = teamname;

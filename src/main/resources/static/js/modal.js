@@ -54,25 +54,20 @@ function main_login_check() {
 
 // 회원가입 기능
 function sign_up() {
-    let nick_name = $('#nickname').val()
-    let password = $('#signup_password').val()
+    let info = {
+        username:$('#nickname').val(),
+        password:$('#signup_password').val(),
+        email: $("#email").val()
+    }
 
     $.ajax({
-        type: "POST",
-        url: "/sign-up",
-        data: {
-            nick_name: nick_name,
-            password : password
-        },
+        type: 'POST',
+        url: `/signup`,
+        contentType: "application/json",
+        data: JSON.stringify(info),
         success: function (response) {
-            if (response["msg"] == '저장완료') {
-                alert(response["msg"]);
-                $('#signup_close').click()
-            }else if (response["msg"] == '중복된 닉네임') {
-                alert(response["msg"]);
-            }else if (response['msg'] == "영어 또는 숫자로 6글자 이상으로 작성해주세요") {
-                alert(response["msg"]);
-            }
+            alert("회원가입이 완료되었습니다!!");
+            location.href = '/';
         }
     })
 }
@@ -87,61 +82,31 @@ function hide_nickname() {
 
 // 로그인 기능
 function login() {
-    let nick_name = $('#login_nickname').val()
-    let password = $('#login_password').val()
-
+    let info = {
+        username: $('#login_nickname').val(),
+        password: $('#login_password').val()
+    }
     $.ajax({
-        type: "POST",
-        url: "/login",
-        data: {
-            nick_name: nick_name,
-            password: password
-        },
+        type: 'POST',
+        url: `/login`,
+        contentType: "application/json",
+        data: JSON.stringify(info),
         success: function (response) {
-            if (response['msg'] == "SUCCESS") {
-                alert('로그인에 성공하셨습니다.')
-                $('#login_close').click()
-                window.location.reload();
-                setCookie("access_token", response["access_token"], 1)
-            } else if (response['msg'] == "INVALID_NICKNAME") {
-                alert("닉네임이 틀렸습니다.")
-            } else if (response['msg'] == "INVALID_PASSWORD") {
-                alert("비밀번호가 틀렸습니다.")
-            }
+            alert("로그인완료")
+            localStorage.setItem("token", response['token']);
+            localStorage.setItem("username", response['username']);
+            location.href = '/';
         }
-    });
-}
-//카카오 소셜 로그인 기능
-Kakao.init('774a0c1c031cc69d814adaba2a2d299d');
-function loginWithKakao() {
-    Kakao.Auth.login({
-        success: function(authObj) {
-            $.ajax({
-                type: 'POST',
-                url: `/login/kakao`,
-                contentType: "application/json",
-                data: JSON.stringify({'token':authObj['access_token']}),
-                success: function (response) {
-                    alert("카카오 로그인완료")
-                    localStorage.setItem("token", response['token']);
-                    localStorage.setItem("username", response['username']);
-                    location.href = '/';
-                }
-            })
-        },
-        fail: function(err) {
-            alert(JSON.stringify(err))
-        },
     })
 }
 
 //로그아웃
 function log_out() {
     localStorage.removeItem('token');
-    localStorage.removeItem("username");
-    alert('로그아웃 되었습니다')
-    location.href ="/";
-}
+    localStorage.removeItem('username');
+        alert('로그아웃 되었습니다')
+        location.href ="/";
+    }
 
 // 회원가입시 닉네임 중복확인 기능
 function nickname_check() {
@@ -165,6 +130,12 @@ function nickname_check() {
     });
 }
 //유저이름 가져오기
-
 $("#username").html(localStorage.getItem("username"));
 
+
+// ajax 시 헤더 부분에 토큰 넣어주고 코드를 줄일 수 있다
+$.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+    if(localStorage.getItem('token')) {
+        jqXHR.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    }
+});

@@ -4,9 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import site.bbichul.models.Team;
 import site.bbichul.models.User;
 
-import java.util.List;
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 public interface TeamRepository extends JpaRepository<Team, String> {
-    Optional<User> findById(Long id);
+
+//    @Transactional
+//    Optional<User> findByUsernameAndTeamId(String username, Long teamId);
 }
