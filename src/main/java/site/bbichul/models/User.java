@@ -13,10 +13,11 @@ import javax.persistence.*;
 @Entity // DB 테이블 역할을 합니다.
 public class User extends TimeStamped {
 
-    public User(String username, String password, UserRole role) {
+    public User(String username, String password, UserRole role, UserInfo userInfo) {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.userInfo = userInfo;
     }
 
 
@@ -50,6 +51,11 @@ public class User extends TimeStamped {
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
+
+    @OneToOne
+    @JoinColumn(name = "userInfo_id",nullable = true)
+    private UserInfo userInfo;
+
 
 
     public User(UserDto userDto, Long userId) {

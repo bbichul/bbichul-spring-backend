@@ -2,6 +2,7 @@ package site.bbichul.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import site.bbichul.models.UserInfo;
 
 @Setter
 @Getter

@@ -9,26 +9,32 @@ import site.bbichul.models.User;
 import site.bbichul.models.UserInfo;
 import site.bbichul.repository.TeamRepository;
 import site.bbichul.repository.UserInfoRepository;
+import site.bbichul.repository.UserRepository;
 import site.bbichul.security.UserDetailsImpl;
+
+import javax.transaction.Transactional;
 
 @RequiredArgsConstructor
 @Service
 public class ResolutionService {
 
     private final UserInfoRepository userInfoRepository;
+    private final UserRepository userRepository;
 
-    public UserInfo setResolution(UserInfoRequestDto userInfoRequestDto, User user) {
+    @Transactional
+    public String updateResolution(UserInfoRequestDto userInfoRequestDto, User user) {
 
-        UserInfo userInfo = new UserInfo(userInfoRequestDto, user);
-        userInfo.setContent(userInfoRequestDto.getContent());
-        userInfoRepository.save(userInfo);
-        return userInfo;
+        UserInfo userInfo = userInfoRepository.findById(user.getUserInfo().getId()).orElseThrow(
+                () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다.")
+        );
+        userInfo.update(userInfoRequestDto);
+
+        return "성공";
     }
+    public UserInfo getResolution(User user) {
 
-//    public Team teamCheck(String username){
-//        return teamRepository.findByusername(username).orElseThrow(
-//                () -> new NullPointerException("")
-//        )
-//    }
-
+        return userInfoRepository.findById(user.getUserInfo().getId()).orElseThrow(
+                () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
+        );
+    }
 }

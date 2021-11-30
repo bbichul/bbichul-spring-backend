@@ -36,17 +36,17 @@ public class UserInfo {
     @Column(nullable = true, length = 200)
     private String content;
 
-    @OneToOne
-    @JoinColumn(name = "user_id",nullable = false)
-    private User user;
-
-    public UserInfo(UserInfoRequestDto requestDto, User user) {
+    public UserInfo(UserInfoRequestDto requestDto) {
         this.content = requestDto.getContent();
         this.startDate = requestDto.getStart_date();
         this.endDate = requestDto.getEnd_date();
         this.goalHour = requestDto.getGoal_hour();
-        this.user = user;
+    }
 
-//        this.tutor = requestDto.getTutor();
+    public void update(UserInfoRequestDto requestDto) {
+        this.content = requestDto.getContent();
+        this.startDate = requestDto.getStart_date();
+        this.endDate = requestDto.getEnd_date();
+        this.goalHour = requestDto.getGoal_hour();
     }
 }

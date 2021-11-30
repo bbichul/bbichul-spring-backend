@@ -99,15 +99,12 @@ function get_goal_modal() {
 
 function post_resolution_modal() {
     let content = $("#resolution-content").val()
+    let json = {"content": content};
     $.ajax({
         type: "POST",
         url: "/resolution",
-        headers: {
-            Authorization:  getCookie('access_token')
-        },
-        data: {
-            content: content
-        },
+        data: JSON.stringify(json),
+        contentType: "application/json",
         success: function (response) {
             if (response['msg'] == '성공') {
                 get_resolution_modal()
@@ -121,11 +118,8 @@ function get_resolution_modal() {
     $.ajax({
         type: "GET",
         url: "/resolution",
-        headers: {
-            Authorization:  getCookie('access_token')
-        },
-        data: {
-        },
+        data: {},
+        contentType: "application/json",
         success: function (response) {
             let content = response['content']
             $('.resolution-text').text(`${content}`)
@@ -429,3 +423,10 @@ function post_weekly_avg_graph() {
 }
 //유저이름 가져오기
 $("#username").html(localStorage.getItem("username"));
+
+// ajax 시 헤더 부분에 토큰 넣어주고 코드를 줄일 수 있다
+$.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+    if(localStorage.getItem('token')) {
+        jqXHR.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    }
+});
