@@ -14,6 +14,7 @@ import site.bbichul.repository.CalendarMemoRepository;
 import site.bbichul.repository.UserCalendarRepository;
 import site.bbichul.repository.UserRepository;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -107,6 +108,30 @@ public class CalendarService {
         List<CalendarMemo> calendarMemoList = calendarMemoRepository.findAllByUserCalendarId(userCalendar.getId());
 
         return calendarMemoList;
+    }
+
+    @Transactional
+    public void addCalendar(boolean isPrivated, String username) {
+
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new BbichulException(BbichulErrorCode.NOT_FOUND_USER));
+
+
+        if (isPrivated) {
+            List<UserCalendar> userCalendarList = userCalendarRepository.findAllByUserId(user.getId());
+
+            int listLength = userCalendarList.size();
+
+            for (int i = 0; i < listLength; i++) {
+                userCalendarList.get(i).setUserCount(listLength+1);
+            }
+
+            UserCalendar userCalendar = new UserCalendar(user);
+            userCalendar.setUserCount(listLength+1);
+            userCalendar.setCalendarType("P" + Integer.toString(listLength+1));
+
+            userCalendarRepository.save(userCalendar);
+        }
     }
 }
 

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import site.bbichul.dto.CalendarMemoDto;
+import site.bbichul.dto.CalenderDto;
 import site.bbichul.models.CalendarMemo;
 import site.bbichul.models.UserCalendar;
 import site.bbichul.security.UserDetailsImpl;
@@ -48,8 +49,21 @@ public class CalendarController {
 
     @GetMapping("/option")
     public List<CalendarMemo> getMemo(@RequestParam String calendarType,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        log.info("GET /option HTTP/1.1");
+
         String username = userDetails.getUsername();
         return calendarService.getTypeAllMemo(calendarType, username);
+    }
+
+
+    @PostMapping("/option")
+    public String addCalendar(@RequestBody CalenderDto calenderDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        log.info("POST /option HTTP/1.1");
+
+        String username = userDetails.getUsername();
+        boolean isPrivated = calenderDto.getIsPrivated();
+        calendarService.addCalendar(isPrivated, username);
+        return "캘린더가 추가되었습니다.";
     }
 
 }

@@ -1,7 +1,10 @@
 package site.bbichul.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import site.bbichul.dto.CalenderDto;
 
 import javax.persistence.*;
@@ -15,6 +18,7 @@ public class UserCalendar {
     @Id
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;

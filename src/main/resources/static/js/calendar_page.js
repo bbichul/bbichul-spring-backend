@@ -116,24 +116,34 @@ function getInfo() {
         success: function (response) {
             console.log(response)
 
+            nick_name = localStorage.getItem("username");
+
+            let userCalendarCount = response[0].userCount;
+            let teamCalendarCount = response[0].userCount;
 
 
-            nick_name = response['nick_name']
-            team_name = response['team_name']
-            is_include_team = response['is_include_team']
-            let calender_info = response['calender_info']
 
+            for (let i = 0; i < userCalendarCount; i++) {
 
-            if (is_include_team == 1) {
-                selected_cal_now = 'T1';
-                $("#dropdownMenuLink").text(team_name + " 캘린더 1");
-            } else {
-                $("#dropdownMenuLink").text(nick_name + " 캘린더 1");
+                count = calender_info[i].split('cal')[1]
+                let temp_html = `<li>
+                        <button onclick="setCalender(this)" class="dropdown-item" value="P${count}">${nick_name} 캘린더 ${count}</button>
+                    </li>`
+                $('#private-selected').append(temp_html)
+
             }
 
 
+            // if (teamCalendarCount > 0) {
+            //     selected_cal_now = 'T1';
+            //     $("#dropdownMenuLink").text(team_name + " 캘린더 1");
+            // } else {
+            //     $("#dropdownMenuLink").text(nick_name + " 캘린더 1");
+            // }
+
+
             let count, team_count;
-            for (let i = 0; i < calender_info.length; i++) {
+            for (let i = 0; i < response.length; i++) {
 
                 if (calender_info[i].indexOf('team_cal') == 0) {
 
@@ -146,11 +156,7 @@ function getInfo() {
                     $('#team-selected').append(temp_html)
                 } else if (calender_info[i].indexOf('private_cal') == 0) {
 
-                    count = calender_info[i].split('cal')[1]
-                    let temp_html = `<li>
-                        <button onclick="setCalender(this)" class="dropdown-item" value="P${count}">${nick_name} 캘린더 ${count}</button>
-                    </li>`
-                    $('#private-selected').append(temp_html)
+
                 }
             }
         }
@@ -206,7 +212,6 @@ function clickedDayGetMemo(obj) {
 
 }
 
-
 //달력 추가하기
 function addCalender() {
     let add_btn_checked = $('input[name="add-calender-group"]:checked').val();
@@ -218,13 +223,20 @@ function addCalender() {
         is_private = 1;
     }
 
+    let doc = {
+        "isPrivated" : is_private
+    }
+
+    console.log(doc)
+
     $.ajax({
         type: "POST",
         // headers: {
         //     Authorization: getCookie('access_token')
         // },
         url: "/calendars/option",
-        data: {isPrivate_give: is_private},
+        contentType: "application/json",
+        data: JSON.stringify(doc),
         success: function (response) {
             alert(response['msg'])
             window.location.reload();

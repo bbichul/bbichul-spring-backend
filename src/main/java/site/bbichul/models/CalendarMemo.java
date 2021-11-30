@@ -11,8 +11,7 @@ import javax.xml.soap.Text;
 
 @NoArgsConstructor
 @Entity
-@Data
-
+@Getter
 public class CalendarMemo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
