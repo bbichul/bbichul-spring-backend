@@ -4,16 +4,16 @@ $("#username").html(user);
 
 
 // ajax 시 헤더 부분에 토큰 넣어주고 코드를 줄일 수 있다
-// $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
-//     if(localStorage.getItem('token')) {
-//         jqXHR.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
-//     }
-// });
+$.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+    if(localStorage.getItem('token')) {
+        jqXHR.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    }
+});
 
-let my_team = ""
+let team = ""
 
 $(document).ready(function () {
-    teamCheck(user);
+    teamCheck();
     $("input[name=checked-team]").val('')
     /*    pieChartDraw();*/
     $('.progress-value > span').each(function () {
@@ -36,9 +36,6 @@ function get_progressbar() {
     $.ajax({
         type: "POST",
         url: "/get-progressbar",
-        headers: {
-            Authorization: getCookie('access_token')
-        },
         data: {},
         success: function (response) {
             let percent = response['percent']
@@ -56,30 +53,23 @@ function get_progressbar() {
 }
 
 // 팀 소속 여부 확인
-function teamCheck(user) {
-    let username = user
+function teamCheck() {
     $.ajax({
         type: "GET",
-        url: `/team_page/${username}`,
-        headers: {
-            // Authorization: getCookie('access_token')
-        },
+        url: `/team`,
         success: function (response) {
-            console.log(response)
-            // let user_data = response['user_data']
-            my_team = response['team']
-            if (my_team != null) {
+            if (response == "아직 소속된 팀이 없습니다.") {
+                $('.team-exist').hide()
+                let temp_html = `<h1>아직 소속된 팀이 없습니다.</h1>`
+                $('#team-alert').append(temp_html)
+            } else {
                 $('.not-exist').hide()
-                let team = `${my_team}`
+                let team = `${response}`
                 $('#team').css('color', `whitesmoke`);
                 $('#team').css('font-size', `40px`);
                 $('#team').append(team)
                 checkstatus();
-                show_task(my_team)
-            } else {
-                $('.team-exist').hide()
-                let temp_html = `<h1>아직 소속된 팀이 없습니다.</h1>`
-                $('#team-alert').append(temp_html)
+                show_task(team)
             }
         }
     })
@@ -92,35 +82,56 @@ function hide_teamname() {
 }
 
 // 팀 만들기 기능
-function create_team() {
-    my_team = $('#team-name').val()
-    let teamname = {teamname : my_team}
-        // hidden input의 value로 중복확인 버튼을 눌렀는지 안눌렀는지 확인
-    if ($("input[name=checked-team]").val() != 'y') {
-        alert("중복확인을 통과한 경우만 만들 수 있습니다.")
-        $("#team-name").val(null);
-    } else {
-        $.ajax({
-            type: "POST",
-            url: "/team",
-            contentType: "application/json",
-            data: JSON.stringify(teamname),
-            success: function (response) {
-                if (response["msg"] == '팀 만들기 완료') {
-                    alert(response["msg"]);
-                    $('#create-team-close').click()
-                    $('.not-exist').hide()
-                    $('.team-exist').show()
-                    let team = `${my_team}`
-                    $('#team').append(team)
-                    checkstatus();
-                    show_task(my_team)
-                } else {
-                    alert(response["서버 오류"]);
-                }
+function createTeam() {
+    team = $('#team-name').val()
+    let teamname = {teamname : team}
+    $.ajax({
+        type: "POST",
+        url: "/team",
+        contentType: "application/json",
+        data: JSON.stringify(teamname),
+        success: function (response) {
+            console.log(response)
+            if (response == '중복된 팀명이 존재합니다.') {
+                alert(response);
+            } else {
+                alert("팀 만들기 성공!");
+                $('#create-team-close').click()
+                $('.not-exist').hide()
+                $('.team-exist').show()
+                let team = response
+                $('#team').append(team)
+                checkstatus();
+                show_task(team)
             }
-        })
-    }
+        }
+    })
+        // hidden input의 value로 중복확인 버튼을 눌렀는지 안눌렀는지 확인
+    // if ($("input[name=checked-team]").val() != 'y') {
+    //     alert("중복확인을 통과한 경우만 만들 수 있습니다.")
+    //     $("#team-name").val(null);
+    // } else {
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "/team",
+    //         contentType: "application/json",
+    //         data: JSON.stringify(teamname),
+    //         success: function (response) {
+    //             if (response["msg"] == '팀 만들기 완료') {
+    //                 alert(response["msg"]);
+    //                 $('#create-team-close').click()
+    //                 $('.not-exist').hide()
+    //                 $('.team-exist').show()
+    //                 let team = `${team}`
+    //                 $('#team').append(team)
+    //                 checkstatus();
+    //                 show_task(team)
+    //             } else {
+    //                 alert(response["서버 오류"]);
+    //             }
+    //         }
+    //     })
+    // }
 }
 
 function invite_team() {
@@ -134,9 +145,6 @@ function invite_team() {
         $.ajax({
             type: "POST",
             url: "/team",
-            headers: {
-                Authorization: getCookie('access_token')
-            },
             data: {
                 team: invite_name
             },
@@ -149,7 +157,7 @@ function invite_team() {
                     let team = `${invite_name}`
                     $('#team').append(team)
                     checkstatus();
-                    show_task(my_team)
+                    show_task(team)
                 } else if (response["msg"] == '존재하지 않는 팀입니다. 팀 이름을 확인해주세요.') {
                     alert(response["msg"]);
                 }
@@ -161,8 +169,8 @@ function invite_team() {
 // 팀 만들기 시 팀명 중복확인 기능
 function teamname_check() {
     let str_space = /\s/;
-    my_team = $('#team-name').val()
-    if (!my_team || str_space.exec(my_team)) {
+    team = $('#team-name').val()
+    if (!team || str_space.exec(team)) {
         alert("팀 이름에 공백을 사용할 수 없습니다.")
         $("#team-name").val("");
     } else {
@@ -173,7 +181,7 @@ function teamname_check() {
                 Authorization: getCookie('access_token')
             },
             data: {
-                team: my_team
+                team: team
             },
             success: function (response) {
                 if (response['msg'] == "사용할 수 있는 팀 이름입니다.") {
@@ -198,26 +206,23 @@ function teamname_check() {
 }
 
 /*to do list*/
-function show_task(my_team) {
-    let team = my_team
-    $.ajax({
-        type: "GET",
-        url: "/team",
-        headers: {
-            Authorization: getCookie('access_token')
-        },
-        data: {},
-        success: function (response) {
-            let lists = response["tasks"];
-            get_progressbar()
-            for (let i = 0; i < lists.length; i++) {
-                let task = lists[i]['task']
-                let done = lists[i]['done']
-                makeListTask(team, task, done);
-            }
-        }
-    })
-}
+// function show_task(team) {
+//     let team = team
+//     $.ajax({
+//         type: "GET",
+//         url: "/team",
+//         data: {},
+//         success: function (response) {
+//             let lists = response["tasks"];
+//             get_progressbar()
+//             for (let i = 0; i < lists.length; i++) {
+//                 let task = lists[i]['task']
+//                 let done = lists[i]['done']
+//                 makeListTask(team, task, done);
+//             }
+//         }
+//     })
+// }
 
 // 할일 화면에 띄우기
 function makeListTask(team, task, done) {
@@ -232,60 +237,51 @@ function makeListTask(team, task, done) {
 }
 
 //내가 속한 팀 찾아 할일 저장하기
-function findteam() {
-    //입력창이 비어있지 않고 엔터를 치면 실행
-    if (window.event.keyCode == 13 && $(".txt").val() != "") {
-        $.ajax({
-            type: "GET",
-            url: "/team",
-            headers: {
-                Authorization: getCookie('access_token')
-            },
-            data: {},
-            success: function (response) {
-                let user_data = response['user_data']
-                my_team = user_data[0]['team']
-                window.location.reload();
-                addlist(my_team)
-            }
-        });
-    }
-}
-
-//db에 할일 저장
-function addlist(my_team) {
-    let team = my_team
-    let task = $(".txt").val();
-    let temphtml = `<div class='task'>${task}<i class='bi bi-trash-fill' onclick="deletetask('${team}','${task}')"></i><i class='bi bi-check-lg' onclick="changedone('${team}','${task}')"></i></div>`
-    $(".notdone").append(temphtml);
-
-    $.ajax({
-        type: "POST",
-        url: "/team",
-        headers: {
-            Authorization: getCookie('access_token')
-        },
-        data: {
-            team: team,
-            task: task
-        },
-        success: function (response) {
-            //alert(response['msg']);
-        }
-    });
-
-    //입력 창 비우기
-    $(".txt").val("");
-}
+// function findteam() {
+//     //입력창이 비어있지 않고 엔터를 치면 실행
+//     if (window.event.keyCode == 13 && $(".txt").val() != "") {
+//         $.ajax({
+//             type: "GET",
+//             url: "/team",
+//             data: {},
+//             success: function (response) {
+//                 let user_data = response['user_data']
+//                 my_team = user_data[0]['team']
+//                 window.location.reload();
+//                 addlist(my_team)
+//             }
+//         });
+//     }
+// }
+//
+// //db에 할일 저장
+// function addlist(team) {
+//     let team = my_team
+//     let task = $(".txt").val();
+//     let temphtml = `<div class='task'>${task}<i class='bi bi-trash-fill' onclick="deletetask('${team}','${task}')"></i><i class='bi bi-check-lg' onclick="changedone('${team}','${task}')"></i></div>`
+//     $(".notdone").append(temphtml);
+//
+//     $.ajax({
+//         type: "POST",
+//         url: "/team",
+//         data: {
+//             team: team,
+//             task: task
+//         },
+//         success: function (response) {
+//             //alert(response['msg']);
+//         }
+//     });
+//
+//     //입력 창 비우기
+//     $(".txt").val("");
+// }
 
 // to do list 삭제 버튼
 function deletetask(team, task) {
     $.ajax({
         type: "POST",
         url: `/team`,
-        headers: {
-            Authorization: getCookie('access_token')
-        },
         data: {
             team: team,
             task: task
@@ -306,9 +302,6 @@ function changedone(team, task, done) {
     $.ajax({
         type: "POST",
         url: `/team`,
-        headers: {
-            Authorization: getCookie('access_token')
-        },
         data: {
             team: team,
             task: task,
@@ -330,9 +323,6 @@ function checkstatus() {
     $.ajax({
         type: "GET",
         url: "/team",
-        headers: {
-            Authorization: getCookie('access_token')
-        },
         data: {},
         success: function (response) {
             let user_data = response['user_data']

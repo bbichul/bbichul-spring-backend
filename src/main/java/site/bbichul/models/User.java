@@ -56,6 +56,7 @@ public class User extends TimeStamped {
         this.isStudying = userDto.isIsstudying();
 
     }
+
     public void updateStudy(UserDto userDto){
         this.isStudying = userDto.isIsstudying();
     }
