@@ -74,7 +74,7 @@ function record_time() {
     let m = parseInt(minute)* 60
     let s = parseInt(seconds)
     let date = new Date()
-    if (date.getHours() == 18 && date.getMinutes() == 52 & date.getSeconds() == 0) {
+    if (date.getHours() == 0 && date.getMinutes() == 0 & date.getSeconds() == 0) {
         let yesterday_study_time = (h + m + s)
         localStorage.setItem('yesterday_study_time', yesterday_study_time)
     }
