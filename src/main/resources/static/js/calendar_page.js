@@ -116,30 +116,31 @@ function getInfo() {
         success: function (response) {
             console.log(response)
 
-            nick_name = localStorage.getItem("username");
+            let nick_name = localStorage.getItem("username");
 
-            let userCalendarCount = response[0].userCount;
-            let teamCalendarCount = response[0].userCount;
+            let user_calendar_count = response[0].userCount;
+            let team_calendar_count = response[0].teamCount;
+
+            if (team_calendar_count > 0) {
+                selected_cal_now = 'T1';
+                $("#dropdownMenuLink").text(team_name + " 캘린더 1");
+            } else {
+                $("#dropdownMenuLink").text(nick_name + " 캘린더 1");
+            }
+
+            for (let i = 0; i < user_calendar_count; i++) {
 
 
+                let calendar_type = response[i].calendarType;
+                let count = response[i].calendarType.substr(1,2);
 
-            for (let i = 0; i < userCalendarCount; i++) {
 
-                count = calender_info[i].split('cal')[1]
                 let temp_html = `<li>
-                        <button onclick="setCalender(this)" class="dropdown-item" value="P${count}">${nick_name} 캘린더 ${count}</button>
+                        <button onclick="setCalender(this)" class="dropdown-item" value="${calendar_type}">${nick_name}의 캘린더 ${count}</button>
                     </li>`
                 $('#private-selected').append(temp_html)
 
             }
-
-
-            // if (teamCalendarCount > 0) {
-            //     selected_cal_now = 'T1';
-            //     $("#dropdownMenuLink").text(team_name + " 캘린더 1");
-            // } else {
-            //     $("#dropdownMenuLink").text(nick_name + " 캘린더 1");
-            // }
 
 
             let count, team_count;
