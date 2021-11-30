@@ -3,6 +3,7 @@ package site.bbichul.models;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import site.bbichul.dto.CalendarMemoDto;
 
 import javax.persistence.*;
@@ -11,7 +12,8 @@ import javax.xml.soap.Text;
 
 @NoArgsConstructor
 @Entity
-@Data
+@Getter
+@Setter
 
 public class CalendarMemo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
