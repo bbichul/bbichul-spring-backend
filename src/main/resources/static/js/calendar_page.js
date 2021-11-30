@@ -79,6 +79,25 @@ const renderCalendar = () => {
     document.querySelector('.dates').innerHTML = dates.join('');
 }
 
+const prevMonth = () => {
+    date.setDate(1);
+    date.setMonth(date.getMonth() - 1);
+    renderCalendar();
+    getMemo();
+}
+
+const nextMonth = () => {
+    date.setDate(1);
+    date.setMonth(date.getMonth() + 1);
+    renderCalendar();
+    getMemo();
+}
+
+const goToday = () => {
+    date = new Date();
+    renderCalendar();
+}
+
 
 //캘린더 페이지 접속 시 가져오는 정보
 function getInfo() {
@@ -87,13 +106,17 @@ function getInfo() {
 
     $.ajax({
         type: "GET",
-        headers: {
-            Authorization: getCookie('access_token')
-        },
-        url: "/get-info",
+        // headers: {
+        //     Authorization: getCookie('access_token')
+        // },
+        url: "/calendars/info",
+        contentType: "application/json",
         async: false, //전역변수에 값을 저장하기 위해 동기 방식으로 전환,
         data: {},
         success: function (response) {
+            console.log(response)
+
+
 
             nick_name = response['nick_name']
             team_name = response['team_name']
@@ -134,6 +157,55 @@ function getInfo() {
     })
 }
 
+//텍스트 업데이트 함수
+function updateText() {
+    let varMemoText = $('#calenderNote').val();
+
+    let doc = {
+        "contents" : varMemoText,
+        "dateData" : btn_year_month_day,
+        "calendarType" : selected_cal_now
+    }
+
+    $.ajax({
+        type: "PUT",
+        // headers: {
+        //     Authorization: getCookie('access_token')
+        // },
+        url: "/calendars/memo",
+        contentType: "application/json",
+        data: JSON.stringify(doc),
+        success: function (response) {
+        }
+    })
+
+    location.reload();
+    //현재 새로고침 안하면 메모 입력 시 반영 안 되는 버그로 넣어놨습니다
+
+}
+
+
+function clickedDayGetMemo(obj) {
+    btn_year_month_day = $(obj).attr('id'); // 달력 날짜를 클릭 했을 때 받아온 날짜 ID 를 변수에 초기화.
+    let memo_text_day = btn_year_month_day.replace("Y", "년 ").replace("M", "월 ") + "일";
+    $('.select-date').text(memo_text_day);
+
+    $.ajax({
+        type: "GET",
+        // headers: {
+        //     Authorization: getCookie('access_token')
+        // },
+        url: `/calendars/memo?dateData=${btn_year_month_day}&calendarType=${selected_cal_now}`,
+        // data: {date_give: btn_year_month_day, select_cal_give: selected_cal_now},
+        success: function (response) {
+            console.log(response);
+            let receive_memo = response.contents;
+            $('#calenderNote').text(receive_memo);
+        }
+    })
+
+}
+
 
 //달력 추가하기
 function addCalender() {
@@ -148,10 +220,10 @@ function addCalender() {
 
     $.ajax({
         type: "POST",
-        headers: {
-            Authorization: getCookie('access_token')
-        },
-        url: "/add-calender",
+        // headers: {
+        //     Authorization: getCookie('access_token')
+        // },
+        url: "/calendars/option",
         data: {isPrivate_give: is_private},
         success: function (response) {
             alert(response['msg'])
@@ -192,13 +264,17 @@ function setCalender(obj) {
 function getMemo() {
 
     $.ajax({
-        type: "POST",
-        headers: {
-            Authorization: getCookie('access_token')
-        },
-        url: "/take-memo",
-        data: {select_cal_give: selected_cal_now},
+        type: "GET",
+        // headers: {
+        //     Authorization: getCookie('access_token')
+        // },
+        url: `/calendars/option?calendarType=${selected_cal_now}`,
+        // data: {calendarType: selected_cal_now},
         success: function (response) {
+
+            console.log(response)
+
+
             let take_text = response['give_text'];
 
             for (let key in take_text) {
@@ -218,76 +294,6 @@ function getMemo() {
             }
         }
     })
-}
-
-
-const prevMonth = () => {
-    date.setDate(1);
-    date.setMonth(date.getMonth() - 1);
-    renderCalendar();
-    getMemo();
-}
-
-const nextMonth = () => {
-    date.setDate(1);
-    date.setMonth(date.getMonth() + 1);
-    renderCalendar();
-    getMemo();
-}
-
-const goToday = () => {
-    date = new Date();
-    renderCalendar();
-}
-
-
-function clickedDayGetMemo(obj) {
-    btn_year_month_day = $(obj).attr('id'); // 달력 날짜를 클릭 했을 때 받아온 날짜 ID 를 변수에 초기화.
-    let memo_text_day = btn_year_month_day.replace("Y", "년 ").replace("M", "월 ") + "일";
-    $('.select-date').text(memo_text_day);
-
-    $.ajax({
-        type: "GET",
-        // headers: {
-        //     Authorization: getCookie('access_token')
-        // },
-        url: `/calendar/memo?dateData=${btn_year_month_day}`,
-        // data: {date_give: btn_year_month_day, select_cal_give: selected_cal_now},
-        success: function (response) {
-            console.log(response);
-            let receive_memo = response.contents;
-            $('#calenderNote').text(receive_memo);
-        }
-    })
-
-}
-
-
-//텍스트 업데이트 함수
-function updateText() {
-    let varMemoText = $('#calenderNote').val();
-
-    let doc = {
-        "contents" : varMemoText,
-        "dateData" : btn_year_month_day
-    }
-
-    //TODO selected_cal_now
-    $.ajax({
-        type: "PUT",
-        // headers: {
-        //     Authorization: getCookie('access_token')
-        // },
-        url: "/calendar/memo",
-        contentType: "application/json",
-        data: JSON.stringify(doc),
-        success: function (response) {
-        }
-    })
-
-    location.reload();
-    //현재 새로고침 안하면 메모 입력 시 반영 안 되는 버그로 넣어놨습니다
-
 }
 
 // 캘린더 노트 실시간 반영

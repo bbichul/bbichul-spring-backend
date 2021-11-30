@@ -22,9 +22,9 @@ public class CalendarMemo {
     @JoinColumn(name = "userCalendarId",nullable = true)
     private UserCalendar userCalendar;
 
-    @ManyToOne
-    @JoinColumn(name = "teamCalendarId",nullable = true)
-    private TeamCalendar teamCalendar;
+//    @ManyToOne
+//    @JoinColumn(name = "teamCalendarId",nullable = true)
+//    private TeamCalendar teamCalendar;
 
     @ManyToOne
     @JoinColumn(name ="userId" ,nullable = true)
@@ -45,6 +45,12 @@ public class CalendarMemo {
 
     public CalendarMemo(CalendarMemoDto calendarMemoDto, User user){
         this.user = user;
+        this.dateData = calendarMemoDto.getDateData();
+        this.contents = calendarMemoDto.getContents();
+    }
+
+    public CalendarMemo(CalendarMemoDto calendarMemoDto, UserCalendar userCalendar) {
+        this.userCalendar = userCalendar;
         this.dateData = calendarMemoDto.getDateData();
         this.contents = calendarMemoDto.getContents();
     }
