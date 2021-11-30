@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import site.bbichul.dto.TeamRequestDto;
-import site.bbichul.models.Team;
 import site.bbichul.security.UserDetailsImpl;
 import site.bbichul.service.TeamService;
 
@@ -20,7 +19,7 @@ public class TeamController {
     }
 
     @PostMapping("/team")
-    public Team createTeam(@RequestBody TeamRequestDto teamRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public String createTeam(@RequestBody TeamRequestDto teamRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return teamService.createTeam(teamRequestDto, userDetails.getUser());
     }
 }

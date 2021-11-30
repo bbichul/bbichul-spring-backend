@@ -91,6 +91,7 @@ function createTeam() {
         contentType: "application/json",
         data: JSON.stringify(teamname),
         success: function (response) {
+            console.log(response)
             if (response == '중복된 팀명이 존재합니다.') {
                 alert(response);
             } else {
@@ -98,10 +99,10 @@ function createTeam() {
                 $('#create-team-close').click()
                 $('.not-exist').hide()
                 $('.team-exist').show()
-                let team = `${team}`
+                let team = response
                 $('#team').append(team)
                 checkstatus();
-                show_task(my_team)
+                show_task(team)
             }
         }
     })

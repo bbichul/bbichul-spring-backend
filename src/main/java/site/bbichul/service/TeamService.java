@@ -1,14 +1,12 @@
 package site.bbichul.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import site.bbichul.dto.TeamRequestDto;
 import site.bbichul.models.Team;
 import site.bbichul.models.User;
 import site.bbichul.repository.TeamRepository;
 import site.bbichul.repository.UserRepository;
-import site.bbichul.security.UserDetailsImpl;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -29,7 +27,7 @@ public class TeamService {
     }
 
     @Transactional
-    public Team createTeam(TeamRequestDto teamRequestDto, User user) {
+    public String createTeam(TeamRequestDto teamRequestDto, User user) {
         String teamname = teamRequestDto.getTeamname();
 
         Optional<Team> found = teamRepository.findByTeamname(teamname);
@@ -42,7 +40,7 @@ public class TeamService {
 
         user.setTeam(team); // 영속성
         userRepository.save(user);
-        return team;
+        return team.getTeamname();
     }
 
 }
