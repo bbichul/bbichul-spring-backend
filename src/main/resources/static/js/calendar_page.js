@@ -272,7 +272,22 @@ function getMemo() {
         // data: {calendarType: selected_cal_now},
         success: function (response) {
 
-            console.log(response)
+            for (let i = 0; i < response.length; i++) {
+                let text_id = response[i].dateData + "text";
+                let load_text = response[i].contents.substr(0, 5);
+
+                if(load_text.length > 4){
+                    $('#' + text_id).text(load_text + "・・・");
+                }else{
+                    $('#' + text_id).text(load_text);
+                }
+
+                if (load_text == "") {
+                    $('#' + text_id).text('');
+                }
+
+
+            }
 
 
             let take_text = response['give_text'];
