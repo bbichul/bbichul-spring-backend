@@ -70,10 +70,13 @@ function Clock() {
 // 00시 기준으로 시간 자동저장
 // setInterval(Clock, 1000);
 function record_time() {
+    let h = parseInt(hour) * 60 *60
+    let m = parseInt(minute)* 60
+    let s = parseInt(seconds)
     let date = new Date()
-    if (date.getHours() == 0 && date.getMinutes() == 0 & date.getSeconds() == 0) {
-        let yesterday_study_time = (hour + minute + seconds)
-        setCookie('yesterday_study_time', yesterday_study_time, 1)
+    if (date.getHours() == 18 && date.getMinutes() == 52 & date.getSeconds() == 0) {
+        let yesterday_study_time = (h + m + s)
+        localStorage.setItem('yesterday_study_time', yesterday_study_time)
     }
 }
 
@@ -179,7 +182,6 @@ $('#play-next').click(function () {
     index++;
     if (index > $('#myaudio source').length) index = 2;
 
-
     $('#myaudio source#main').attr('src',
         $('#myaudio source:nth-child(' + index + ')').attr('src'));
     $("#myaudio")[0].load();
@@ -188,14 +190,14 @@ $('#play-next').click(function () {
 
 
 // 메인페이지 공부 종료 눌렀을때
-// function checkout_choice() {
-//
-//     if (getCookie('yesterday_study_time') != undefined) {
-//         midnight();
-//     } else {
-//         check_out();
-//     }
-// }
+function checkout_choice() {
+
+    if (localStorage.getItem('yesterday_study_time') != undefined) {
+        midnight();
+    } else {
+        check_out();
+    }
+}
 
 
 // 내가 끝을 누르기 전까지 공부시간 체크(스톱워치)
@@ -286,10 +288,14 @@ const sol = timedate => parseInt(timedate.replace(/[^0-9]/g,""));
 
 // 공부 종료 눌렀을시
 function check_out() {
-    let study_time = (hour + minute + seconds)
+    let h = parseInt(hour) * 60 *60
+    let m = parseInt(minute)* 60
+    let s = parseInt(seconds)
+
+    let study_time = (h + m + s)
     // let stop = false
 
-    let stop = {"study_time":sol(study_time), "isstudying": false}
+    let stop = {"study_time":(study_time), "isstudying": false}
     console.log(stop)
 
     $.ajax({
@@ -301,32 +307,45 @@ function check_out() {
         success: function (response) {
 
 
-            alert("좋아 오늘도 성장했어");
+            alert("좋아 오늘도 성장했어😋");
         }
     })
 
 }
 
-
 // 00시 기준 공부를 전날에 시작해 다음날 끝날때의 함수
-// function midnight() {
-//     let study_time = (hour + minute + seconds)
+function midnight() {
+    let h = parseInt(hour) * 60 *60
+    let m = parseInt(minute)* 60
+    let s = parseInt(seconds)
+
+    let study_time = (h + m + s)
+
+    let stop = {"study_time":(study_time), "isstudying": false,"yesterday_time":localStorage.getItem("yesterday_study_time")}
+    $.ajax({
+        type: "POST",
+        url: "/ytime",
+        contentType: 'application/json',
+        data: JSON.stringify(stop),
+        success: function (response) {
+            alert("좋아 오늘도 성장했어😋");
+            localStorage.removeItem('yesterday_study_time')
+        }
+    })
+}
+
+// function wwise(){
 //     $.ajax({
 //         type: "POST",
-//         url: "/midnight",
-//         headers: {
-//             Authorization: getCookie('access_token')
-//         },
-//         data: {
-//             yesterday_study_time: getCookie('yesterday_study_time'),
-//             total_study_time: study_time,
-//             status: "퇴근",
-//         },
+//         url: "/crawling",
+//         contentType: 'application/json',
+//         data: JSON.stringify(),
 //         success: function (response) {
-//             alert(response["msg"]);
-//             deleteCookie('yesterday_study_time')
+//
+//
 //         }
 //     })
+//
 // }
 
 //유저이름 가져오기
