@@ -20,7 +20,7 @@ public class NaverCrawling {
     private final WiseRepository wiseRepository;
 
     // 네이버 명언 크롤링
-    @Scheduled(cron = "0 40 9 * * *")
+    @Scheduled(cron = "0 37 11 * * *")
     public String goRegister() throws IOException {
         Document doc = Jsoup.connect("https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=blMy&qvt=0&query=%EA%B3%B5%EB%B6%80%20%EB%AA%85%EC%96%B8").get();
         Elements viewlst = doc.select("div.viewlst");
