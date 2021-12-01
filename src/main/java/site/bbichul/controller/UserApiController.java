@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import site.bbichul.dto.JwtResponse;
 import site.bbichul.dto.SignupRequestDto;
 import site.bbichul.dto.UserDto;
+import site.bbichul.models.UserInfo;
 import site.bbichul.service.UserService;
 import site.bbichul.utills.JwtTokenUtil;
 
@@ -35,6 +36,7 @@ public class UserApiController {
     // 회원가입 기능
     @PostMapping(value = "/signup")
     public ResponseEntity<?> createUser(@RequestBody SignupRequestDto userDto) throws Exception {
+//        UserInfo userInfo = userService.registerUserInfo();
         userService.registerUser(userDto);
         authenticate(userDto.getUsername(), userDto.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
