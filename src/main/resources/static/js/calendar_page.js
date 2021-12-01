@@ -294,27 +294,8 @@ function getMemo() {
                     $('#' + text_id).text('');
                 }
 
-
             }
 
-
-            let take_text = response['give_text'];
-
-            for (let key in take_text) {
-                let text_id = key + 'text';
-                let load_text = take_text[key].substr(0, 5);
-
-                if(load_text.length > 4){
-                 $('#' + text_id).text(load_text + "・・・");
-                }else{
-                 $('#' + text_id).text(load_text);
-                }
-
-                if (load_text == "") {
-                    $('#' + text_id).text('');
-                }
-
-            }
         }
     })
 }
