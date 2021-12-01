@@ -80,4 +80,24 @@ public class TeamService {
         }
     }
 
+    public List<User> checkStatus(User user) {
+        List<User> users = userRepository.findAllByTeamId(user.getTeam().getId());
+        return users;
+    }
+
+    public String signupTeam(TeamRequestDto teamRequestDto, User user) {
+        String teamname = teamRequestDto.getTeamname();
+        String message;
+
+        Optional<Team> found = teamRepository.findByTeamname(teamname);
+        if (found.isPresent()) {
+            user.setTeam(found.get());
+            userRepository.save(user);
+            message = "초대받은 팀에 가입되었습니다.";
+        }
+        else {
+            message = "존재하지 않는 팀입니다. 팀 이름을 확인해주세요.";
+        }
+        return message;
+    }
 }
