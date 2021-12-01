@@ -46,6 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login/kakao").permitAll()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/").permitAll()
+//                .antMatchers("/resolution").permitAll()
+                .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
@@ -59,6 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .permitAll()
                 .and()
                 .exceptionHandling();
+
 
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

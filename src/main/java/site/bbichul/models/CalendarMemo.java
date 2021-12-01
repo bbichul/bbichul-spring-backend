@@ -3,6 +3,7 @@ package site.bbichul.models;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import site.bbichul.dto.CalendarMemoDto;
 
 import javax.persistence.*;
@@ -21,14 +22,6 @@ public class CalendarMemo {
     @JoinColumn(name = "userCalendarId",nullable = true)
     private UserCalendar userCalendar;
 
-//    @ManyToOne
-//    @JoinColumn(name = "teamCalendarId",nullable = true)
-//    private TeamCalendar teamCalendar;
-
-    @ManyToOne
-    @JoinColumn(name ="userId" ,nullable = true)
-    private User user;
-
 
     @Column(nullable = false, length = 200)
     private String dateData;
@@ -38,12 +31,6 @@ public class CalendarMemo {
 
 
     public CalendarMemo(CalendarMemoDto calendarMemoDto) {
-        this.dateData = calendarMemoDto.getDateData();
-        this.contents = calendarMemoDto.getContents();
-    }
-
-    public CalendarMemo(CalendarMemoDto calendarMemoDto, User user){
-        this.user = user;
         this.dateData = calendarMemoDto.getDateData();
         this.contents = calendarMemoDto.getContents();
     }

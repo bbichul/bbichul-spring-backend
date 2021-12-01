@@ -17,4 +17,5 @@ public class TimeRequestDto {
     private int weekday;
     private int study_time;
     private boolean isstudying;
+    private int yesterday_time;
 }

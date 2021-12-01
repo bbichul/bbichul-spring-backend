@@ -23,6 +23,10 @@ public class UserCalendar {
     @JoinColumn(name = "userId")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "teamId")
+    private Team team;
+
     @Column(nullable = false)
     private int userCount;
 
@@ -34,6 +38,10 @@ public class UserCalendar {
 
     public UserCalendar(User user){
         this.user = user;
+    }
+
+    public UserCalendar(Team team){
+        this.team = team;
     }
 
 }

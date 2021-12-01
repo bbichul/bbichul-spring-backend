@@ -7,6 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import site.bbichul.service.CalendarService;
 
+@EnableJpaAuditing
 @SpringBootApplication
 @PropertySource("classpath:/app.properties")
 @RequiredArgsConstructor

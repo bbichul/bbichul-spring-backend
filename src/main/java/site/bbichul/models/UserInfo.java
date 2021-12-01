@@ -2,14 +2,19 @@ package site.bbichul.models;
 
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import site.bbichul.dto.UserDto;
+import site.bbichul.dto.UserInfoRequestDto;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 
 public class UserInfo {
@@ -34,7 +39,17 @@ public class UserInfo {
     @Column(nullable = true, length = 200)
     private String content;
 
-    @OneToOne
-    @JoinColumn(name = "user_id",nullable = false)
-    private User user;
+    public UserInfo(UserInfoRequestDto requestDto) {
+        this.content = requestDto.getContent();
+        this.startDate = requestDto.getStart_date();
+        this.endDate = requestDto.getEnd_date();
+        this.goalHour = requestDto.getGoal_hour();
+    }
+
+    public void update(UserInfoRequestDto requestDto) {
+        this.content = requestDto.getContent();
+        this.startDate = requestDto.getStart_date();
+        this.endDate = requestDto.getEnd_date();
+        this.goalHour = requestDto.getGoal_hour();
+    }
 }

@@ -2,15 +2,14 @@ package site.bbichul.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import site.bbichul.dto.SignupRequestDto;
 import site.bbichul.dto.UserDto;
 import site.bbichul.models.User;
+import site.bbichul.models.UserInfo;
 import site.bbichul.models.UserRole;
+import site.bbichul.repository.UserInfoRepository;
 import site.bbichul.repository.UserRepository;
 
 import javax.transaction.Transactional;
@@ -20,6 +19,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final UserInfoRepository userInfoRepository;
     private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
     private final PasswordEncoder passwordEncoder;
 
@@ -46,11 +46,16 @@ public class UserService {
             role = UserRole.ADMIN;
         }
 
-        User user = new User(username, password,role);
+        UserInfo userInfo = new UserInfo();
+        userInfoRepository.save(userInfo);
+
+
+        User user = new User(username, password, role, userInfo);
         userRepository.save(user);
 
         return user;
     }
+
     @Transactional
     public void setStudy(UserDto userDto, String username) {
         User user = userRepository.findByUsername(username).orElseThrow(

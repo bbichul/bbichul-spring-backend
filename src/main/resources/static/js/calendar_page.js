@@ -2,7 +2,6 @@
 let date = new Date();
 let btn_year_month_day = ''; //텍스트 박스와 캘린더 연동 위한 달력 버튼 ID 값 저장
 
-let is_include_team = 0; //소속된 팀이 존재하지 않을 때 0값으로 개인 캘린더 만을 엽니다.
 let nick_name;
 let team_name;
 let selected_cal_now;
@@ -115,47 +114,47 @@ function getInfo() {
         data: {},
         success: function (response) {
             console.log(response)
+            nick_name = localStorage.getItem("username");
 
-            let nick_name = localStorage.getItem("username");
+            let team_calendar_count;
+            let user_calendar_count;
+            for (let i = 0; i < response.length; i++) {
+                if (response[i].team != null) {
+                    team_name = response[i].team.teamname;
+                    team_calendar_count = response[i].teamCount;
+                }
 
-            let user_calendar_count = response[0].userCount;
-            let team_calendar_count = response[0].teamCount;
+                if (response[i].userCount > 0) {
+                    user_calendar_count = response[i].userCount;
+                }
+
+            }
 
             if (team_calendar_count > 0) {
                 selected_cal_now = 'T1';
                 $("#dropdownMenuLink").text(team_name + " 캘린더 1");
+
             } else {
                 $("#dropdownMenuLink").text(nick_name + " 캘린더 1");
             }
 
-            for (let i = 0; i < user_calendar_count; i++) {
-
-
-                let calendar_type = response[i].calendarType;
+            for (let i = 0; i < response.length; i++) {
+                let calendar_value = response[i].calendarType;
                 let count = response[i].calendarType.substr(1,2);
+                let calendar_type = response[i].calendarType.substr(0,1);
 
-
-                let temp_html = `<li>
-                        <button onclick="setCalender(this)" class="dropdown-item" value="${calendar_type}">${nick_name}의 캘린더 ${count}</button>
+                if (calendar_type =="P") {
+                    let temp_html = `<li>
+                        <button onclick="setCalender(this)" class="dropdown-item" value="${calendar_value}">${nick_name}의 캘린더 ${count}</button>
                     </li>`
-                $('#private-selected').append(temp_html)
-
+                    $('#private-selected').append(temp_html);
+                }else if (calendar_type == "T") {
+                    let temp_html = `<li>
+                        <button onclick="setCalender(this)" class="dropdown-item" value="${calendar_value}">${team_name}의 캘린더 ${count}</button>
+                    </li>`
+                    $('#team-selected').append(temp_html);
+                }
             }
-
-
-            // for (let i = 0; i < response.length; i++) {
-            //
-            //     if (calender_info[i].indexOf('team_cal') == 0) {
-            //
-            //         team_count = calender_info[i].split('cal')[1]
-            //
-            //         let temp_html = `<li>
-            //             <button onclick="setCalender(this)" class="dropdown-item" value="T${team_count}">팀 ${team_name} 캘린더 ${team_count}</button>
-            //         </li>`
-            //
-            //         $('#team-selected').append(temp_html)
-            //     }
-            // }
         }
     })
 }
@@ -235,7 +234,7 @@ function addCalender() {
         contentType: "application/json",
         data: JSON.stringify(doc),
         success: function (response) {
-            alert(response['msg'])
+            alert(response)
             window.location.reload();
         }
     })
@@ -256,10 +255,10 @@ function setCalender(obj) {
 
         if (private_or_team == 'T') {
             $('#dropdownMenuLink').text(team_name + " 캘린더 " + calender_num);
-            alert(team_name + calender_num + " 캘린더로 변경 되었습니다.")
+            alert(team_name + " 캘린더"+ calender_num+ "로 변경 되었습니다.");
         } else if (private_or_team == 'P') {
             $('#dropdownMenuLink').text(nick_name + " 캘린더 " + calender_num);
-            alert(nick_name + calender_num + " 캘린더로 변경 되었습니다.")
+            alert(nick_name + " 캘린더"+ calender_num+ "로 변경 되었습니다.");
         }
 
         renderCalendar();
