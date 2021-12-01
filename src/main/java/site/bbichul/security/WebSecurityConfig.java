@@ -33,6 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/img/**").permitAll()
                 // css 폴더를 login 없이 허용
                 .antMatchers("/css/**").permitAll()
+                // audio 폴더 사용
+                .antMatchers("/audio/**").permitAll()
                 // js 폴더를 login 없이 허용
                 .antMatchers("/js/**").permitAll()
                 // user 폴더를 login 없이도 사용

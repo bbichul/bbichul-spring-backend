@@ -1,5 +1,5 @@
 const getRandomNumberOf = (total) => Math.floor(Math.random() * total);
-let i = getRandomNumberOf(10);
+let i = getRandomNumberOf(20);
 
 $(document).ready(function () {
     getWiseSy();
@@ -8,36 +8,25 @@ $(document).ready(function () {
 
 });
 
-// function wwise(){
-//     $.ajax({
-//         type: "POST",
-//         url: "/crawling",
-//         contentType: 'application/json',
-//         data: JSON.stringify(),
-//         success: function (response) {
-//
-//
-//         }
-//     })
-//
-// }
-
 // 명언 가져와서 뿌려주기
 function getWiseSy() {
     $.ajax({
         type: "GET",
         url: "/wise",
-        data: {},
+        contentType: 'application/json; charset=utf-8',
         success: function (response) {
-            let wise_sy = response;
-            let name = wise_sy[i]['sy_name']
-            let wise = wise_sy[i]['wise_sy']
-            let temp_html = `<p>${wise}</p>
-                             <p>${name}</p>`
-            $('#wise-box').append(temp_html)
+            let i = getRandomNumberOf(response.length);
+            wise(response[i])
+
         }
     })
 }
+function wise(wise){
+    let temp_html = `<p>${wise['wise']}</p>
+                     <p>${wise['name']}</p>`
+    $('#wise-box').append(temp_html)
+}
+
 
 // 현재시간 및 날짜
 let date_list = $("#Clockday").text().split(' ')
@@ -80,8 +69,6 @@ function Clock() {
         Clock.innerText = hh + ':' + mm + ':' + ss;
     }
 }
-
-
 
 // 1초(1000)마다 Clock함수를 재실행 한다
 setInterval(function () {
@@ -145,6 +132,7 @@ function handleGeoSucc(position) {
 // 위치 정보를 가져오지 못할시 서울로 가져옴
 function handleGeoErr() {
 
+
     fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=seoul&appid=8bd97449cfbe6250092e849b78668814&units=metric`
     )
@@ -189,6 +177,9 @@ $('#play-next').click(function () {
     $("#myaudio")[0].load();
     $("#myaudio")[0].play();
 });
+
+
+
 
 // 내가 끝을 누르기 전까지 공부시간 체크(스톱워치)
 let hour = 0;
@@ -257,21 +248,7 @@ document.getElementById('reset-btn').addEventListener('click', () => {
 
 });
 
-// 00시 되면 로컬스토리지에 현재진행 시간 담기
-// setInterval(Clock, 1000);
-function record_time() {
-    let h = parseInt(hour) * 60 *60
-    let m = parseInt(minute)* 60
-    let s = parseInt(seconds)
-    let date = new Date()
-    if (date.getHours() == 20 && date.getMinutes() == 40 & date.getSeconds() == 0) {
-        let yesterday_study_time = (h + m + s)
-        localStorage.setItem('yesterday_study_time', yesterday_study_time)
-    }
-}
-
-
-// 메인페이지 공부 시작 눌렀을때
+// 공부시작 눌렀을시
 function check_in() {
     let start = {"isstudying": true}
 
@@ -285,7 +262,6 @@ function check_in() {
         }
     })
 }
-
 // 메인페이지 공부 종료 눌렀을때
 function checkout_choice() {
 
@@ -294,6 +270,46 @@ function checkout_choice() {
     } else {
         check_out();
     }
+}
+
+// 00시 기준으로 시간 자동저장
+// setInterval(Clock, 1000);
+function record_time() {
+    let h = parseInt(hour) * 60 *60
+    let m = parseInt(minute)* 60
+    let s = parseInt(seconds)
+    let date = new Date()
+    if (date.getHours() == 15 && date.getMinutes() == 26 & date.getSeconds() == 40) {
+        let yesterday_study_time = (h + m + s)
+        localStorage.setItem('yesterday_study_time', yesterday_study_time)
+    }
+}
+
+// 공부 종료 눌렀을시
+function check_out() {
+    let h = parseInt(hour) * 60 *60
+    let m = parseInt(minute)* 60
+    let s = parseInt(seconds)
+
+    let study_time = (h + m + s)
+
+
+    let stop = {"study_time":(study_time), "isstudying": false}
+    console.log(stop)
+
+    $.ajax({
+        type: "POST",
+        url: "/time",
+        contentType: 'application/json',
+        data: JSON.stringify(stop),
+
+        success: function (response) {
+
+
+            alert("좋아 오늘도 성장했어😋");
+        }
+    })
+
 }
 
 // 00시 기준 공부를 전날에 시작해 다음날 끝날때의 함수
@@ -316,34 +332,6 @@ function midnight() {
         }
     })
 }
-
-// 공부 종료 눌렀을시
-function check_out() {
-    let h = parseInt(hour) * 60 *60
-    let m = parseInt(minute)* 60
-    let s = parseInt(seconds)
-
-    let study_time = (h + m + s)
-    // let stop = false
-
-    let stop = {"study_time":(study_time), "isstudying": false}
-    console.log(stop)
-
-    $.ajax({
-        type: "POST",
-        url: "/time",
-        contentType: 'application/json',
-        data: JSON.stringify(stop),
-
-        success: function (response) {
-
-
-            alert("좋아 오늘도 성장했어😋");
-        }
-    })
-
-}
-
 
 //유저이름 가져오기
 $("#username").html(localStorage.getItem("username"));
