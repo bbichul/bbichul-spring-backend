@@ -12,6 +12,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     Optional<User>findById(Long id);
 
-
-
 }
