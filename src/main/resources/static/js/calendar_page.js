@@ -143,23 +143,19 @@ function getInfo() {
             }
 
 
-            let count, team_count;
-            for (let i = 0; i < response.length; i++) {
-
-                if (calender_info[i].indexOf('team_cal') == 0) {
-
-                    team_count = calender_info[i].split('cal')[1]
-
-                    let temp_html = `<li>
-                        <button onclick="setCalender(this)" class="dropdown-item" value="T${team_count}">팀 ${team_name} 캘린더 ${team_count}</button>
-                    </li>`
-
-                    $('#team-selected').append(temp_html)
-                } else if (calender_info[i].indexOf('private_cal') == 0) {
-
-
-                }
-            }
+            // for (let i = 0; i < response.length; i++) {
+            //
+            //     if (calender_info[i].indexOf('team_cal') == 0) {
+            //
+            //         team_count = calender_info[i].split('cal')[1]
+            //
+            //         let temp_html = `<li>
+            //             <button onclick="setCalender(this)" class="dropdown-item" value="T${team_count}">팀 ${team_name} 캘린더 ${team_count}</button>
+            //         </li>`
+            //
+            //         $('#team-selected').append(temp_html)
+            //     }
+            // }
         }
     })
 }
@@ -255,13 +251,13 @@ function setCalender(obj) {
 
         selected_cal_now = select_calender_id;
 
-        let isPrivate = selected_cal_now.substr(0, 1);
+        let private_or_team = selected_cal_now.substr(0, 1);
         let calender_num = selected_cal_now.substr(1, 1);
 
-        if (isPrivate == 'T') {
+        if (private_or_team == 'T') {
             $('#dropdownMenuLink').text(team_name + " 캘린더 " + calender_num);
             alert(team_name + calender_num + " 캘린더로 변경 되었습니다.")
-        } else if (isPrivate == 'P') {
+        } else if (private_or_team == 'P') {
             $('#dropdownMenuLink').text(nick_name + " 캘린더 " + calender_num);
             alert(nick_name + calender_num + " 캘린더로 변경 되었습니다.")
         }
