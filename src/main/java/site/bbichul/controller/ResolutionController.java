@@ -17,12 +17,15 @@ public class ResolutionController {
     private final UserInfoRepository userInfoRepository;
     private final ResolutionService resolutionService;
 
+
+    @ResponseBody
     @PutMapping("/resolution")
     public String updateResolution(@RequestBody UserInfoRequestDto userInfoRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return resolutionService.updateResolution(userInfoRequestDto, userDetails.getUser());
 
     }
 
+    @ResponseBody
     @GetMapping("/resolution")
     public UserInfo getResolution(@AuthenticationPrincipal UserDetailsImpl userDetails) {
 

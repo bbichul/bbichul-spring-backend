@@ -101,15 +101,13 @@ function post_resolution_modal() {
     let content = $("#resolution-content").val()
     let json = {"content": content};
     $.ajax({
-        type: "POST",
+        type: "PUT",
         url: "/resolution",
         data: JSON.stringify(json),
         contentType: "application/json",
         success: function (response) {
-            if (response['msg'] == '성공') {
                 get_resolution_modal()
                 $('#resolution-close').click()
-            }
         }
     })
 }
@@ -121,7 +119,7 @@ function get_resolution_modal() {
         data: {},
         contentType: "application/json",
         success: function (response) {
-            let content = response['content']
+            let content = response["content"]
             $('.resolution-text').text(`${content}`)
         }
     })
