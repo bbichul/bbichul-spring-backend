@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.*;
 import site.bbichul.dto.TeamRequestDto;
 import site.bbichul.dto.TeamTaskRequestDto;
 import site.bbichul.models.TeamTask;
+import site.bbichul.models.User;
 import site.bbichul.security.UserDetailsImpl;
 import site.bbichul.service.TeamService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -48,5 +48,13 @@ public class TeamController {
         teamService.changeTask(teamTaskRequestDto);
     }
 
+    @GetMapping("/team/status")
+    public List<User> checkStatus(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return teamService.checkStatus(userDetails.getUser());
+    }
 
+    @PostMapping("/team/signup")
+    public String signupTeam(@RequestBody TeamRequestDto teamRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return teamService.signupTeam(teamRequestDto, userDetails.getUser());
+    }
 }

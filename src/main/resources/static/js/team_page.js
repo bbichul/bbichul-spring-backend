@@ -100,7 +100,7 @@ function createTeam() {
                 $('.team-exist').show()
                 let team = response
                 $('#team').append(team)
-                // checkstatus();
+                checkstatus();
             }
         }
     })
@@ -132,38 +132,37 @@ function createTeam() {
     // }
 }
 
-// function invite_team() {
-//     let str_space = /\s/;
-//     invite_name = $('#invite-name').val()
-//
-//     if (!invite_name || str_space.exec(invite_name)) {
-//         alert("팀 이름에 공백을 사용할 수 없습니다.")
-//         $("#invite-name").val(null);
-//     } else {
-//         $.ajax({
-//             type: "POST",
-//             url: "/team",
-//             data: {
-//                 team: invite_name
-//             },
-//             success: function (response) {
-//                 if (response["msg"] == '초대받은 팀에 가입되었습니다.') {
-//                     alert(response["msg"]);
-//                     $('#create-team-close').click()
-//                     $('.not-exist').hide()
-//                     $('.team-exist').show()
-//                     let team = `${invite_name}`
-//                     $('#team').append(team)
-//                     checkstatus();
-//                     show_task(team)
-//                 } else if (response["msg"] == '존재하지 않는 팀입니다. 팀 이름을 확인해주세요.') {
-//                     alert(response["msg"]);
-//                 }
-//             }
-//         })
-//     }
-// }
-//
+function invite_team() {
+    let str_space = /\s/;
+    let invitename = $('#invite-name').val()
+    let teamname = {teamname:invitename}
+    if (!invitename || str_space.exec(invitename)) {
+        alert("팀 이름에 공백을 사용할 수 없습니다.")
+        $("#invite-name").val(null);
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/team/signup",
+            contentType: "application/json",
+            data: JSON.stringify(teamname),
+            success: function (response) {
+                if (response == '초대받은 팀에 가입되었습니다.') {
+                    alert(response);
+                    $('#create-team-close').click()
+                    $('.not-exist').hide()
+                    $('.team-exist').show()
+                    let team = `${invitename}`
+                    $('#team').append(team)
+                    checkstatus();
+                    showtask()
+                } else if (response == '존재하지 않는 팀입니다. 팀 이름을 확인해주세요.') {
+                    alert(response);
+                }
+            }
+        })
+    }
+}
+
 // // 팀 만들기 시 팀명 중복확인 기능
 // function teamname_check() {
 //     let str_space = /\s/;
@@ -288,14 +287,16 @@ function changedone(id) {
 
 //팀원들의 출결 상태 불러오기
 function checkstatus() {
+    let status = "check-in"
     $.ajax({
         type: "GET",
         url: "/team/status",
         success: function (response) {
-            let user_data = response['user_data']
-            for (let i = 0; i < user_data.length; i++) {
-                let nick_name = user_data[i]['nick_name']
-                let status = user_data[i]['status']
+            for (let i = 0; i < response.length; i++) {
+                let nick_name = response[i]['username']
+                if (response[i]['studying'] == false) {
+                    status = "check-out"
+                }
                 let temphtml = `<tr>
                                 <td>${nick_name}</td>
                                 <td>${status}</td>
