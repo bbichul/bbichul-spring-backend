@@ -2,7 +2,9 @@ package site.bbichul.models;
 
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import site.bbichul.dto.UserDto;
 import site.bbichul.dto.UserInfoRequestDto;
@@ -11,7 +13,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 
 public class UserInfo {
