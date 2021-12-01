@@ -68,6 +68,9 @@ function sign_up() {
         success: function (response) {
             alert("회원가입이 완료되었습니다!!");
             location.href = '/';
+        },
+        error: function (error){
+            alert("중복된 아이디가 있습니다")
         }
     })
 }
@@ -96,6 +99,9 @@ function login() {
             localStorage.setItem("token", response['token']);
             localStorage.setItem("username", response['username']);
             location.href = '/';
+        },
+        error: function (error){
+            alert("아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다.")
         }
     })
 }

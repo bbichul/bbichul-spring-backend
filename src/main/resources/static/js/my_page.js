@@ -41,18 +41,18 @@ function post_goal_modal() {
 
     let goal_hour = $("input[name=goal_hour]").val()
 
+    let json = {
+        "start_date": string_start_date,
+        "end_date": string_end_date,
+        "goal_hour": goal_hour
+    };
+
     if (days >= 0) {
             $.ajax({
-                type: "POST",
+                type: "PUT",
                 url: "/goal",
-                headers: {
-                    Authorization:  getCookie('access_token')
-                },
-                data: {
-                    string_start_date: string_start_date,
-                    string_end_date: string_end_date,
-                    goal_hour: goal_hour
-                },
+                data: JSON.stringify(json),
+                contentType: "application/json",
                 success: function (response) {
                     if (response['msg'] == "목표시간을 다시 입력해주세요") {
                         alert(response['msg'])
@@ -67,14 +67,12 @@ function get_goal_modal() {
     $.ajax({
         type: "GET",
         url: "/goal",
-        headers: {
-            Authorization:  getCookie('access_token')
-        },
+        contentType: "application/json",
         data: {
         },
         success: function (response) {
-            let string_start_date = response['string_start_date']
-            let string_end_date = response['string_end_date']
+            let string_start_date = response['startDate']
+            let string_end_date = response['endDate']
             let d_day = response['d_day']
             let goal_hour = response['goal_hour']
             let done_hour = response['done_hour']
@@ -99,20 +97,15 @@ function get_goal_modal() {
 
 function post_resolution_modal() {
     let content = $("#resolution-content").val()
+    let json = {"content": content};
     $.ajax({
-        type: "POST",
+        type: "PUT",
         url: "/resolution",
-        headers: {
-            Authorization:  getCookie('access_token')
-        },
-        data: {
-            content: content
-        },
+        data: JSON.stringify(json),
+        contentType: "application/json",
         success: function (response) {
-            if (response['msg'] == '성공') {
                 get_resolution_modal()
                 $('#resolution-close').click()
-            }
         }
     })
 }
@@ -121,13 +114,10 @@ function get_resolution_modal() {
     $.ajax({
         type: "GET",
         url: "/resolution",
-        headers: {
-            Authorization:  getCookie('access_token')
-        },
-        data: {
-        },
+        data: {},
+        contentType: "application/json",
         success: function (response) {
-            let content = response['content']
+            let content = response["content"]
             $('.resolution-text').text(`${content}`)
         }
     })
@@ -429,3 +419,10 @@ function post_weekly_avg_graph() {
 }
 //유저이름 가져오기
 $("#username").html(localStorage.getItem("username"));
+
+// ajax 시 헤더 부분에 토큰 넣어주고 코드를 줄일 수 있다
+$.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+    if(localStorage.getItem('token')) {
+        jqXHR.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    }
+});

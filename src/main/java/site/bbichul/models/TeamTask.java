@@ -9,7 +9,8 @@ import site.bbichul.dto.TeamTaskRequestDto;
 import javax.persistence.*;
 import java.util.Optional;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor // 기본 생성자를 만들어줍니다.
 @Entity // DB 테이블 역할을 합니다.
 

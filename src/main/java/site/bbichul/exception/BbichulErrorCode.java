@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum BbichulErrorCode {
     NOT_FOUND_MEMO("메모를 찾지 못했습니다."),
-    NOT_FOUND_USER("유저를 찾지 못했습니다.");
+    NOT_FOUND_USER("유저를 찾지 못했습니다."),
+    NOT_FOUND_MATCHED_CALENDAR("해당 정보로 달력을 찾지 못했습니다.");
 
     private final String message;
 }

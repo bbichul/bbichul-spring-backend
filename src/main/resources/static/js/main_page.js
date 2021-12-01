@@ -1,5 +1,5 @@
 const getRandomNumberOf = (total) => Math.floor(Math.random() * total);
-let i = getRandomNumberOf(10);
+let i = getRandomNumberOf(20);
 
 $(document).ready(function () {
     getWiseSy();
@@ -13,17 +13,20 @@ function getWiseSy() {
     $.ajax({
         type: "GET",
         url: "/wise",
-        data: {},
+        contentType: 'application/json; charset=utf-8',
         success: function (response) {
-            let wise_sy = response;
-            let name = wise_sy[i]['sy_name']
-            let wise = wise_sy[i]['wise_sy']
-            let temp_html = `<p>${wise}</p>
-                             <p>${name}</p>`
-            $('#wise-box').append(temp_html)
+            let i = getRandomNumberOf(response.length);
+            wise(response[i])
+
         }
     })
 }
+function wise(wise){
+    let temp_html = `<p>${wise['wise']}</p>
+                     <p>${wise['name']}</p>`
+    $('#wise-box').append(temp_html)
+}
+
 
 // 현재시간 및 날짜
 let date_list = $("#Clockday").text().split(' ')
@@ -64,16 +67,6 @@ function Clock() {
         let Clock = document.getElementById("Clock");
         Clockday.innerText = YYYY + '년 ' + MM + '월 ' + DD + '일 ' + Week + '요일';
         Clock.innerText = hh + ':' + mm + ':' + ss;
-    }
-}
-
-// 00시 기준으로 시간 자동저장
-// setInterval(Clock, 1000);
-function record_time() {
-    let date = new Date()
-    if (date.getHours() == 0 && date.getMinutes() == 0 & date.getSeconds() == 0) {
-        let yesterday_study_time = (hour + minute + seconds)
-        setCookie('yesterday_study_time', yesterday_study_time, 1)
     }
 }
 
@@ -148,7 +141,7 @@ function handleGeoErr() {
 
         })
         .then(function (json) {
-            let $country = json.sys.country;
+
             let $temp = json.main.temp;  //현재온도
             let $place = json.name;   // 사용자 위치
             let $humidity = json.main.humidity; //강수량
@@ -156,7 +149,8 @@ function handleGeoErr() {
             let $temp_max = json.main.temp_max;//최고온도
             let $temp_min = json.main.temp_min;//최저온도
             let icon = json.weather[0].icon;//날씨아이콘
-            let $wId = json.weather[0].id; // 날씨 상태 id 코드
+            // let $wId = json.weather[0].id; // 날씨 상태 id 코드
+            // let $country = json.sys.country; //  국가 나오기 
             let _icon = `https://openweathermap.org/img/wn/${icon}@2x.png`
 
             $('.csky').append($sky);
@@ -179,7 +173,6 @@ $('#play-next').click(function () {
     index++;
     if (index > $('#myaudio source').length) index = 2;
 
-
     $('#myaudio source#main').attr('src',
         $('#myaudio source:nth-child(' + index + ')').attr('src'));
     $("#myaudio")[0].load();
@@ -187,15 +180,6 @@ $('#play-next').click(function () {
 });
 
 
-// 메인페이지 공부 종료 눌렀을때
-// function checkout_choice() {
-//
-//     if (getCookie('yesterday_study_time') != undefined) {
-//         midnight();
-//     } else {
-//         check_out();
-//     }
-// }
 
 
 // 내가 끝을 누르기 전까지 공부시간 체크(스톱워치)
@@ -279,17 +263,39 @@ function check_in() {
         }
     })
 }
+// 메인페이지 공부 종료 눌렀을때
+function checkout_choice() {
 
+    if (localStorage.getItem('yesterday_study_time') != undefined) {
+        midnight();
+    } else {
+        check_out();
+    }
+}
 
-// 가져온 공부시간 int 로 형변환
-const sol = timedate => parseInt(timedate.replace(/[^0-9]/g,""));
+// 00시 기준으로 시간 자동저장
+// setInterval(Clock, 1000);
+function record_time() {
+    let h = parseInt(hour) * 60 *60
+    let m = parseInt(minute)* 60
+    let s = parseInt(seconds)
+    let date = new Date()
+    if (date.getHours() == 15 && date.getMinutes() == 26 & date.getSeconds() == 40) {
+        let yesterday_study_time = (h + m + s)
+        localStorage.setItem('yesterday_study_time', yesterday_study_time)
+    }
+}
 
 // 공부 종료 눌렀을시
 function check_out() {
-    let study_time = (hour + minute + seconds)
-    // let stop = false
+    let h = parseInt(hour) * 60 *60
+    let m = parseInt(minute)* 60
+    let s = parseInt(seconds)
 
-    let stop = {"study_time":sol(study_time), "isstudying": false}
+    let study_time = (h + m + s)
+
+
+    let stop = {"study_time":(study_time), "isstudying": false}
     console.log(stop)
 
     $.ajax({
@@ -301,33 +307,32 @@ function check_out() {
         success: function (response) {
 
 
-            alert("좋아 오늘도 성장했어");
+            alert("좋아 오늘도 성장했어😋");
         }
     })
 
 }
 
-
 // 00시 기준 공부를 전날에 시작해 다음날 끝날때의 함수
-// function midnight() {
-//     let study_time = (hour + minute + seconds)
-//     $.ajax({
-//         type: "POST",
-//         url: "/midnight",
-//         headers: {
-//             Authorization: getCookie('access_token')
-//         },
-//         data: {
-//             yesterday_study_time: getCookie('yesterday_study_time'),
-//             total_study_time: study_time,
-//             status: "퇴근",
-//         },
-//         success: function (response) {
-//             alert(response["msg"]);
-//             deleteCookie('yesterday_study_time')
-//         }
-//     })
-// }
+function midnight() {
+    let h = parseInt(hour) * 60 *60
+    let m = parseInt(minute)* 60
+    let s = parseInt(seconds)
+
+    let study_time = (h + m + s)
+
+    let stop = {"study_time":(study_time), "isstudying": false,"yesterday_time":localStorage.getItem("yesterday_study_time")}
+    $.ajax({
+        type: "POST",
+        url: "/ytime",
+        contentType: 'application/json',
+        data: JSON.stringify(stop),
+        success: function (response) {
+            alert("좋아 오늘도 성장했어😋");
+            localStorage.removeItem('yesterday_study_time')
+        }
+    })
+}
 
 //유저이름 가져오기
 $("#username").html(localStorage.getItem("username"));

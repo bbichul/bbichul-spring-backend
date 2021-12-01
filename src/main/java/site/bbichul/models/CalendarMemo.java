@@ -3,6 +3,7 @@ package site.bbichul.models;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import site.bbichul.dto.CalendarMemoDto;
 
 import javax.persistence.*;
@@ -11,8 +12,7 @@ import javax.xml.soap.Text;
 
 @NoArgsConstructor
 @Entity
-@Data
-
+@Getter
 public class CalendarMemo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -21,14 +21,6 @@ public class CalendarMemo {
     @ManyToOne
     @JoinColumn(name = "userCalendarId",nullable = true)
     private UserCalendar userCalendar;
-
-    @ManyToOne
-    @JoinColumn(name = "teamCalendarId",nullable = true)
-    private TeamCalendar teamCalendar;
-
-    @ManyToOne
-    @JoinColumn(name ="userId" ,nullable = true)
-    private User user;
 
 
     @Column(nullable = false, length = 200)
@@ -43,8 +35,8 @@ public class CalendarMemo {
         this.contents = calendarMemoDto.getContents();
     }
 
-    public CalendarMemo(CalendarMemoDto calendarMemoDto, User user){
-        this.user = user;
+    public CalendarMemo(CalendarMemoDto calendarMemoDto, UserCalendar userCalendar) {
+        this.userCalendar = userCalendar;
         this.dateData = calendarMemoDto.getDateData();
         this.contents = calendarMemoDto.getContents();
     }
