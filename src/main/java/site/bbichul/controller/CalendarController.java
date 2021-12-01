@@ -63,7 +63,7 @@ public class CalendarController {
         String username = userDetails.getUsername();
         boolean isPrivated = calenderDto.getIsPrivated();
         calendarService.addCalendar(isPrivated, username);
-        return "캘린더가 추가되었습니다.";
+        return "캘린더가 추가되었습니다 !";
     }
 
 }
