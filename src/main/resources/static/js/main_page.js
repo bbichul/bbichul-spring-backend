@@ -8,6 +8,20 @@ $(document).ready(function () {
 
 });
 
+// function wwise(){
+//     $.ajax({
+//         type: "POST",
+//         url: "/crawling",
+//         contentType: 'application/json',
+//         data: JSON.stringify(),
+//         success: function (response) {
+//
+//
+//         }
+//     })
+//
+// }
+
 // 명언 가져와서 뿌려주기
 function getWiseSy() {
     $.ajax({
@@ -67,18 +81,7 @@ function Clock() {
     }
 }
 
-// 00시 기준으로 시간 자동저장
-// setInterval(Clock, 1000);
-function record_time() {
-    let h = parseInt(hour) * 60 *60
-    let m = parseInt(minute)* 60
-    let s = parseInt(seconds)
-    let date = new Date()
-    if (date.getHours() == 0 && date.getMinutes() == 0 & date.getSeconds() == 0) {
-        let yesterday_study_time = (h + m + s)
-        localStorage.setItem('yesterday_study_time', yesterday_study_time)
-    }
-}
+
 
 // 1초(1000)마다 Clock함수를 재실행 한다
 setInterval(function () {
@@ -142,7 +145,6 @@ function handleGeoSucc(position) {
 // 위치 정보를 가져오지 못할시 서울로 가져옴
 function handleGeoErr() {
 
-
     fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=seoul&appid=8bd97449cfbe6250092e849b78668814&units=metric`
     )
@@ -187,18 +189,6 @@ $('#play-next').click(function () {
     $("#myaudio")[0].load();
     $("#myaudio")[0].play();
 });
-
-
-// 메인페이지 공부 종료 눌렀을때
-function checkout_choice() {
-
-    if (localStorage.getItem('yesterday_study_time') != undefined) {
-        midnight();
-    } else {
-        check_out();
-    }
-}
-
 
 // 내가 끝을 누르기 전까지 공부시간 체크(스톱워치)
 let hour = 0;
@@ -267,7 +257,21 @@ document.getElementById('reset-btn').addEventListener('click', () => {
 
 });
 
-// 공부시작 눌렀을시
+// 00시 되면 로컬스토리지에 현재진행 시간 담기
+// setInterval(Clock, 1000);
+function record_time() {
+    let h = parseInt(hour) * 60 *60
+    let m = parseInt(minute)* 60
+    let s = parseInt(seconds)
+    let date = new Date()
+    if (date.getHours() == 20 && date.getMinutes() == 40 & date.getSeconds() == 0) {
+        let yesterday_study_time = (h + m + s)
+        localStorage.setItem('yesterday_study_time', yesterday_study_time)
+    }
+}
+
+
+// 메인페이지 공부 시작 눌렀을때
 function check_in() {
     let start = {"isstudying": true}
 
@@ -282,9 +286,36 @@ function check_in() {
     })
 }
 
+// 메인페이지 공부 종료 눌렀을때
+function checkout_choice() {
 
-// 가져온 공부시간 int 로 형변환
-const sol = timedate => parseInt(timedate.replace(/[^0-9]/g,""));
+    if (localStorage.getItem('yesterday_study_time') != undefined) {
+        midnight();
+    } else {
+        check_out();
+    }
+}
+
+// 00시 기준 공부를 전날에 시작해 다음날 끝날때의 함수
+function midnight() {
+    let h = parseInt(hour) * 60 *60
+    let m = parseInt(minute)* 60
+    let s = parseInt(seconds)
+
+    let study_time = (h + m + s)
+
+    let stop = {"study_time":(study_time), "isstudying": false,"yesterday_time":localStorage.getItem("yesterday_study_time")}
+    $.ajax({
+        type: "POST",
+        url: "/ytime",
+        contentType: 'application/json',
+        data: JSON.stringify(stop),
+        success: function (response) {
+            alert("좋아 오늘도 성장했어😋");
+            localStorage.removeItem('yesterday_study_time')
+        }
+    })
+}
 
 // 공부 종료 눌렀을시
 function check_out() {
@@ -313,40 +344,6 @@ function check_out() {
 
 }
 
-// 00시 기준 공부를 전날에 시작해 다음날 끝날때의 함수
-function midnight() {
-    let h = parseInt(hour) * 60 *60
-    let m = parseInt(minute)* 60
-    let s = parseInt(seconds)
-
-    let study_time = (h + m + s)
-
-    let stop = {"study_time":(study_time), "isstudying": false,"yesterday_time":localStorage.getItem("yesterday_study_time")}
-    $.ajax({
-        type: "POST",
-        url: "/ytime",
-        contentType: 'application/json',
-        data: JSON.stringify(stop),
-        success: function (response) {
-            alert("좋아 오늘도 성장했어😋");
-            localStorage.removeItem('yesterday_study_time')
-        }
-    })
-}
-
-// function wwise(){
-//     $.ajax({
-//         type: "POST",
-//         url: "/crawling",
-//         contentType: 'application/json',
-//         data: JSON.stringify(),
-//         success: function (response) {
-//
-//
-//         }
-//     })
-//
-// }
 
 //유저이름 가져오기
 $("#username").html(localStorage.getItem("username"));

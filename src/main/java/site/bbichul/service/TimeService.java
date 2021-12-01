@@ -79,9 +79,10 @@ public class TimeService {
             time.setStudy_time(timeRequestDto.getStudy_time() - ytime);
             timeRepository.save(time);
 
-
             if (time2 != null ){
+
                 time2.updateStudyTime(timeRequestDto.getStudy_time()+ ytime);
+
             }  else {
 
                 time3.setStudy_time(ytime);
