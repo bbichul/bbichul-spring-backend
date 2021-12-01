@@ -141,7 +141,7 @@ function handleGeoErr() {
 
         })
         .then(function (json) {
-            let $country = json.sys.country;
+
             let $temp = json.main.temp;  //현재온도
             let $place = json.name;   // 사용자 위치
             let $humidity = json.main.humidity; //강수량
@@ -149,7 +149,8 @@ function handleGeoErr() {
             let $temp_max = json.main.temp_max;//최고온도
             let $temp_min = json.main.temp_min;//최저온도
             let icon = json.weather[0].icon;//날씨아이콘
-            let $wId = json.weather[0].id; // 날씨 상태 id 코드
+            // let $wId = json.weather[0].id; // 날씨 상태 id 코드
+            // let $country = json.sys.country; //  국가 나오기 
             let _icon = `https://openweathermap.org/img/wn/${icon}@2x.png`
 
             $('.csky').append($sky);
