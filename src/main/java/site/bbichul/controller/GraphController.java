@@ -25,9 +25,9 @@ public class GraphController {
     }
 
 
-//    @GetMapping("/bargraph")
-//    public UserInfo getResolution(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-//
-//        return graphService.getResolution(userDetails.getUser());
-//    }
+    @PostMapping("/bar-graph")
+    public Map<String, Object> drawBarGraph(@RequestBody GraphRequestDto graphRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        return graphService.drawBarGraph(graphRequestDto, userDetails.getUser());
+    }
 }

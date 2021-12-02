@@ -364,16 +364,15 @@ function post_study_time_graph() {
 }
 
 function post_weekly_avg_graph() {
+    let json = {
+        "year": $("select[name=year]").val(),
+        "month": $("select[name=month]").val()
+    };
     $.ajax({
         type: "POST",
         url: "/bar-graph",
-        headers: {
-            Authorization:  getCookie('access_token')
-        },
-        data: {
-            year: $("select[name=year]").val(),
-            month: $("select[name=month]").val()
-        },
+        contentType: "application/json",
+        data: JSON.stringify(json),
         success: function (response) {
             let monday = response['monday']
             let tuesday = response['tuesday']

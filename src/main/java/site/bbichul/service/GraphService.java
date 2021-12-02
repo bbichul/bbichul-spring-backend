@@ -57,4 +57,46 @@ public class GraphService {
         return map;
     }
 
+    @Transactional
+    public Map<String, Object> drawBarGraph(GraphRequestDto graphRequestDto, User user) {
+        int year = graphRequestDto.getYear();
+        int month = graphRequestDto.getMonth();
+
+        ArrayList weekdayAvgStudyTimeList = new ArrayList();
+
+        for (int weekday = 0; weekday <7; weekday++) {
+            List<Time> weeklyUserData = timeRepository.findAllByUserIdAndYearAndMonthAndWeekday(user.getId(),year, month, weekday);
+            weekdayAvgStudyTimeList.add(0);
+
+            int weekdaySum = 0;
+            int dayCount = 0;
+
+            for (Time day : weeklyUserData) {
+                weekdaySum += day.getStudy_time();
+                dayCount += 1;
+            }
+            int weekdayAvgStudyTime = 1;
+            try {
+                weekdayAvgStudyTime = weekdaySum / dayCount;
+            }catch (ArithmeticException e) {
+                weekdayAvgStudyTime = 0;
+            }
+
+
+            weekdayAvgStudyTimeList.set(weekday, weekdayAvgStudyTime);
+
+        }
+
+        Map<String, Object> map = new HashMap();	//<키 자료형, 값 자료형>
+        map.put("monday", weekdayAvgStudyTimeList.get(0));
+        map.put("tuesday", weekdayAvgStudyTimeList.get(1));
+        map.put("wednesday", weekdayAvgStudyTimeList.get(2));
+        map.put("thursday", weekdayAvgStudyTimeList.get(3));
+        map.put("friday", weekdayAvgStudyTimeList.get(4));
+        map.put("saturday", weekdayAvgStudyTimeList.get(5));
+        map.put("sunday", weekdayAvgStudyTimeList.get(6));
+
+        return map;
+    }
+
 }

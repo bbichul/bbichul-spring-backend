@@ -14,4 +14,6 @@ public interface TimeRepository extends JpaRepository<Time,Long> {
     Optional<Time> findByUserIdAndYearAndMonthAndDay(Long userId, int year, int month , int day );
 
     List<Time> findAllByUserIdAndYearAndMonthOrderByDayDesc(Long id, int year, int month);
+
+    List<Time> findAllByUserIdAndYearAndMonthAndWeekday(Long id, int year, int month, int weekday);
 }
