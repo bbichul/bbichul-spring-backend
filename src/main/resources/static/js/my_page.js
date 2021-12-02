@@ -1,6 +1,6 @@
 //처음들어왔을때 select-box가 현재 년,월로 찍히게 하기
 $("#year").val(2021);
-$("#month").val(10);
+$("#month").val(12);
 
 
 $(document).ready(function () {
@@ -308,16 +308,16 @@ function my_info() {
 
 
 function post_study_time_graph() {
+    let json = {
+        "year": $("select[name=year]").val(),
+        "month": $("select[name=month]").val()
+    };
+
     $.ajax({
         type: "POST",
         url: "/line-graph",
-        headers: {
-            Authorization:  getCookie('access_token')
-        },
-        data: {
-            year: $("select[name=year]").val(),
-            month: $("select[name=month]").val()
-        },
+        contentType: "application/json",
+        data: JSON.stringify(json),
         success: function (response) {
             let day_list = response['day_list']
             let day_time_list = response['day_time_list']

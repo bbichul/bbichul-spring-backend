@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface TimeRepository extends JpaRepository<Time,Long> {
 
     Optional<Time> findByUserIdAndYearAndMonthAndDay(Long userId, int year, int month , int day );
-    List<Time> findAllByUserIdAndYearAndMonth(Long user_id, int year, int month);
 
+    List<Time> findAllByUserIdAndYearAndMonthOrderByDayDesc(Long id, int year, int month);
 }

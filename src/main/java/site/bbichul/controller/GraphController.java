@@ -22,8 +22,6 @@ public class GraphController {
 
         return graphService.drawLineGraph(graphRequestDto, userDetails.getUser());
 
-
-
     }
 
 
