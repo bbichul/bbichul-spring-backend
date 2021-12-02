@@ -54,10 +54,11 @@
                 <li><a class="nav-link scrollto active" href="/">Home</a></li>
                 <li><a class="nav-link scrollto" href="/main_page.html">main</a></li>
                 <li><a href="/calendar_page.html">Schedule</a></li>
-                <li><a class="nav-link scrollto" href="/my-page.html">My Page</a></li>
+                <li><a class="nav-link scrollto" href="/my_page.html">My Page</a></li>
                 <li><a id="login-button" class="getstarted scrollto" href="#" data-toggle="modal"
                        data-target="#loginModal">Log In</a>
                 </li>
+                <span id="usernames" style="color: white"></span>
                 <li><a id="logout-button" onclick="log_out()" class="getstarted scrollto" href="#" data-toggle="modal"
                        data-target="#loginModal">Log Out</a>
                 </li>
@@ -66,7 +67,7 @@
         </nav><!-- .navbar -->
 
     </div>
-    <span id="username" style="color: white"></span>님
+
 </header><!-- End Header -->
 
 <div id="team-page">
@@ -106,7 +107,7 @@
             </div>
             <div class="right-body">
                 <div class="todo-list">
-                    <input type="text" placeholder="Add A Task" onkeyup="findteam()" class="txt">
+                    <input id="taskinput" type="text" placeholder="Add A Task" class="txt">
                     <div class="notdone">
                         <h3>To Do List</h3>
                     </div>
@@ -135,7 +136,7 @@
             <div class="modal-body">
                 <div class="input-box">
                     <label>팀 이름</label>
-                    <input type="text" id="team-name">
+                    <input type="text" id="team-name" readonly>
                     <p id="can-using">사용해도 되는 팀 이름입니다.</p>
                     <p id="cant-using">이미 사용중인 팀 이름입니다.</p>
                     <p id="double-check">특수문자는 포함할 수 없습니다.</p>
