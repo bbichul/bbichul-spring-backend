@@ -15,8 +15,8 @@ $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
 $(document).ready(function () {
     teamCheck();
     document.getElementById('team-name').readOnly = false;
-    // $("input[name=checked-team]").val('')
-    // /*    pieChartDraw();*/
+    $("input[name=checked-team]").val('')
+    /*    pieChartDraw();*/
     // $('.progress-value > span').each(function () {
     //     $(this).prop('Counter', 0).animate({
     //         Counter: $(this).text()
@@ -31,10 +31,11 @@ $(document).ready(function () {
 });
 
 //progress bar
-// function getprogressbar() {
+// function get_progressbar() {
 //     $.ajax({
 //         type: "POST",
-//         url: "/team/progressbar",
+//         url: "/get-progressbar",
+//         data: {},
 //         success: function (response) {
 //             let percent = response['percent']
 //             let done_count = response['done_count']
@@ -79,7 +80,7 @@ function hide_teamname() {
     $("#double-check").hide()
 }
 
-// 팀 만들기
+// 팀 만들기 기능
 function createTeam() {
     team = $('#team-name').val()
     let teamname = {teamname : team}
@@ -174,8 +175,8 @@ function teamname_check() {
 }
 
 //모달창 닫으면 input창 수정가능하게함
-$(document).on('hidden.bs.modal',function(e) {
-    $(this).readOnly=false;
+$('#create-team-close').on('click',function() {
+    document.getElementById('team-name').readOnly=false;
 });
 
 /*to do list*/
@@ -184,7 +185,7 @@ function showtask() {
         type: "GET",
         url: "/team/task",
         success: function (response) {
-            // getprogressbar()
+            // get_progressbar()
             for (let i = 0; i < response.length; i++) {
                 let task = response[i]['task']
                 let done = response[i]['done']
