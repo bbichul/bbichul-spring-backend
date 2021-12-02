@@ -177,6 +177,7 @@ function teamname_check() {
 //모달창 닫으면 input창 수정가능하게함
 $('#create-team-close').on('click',function() {
     document.getElementById('team-name').readOnly=false;
+    $("#team-name").val(null);
 });
 
 /*to do list*/
