@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
 import site.bbichul.dto.SignupRequestDto;
 import site.bbichul.dto.UserDto;
+import site.bbichul.models.Team;
 import site.bbichul.models.User;
 import site.bbichul.models.UserInfo;
 import site.bbichul.models.UserRole;
@@ -55,13 +57,25 @@ public class UserService {
 
         return user;
     }
-
+    // 공부 중 유무 체크
     @Transactional
     public void setStudy(UserDto userDto, String username) {
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new NullPointerException("그럴리가 없쥬")
         );
         user.updateStudy(userDto);
+    }
+    // 닉네임 중복 체크
+    public String checkUser(UserDto userDto){
+        String username = userDto.getUsername();
+        String message;
+        Optional<User> name = userRepository.findByUsername(username);
+        if(name.isPresent()){
+            message = "중복되는 닉네임입니다. 다시 입력해주세요.";
+        }else {
+            message = "사용할 수 있는 닉네임입니다.";
+        }
+        return message;
     }
 
 }

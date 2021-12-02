@@ -44,6 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 // 모든 html 사용
                 .antMatchers("/**.html").permitAll()
+                // 닉네임 중복체크 사용
+                .antMatchers("/check").permitAll()
                 //카카오 로그인 사용
                 .antMatchers("/login/kakao").permitAll()
                 .antMatchers("/signup").permitAll()

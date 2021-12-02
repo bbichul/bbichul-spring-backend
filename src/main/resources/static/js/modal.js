@@ -1,9 +1,11 @@
 //새로고침마다 로그인 상태에 따라 로그인/아웃이 바뀜
 $(document).ready(function () {
-    if(getCookie("access_token") == null){
+    if(localStorage.getItem("token") == null){
         $('#login-button').show()
+        $('#usernames').hide()
         $('#logout-button').hide()
     } else {
+        $('#usernames').show()
         $('#login-button').hide()
         $('#logout-button').show()
     }
@@ -24,23 +26,6 @@ $('#signup_password_eye').on("mousedown", function(){
     $('#signup_password').attr('type',"password");
 });
 
-//쿠키 저장하기
-var setCookie = function(name, value, exp) {
-    var date = new Date();
-    date.setTime(date.getTime() + exp*24*60*60*1000);
-    document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
-};
-
-//쿠키 가져오기
-var getCookie = function(name) {
-    var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-    return value? value[2] : null;
-};
-
-//쿠키 삭제하기
-var deleteCookie = function(name) {
-    document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
-}
 
 
 // 메인페이지 진입전 로그인 확인 기능
@@ -54,10 +39,25 @@ function main_login_check() {
 
 // 회원가입 기능
 function sign_up() {
+    let username = $('#nickname').val()
+    let password =$('#signup_password').val()
     let info = {
-        username:$('#nickname').val(),
-        password:$('#signup_password').val(),
-        email: $("#email").val()
+        username:username,
+        password:password,
+    }
+    if (username === "") {
+        $("#help-id-login").text("닉네임을 입력해주세요.")
+        $("#nickname").focus()
+        return;
+    } else {
+        $("#help-id-login").text("")
+    }
+    if (password === "") {
+        $("#help-password").text("비밀번호를 입력해주세요.")
+        $("#signup_password").focus()
+        return;
+    }else {
+        $("#help-password").text("")
     }
 
     $.ajax({
@@ -99,6 +99,7 @@ function login() {
             localStorage.setItem("token", response['token']);
             localStorage.setItem("username", response['username']);
             location.href = '/';
+
         },
         error: function (error){
             alert("아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다.")
@@ -110,33 +111,50 @@ function login() {
 function log_out() {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-        alert('로그아웃 되었습니다')
-        location.href ="/";
-    }
+    alert('로그아웃 되었습니다')
+    location.href ="/";
+}
 
 // 회원가입시 닉네임 중복확인 기능
 function nickname_check() {
-    let nick_name = $('#nickname').val()
-    console.log(nick_name)
+    $("#cant-using").hide()
+    $("#can-using").hide()
+    let username = $('#nickname').val()
+
+    let nick_name = {"username":username}
+
+    if (username === "") {
+        $("#help-id-login").text("닉네임을 입력해주세요.")
+        $("#nickname").focus()
+        return;
+    } else {
+        $("#help-id-login").text("")
+    }
     $.ajax({
         type: "POST",
-        url: "/nickname",
-        data: {
-            nick_name: nick_name
-        },
+        url: "/check",
+        contentType: 'application/json',
+        data: JSON.stringify(nick_name),
         success: function (response) {
-            if (response['msg'] == "사용할 수 있는 닉네임입니다.") {
+            if (response  == "사용할 수 있는 닉네임입니다.") {
                 $("#cant-using").hide()
                 $("#can-using").show()
-            } else if (response['msg'] == "중복되는 닉네임입니다. 다시 입력해주세요.") {
+            } else if (response == "중복되는 닉네임입니다. 다시 입력해주세요.") {
                 $("#can-using").hide()
                 $("#cant-using").show()
             }
         }
     });
 }
+
 //유저이름 가져오기
-$("#username").html(localStorage.getItem("username"));
+let user = localStorage.getItem("username")
+let temp_html = `
+<span >${user}님</span>
+`
+$('#usernames').append(temp_html)
+
+
 
 
 // ajax 시 헤더 부분에 토큰 넣어주고 코드를 줄일 수 있다
