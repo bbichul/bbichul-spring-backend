@@ -107,7 +107,7 @@
             </div>
             <div class="right-body">
                 <div class="todo-list">
-                    <input type="text" placeholder="Add A Task" onkeyup="findteam()" class="txt">
+                    <input id="taskinput" type="text" placeholder="Add A Task" class="txt">
                     <div class="notdone">
                         <h3>To Do List</h3>
                     </div>
@@ -136,7 +136,7 @@
             <div class="modal-body">
                 <div class="input-box">
                     <label>팀 이름</label>
-                    <input type="text" id="team-name">
+                    <input type="text" id="team-name" readonly>
                     <p id="can-using">사용해도 되는 팀 이름입니다.</p>
                     <p id="cant-using">이미 사용중인 팀 이름입니다.</p>
                     <p id="double-check">특수문자는 포함할 수 없습니다.</p>

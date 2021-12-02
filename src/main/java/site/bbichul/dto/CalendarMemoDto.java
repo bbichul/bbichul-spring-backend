@@ -7,6 +7,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CalendarMemoDto {
     private String dateData;
-
     private String contents;
+    private String calendarType;
 }

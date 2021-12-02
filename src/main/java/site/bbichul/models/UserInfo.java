@@ -1,13 +1,12 @@
 package site.bbichul.models;
 
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-import site.bbichul.dto.UserDto;
-import site.bbichul.dto.UserInfoRequestDto;
+import site.bbichul.dto.GoalRequestDto;
+import site.bbichul.dto.ResolutionRequestDto;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -39,15 +38,18 @@ public class UserInfo {
     @Column(nullable = true, length = 200)
     private String content;
 
-    public UserInfo(UserInfoRequestDto requestDto) {
+    public UserInfo(ResolutionRequestDto requestDto) {
         this.content = requestDto.getContent();
         this.startDate = requestDto.getStart_date();
         this.endDate = requestDto.getEnd_date();
         this.goalHour = requestDto.getGoal_hour();
     }
 
-    public void update(UserInfoRequestDto requestDto) {
+    public void resolutionUpdate(ResolutionRequestDto requestDto) {
         this.content = requestDto.getContent();
+    }
+
+    public void goalUpdate(GoalRequestDto requestDto) {
         this.startDate = requestDto.getStart_date();
         this.endDate = requestDto.getEnd_date();
         this.goalHour = requestDto.getGoal_hour();
