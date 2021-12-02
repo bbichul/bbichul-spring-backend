@@ -10,6 +10,7 @@ import site.bbichul.models.User;
 import site.bbichul.security.UserDetailsImpl;
 import site.bbichul.service.TeamService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -19,8 +20,8 @@ public class TeamController {
     private final TeamService teamService;
 
     @GetMapping("/team")
-    public String teamCheck(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return teamService.teamCheck(userDetails.getUser());
+    public String checkTeam(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return teamService.checkTeam(userDetails.getUser());
     }
 
     @PostMapping("/team")
@@ -56,5 +57,10 @@ public class TeamController {
     @PostMapping("/team/signup")
     public String signupTeam(@RequestBody TeamRequestDto teamRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return teamService.signupTeam(teamRequestDto, userDetails.getUser());
+    }
+
+    @PostMapping("/team/checkname")
+    public String checkName(@RequestBody TeamRequestDto teamRequestDto) {
+        return teamService.checkName(teamRequestDto);
     }
 }

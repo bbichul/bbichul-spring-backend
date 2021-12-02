@@ -23,7 +23,7 @@ public class TeamService {
     private final UserRepository userRepository;
     private final TeamTaskRepository teamTaskRepository;
 
-    public String teamCheck(User user) {
+    public String checkTeam(User user) {
         if (user.getTeam() == null) {
             return "아직 소속된 팀이 없습니다.";
         }
@@ -97,6 +97,18 @@ public class TeamService {
         }
         else {
             message = "존재하지 않는 팀입니다. 팀 이름을 확인해주세요.";
+        }
+        return message;
+    }
+
+    public String checkName(TeamRequestDto teamRequestDto) {
+        String teamname = teamRequestDto.getTeamname();
+        String message;
+        Optional<Team> result = teamRepository.findByTeamname(teamname);
+        if (result.isPresent()) {
+            message = "중복되는 팀 이름입니다. 다시 입력해주세요.";
+        } else {
+            message = "사용할 수 있는 팀 이름입니다.";
         }
         return message;
     }

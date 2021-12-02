@@ -14,6 +14,7 @@ $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
 
 $(document).ready(function () {
     teamCheck();
+    document.getElementById('team-name').readOnly = false;
     $("input[name=checked-team]").val('')
     /*    pieChartDraw();*/
     // $('.progress-value > span').each(function () {
@@ -27,8 +28,6 @@ $(document).ready(function () {
     //         }
     //     });
     // });
-
-
 });
 
 //progress bar
@@ -85,53 +84,33 @@ function hide_teamname() {
 function createTeam() {
     team = $('#team-name').val()
     let teamname = {teamname : team}
-    $.ajax({
-        type: "POST",
-        url: "/team",
-        contentType: "application/json",
-        data: JSON.stringify(teamname),
-        success: function (response) {
-            if (response == '중복된 팀명이 존재합니다.') {
-                alert(response);
-            } else {
-                alert("팀 만들기 성공!");
-                $('#create-team-close').click()
-                $('.not-exist').hide()
-                $('.team-exist').show()
-                let team = response
-                $('#team').append(team)
-                checkstatus();
-            }
-        }
-    })
         // hidden input의 value로 중복확인 버튼을 눌렀는지 안눌렀는지 확인
-    // if ($("input[name=checked-team]").val() != 'y') {
-    //     alert("중복확인을 통과한 경우만 만들 수 있습니다.")
-    //     $("#team-name").val(null);
-    // } else {
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "/team",
-    //         contentType: "application/json",
-    //         data: JSON.stringify(teamname),
-    //         success: function (response) {
-    //             if (response["msg"] == '팀 만들기 완료') {
-    //                 alert(response["msg"]);
-    //                 $('#create-team-close').click()
-    //                 $('.not-exist').hide()
-    //                 $('.team-exist').show()
-    //                 let team = `${team}`
-    //                 $('#team').append(team)
-    //                 checkstatus();
-    //                 show_task(team)
-    //             } else {
-    //                 alert(response["서버 오류"]);
-    //             }
-    //         }
-    //     })
-    // }
+    if ($("input[name=checked-team]").val() != 'y') {
+        alert("중복확인을 통과한 경우만 만들 수 있습니다.")
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/team",
+            contentType: "application/json",
+            data: JSON.stringify(teamname),
+            success: function (response) {
+                if (response == '중복된 팀명이 존재합니다.') {
+                    alert(response);
+                } else {
+                    alert("팀 만들기 성공!");
+                    $('#create-team-close').click()
+                    $('.not-exist').hide()
+                    $('.team-exist').show()
+                    let team = response
+                    $('#team').append(team)
+                    checkstatus();
+                }
+            }
+        })
+    }
 }
 
+//초대받은 팀에 가입하기
 function invite_team() {
     let str_space = /\s/;
     let invitename = $('#invite-name').val()
@@ -163,45 +142,43 @@ function invite_team() {
     }
 }
 
-// // 팀 만들기 시 팀명 중복확인 기능
-// function teamname_check() {
-//     let str_space = /\s/;
-//     team = $('#team-name').val()
-//     if (!team || str_space.exec(team)) {
-//         alert("팀 이름에 공백을 사용할 수 없습니다.")
-//         $("#team-name").val("");
-//     } else {
-//         $.ajax({
-//             type: "POST",
-//             url: "/team",
-//             headers: {
-//                 Authorization: getCookie('access_token')
-//             },
-//             data: {
-//                 team: team
-//             },
-//             success: function (response) {
-//                 if (response['msg'] == "사용할 수 있는 팀 이름입니다.") {
-//                     $("#double-check").hide()
-//                     $("#cant-using").hide()
-//                     $("#can-using").show()
-//                     $("input[name=checked-team]").val('y');
-//                 } else if (response['msg'] == "중복되는 팀 이름입니다. 다시 입력해주세요.") {
-//                     $("#double-check").hide()
-//                     $("#can-using").hide()
-//                     $("#cant-using").show()
-//                     $("input[name=checked-team]").val('');
-//                 } else if (response['msg'] == "특수문자를 제외하고 작성해주세요"){
-//                     $("#double-check").show()
-//                     $("#cant-using").hide()
-//                     $("#can-using").hide()
-//                     $("input[name=checked-team]").val('');
-//                 }
-//             }
-//         });
-//     }
-// }
-//
+// 팀 만들기 시 팀명 중복확인 기능
+function teamname_check() {
+    let str_space = /\s/;
+    teamname = $('#team-name').val()
+    let name = {teamname:teamname}
+    if (!teamname || str_space.exec(teamname)) {
+        alert("팀 이름에 공백을 사용할 수 없습니다.")
+        $("#team-name").val(null);
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/team/checkname",
+            contentType: "application/json",
+            data: JSON.stringify(name),
+            success: function (response) {
+                if (response == "사용할 수 있는 팀 이름입니다.") {
+                    $("#double-check").hide()
+                    $("#cant-using").hide()
+                    $("#can-using").show()
+                    $("input[name=checked-team]").val('y');
+                    document.getElementById('team-name').readOnly = true;
+                } else {
+                    $("#double-check").hide()
+                    $("#can-using").hide()
+                    $("#cant-using").show()
+                    $("input[name=checked-team]").val(null);
+                }
+            }
+        });
+    }
+}
+
+//모달창 닫으면 input창 수정가능하게함
+$('#create-team-close').on('click',function() {
+    document.getElementById('team-name').readOnly=false;
+    $("#team-name").val(null);
+});
 
 /*to do list*/
 function showtask() {
