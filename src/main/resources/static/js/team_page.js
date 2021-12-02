@@ -1,6 +1,3 @@
-//유저이름 가져오기
-let user = localStorage.getItem("username")
-$("#username").html(user);
 
 
 // ajax 시 헤더 부분에 토큰 넣어주고 코드를 줄일 수 있다
