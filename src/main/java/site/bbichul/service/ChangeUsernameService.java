@@ -20,7 +20,7 @@ public class ChangeUsernameService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Map<String, Object> changeUsername(UsernameDto usernameDto, User user) {
+    public Map<String, Object> getUsername(UsernameDto usernameDto, User user) {
 
         if (userRepository.findByUsername(usernameDto.getUsername()).isPresent()) {
             Map<String, Object> map = new HashMap();	//<키 자료형, 값 자료형>
@@ -28,11 +28,13 @@ public class ChangeUsernameService {
             return map;
         }
 
-        user.usernameUpdate(usernameDto);
 
+        User user1 = userRepository.findById(user.getId()).orElseThrow(
+                () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
+        );
 
         Map<String, Object> map = new HashMap();	//<키 자료형, 값 자료형>
-        map.put("msg", "성공");
+        map.put("nickName", user1.getUsername());
 
         return map;
     }

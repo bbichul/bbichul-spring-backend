@@ -18,9 +18,9 @@ public class ChangeUsernameController {
     private final ChangeUsernameService changeUsernameService;
 
 
-    @PostMapping("/nickname-modal")
-    public Map<String,Object> changeUsername(@RequestBody UsernameDto usernameDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return changeUsernameService.changeUsername(usernameDto, userDetails.getUser());
+    @GetMapping("/nickname-modal")
+    public Map<String,Object> getUsername(@RequestBody UsernameDto usernameDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return changeUsernameService.getUsername(usernameDto, userDetails.getUser());
     }
 
 //    @GetMapping("/nickname-modal")

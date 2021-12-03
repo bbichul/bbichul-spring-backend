@@ -148,11 +148,8 @@ function get_nickname_modal() {
     $.ajax({
         type: "GET",
         url: "/nickname-modal",
-        headers: {
-            Authorization:  getCookie('access_token')
-        },
-        data: {
-        },
+        contentType: "application/json",
+        data: {},
         success: function (response) {
             let nickname = response['nick_name']
             $('.present-nickname').text(`${nickname}`)
