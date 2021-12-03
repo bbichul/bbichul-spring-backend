@@ -10,4 +10,6 @@ import java.util.Optional;
 
 public interface TeamTaskRepository extends JpaRepository<TeamTask, Long> {
     List<TeamTask> findAllByTeamId(Long id);
+
+    Long countByTeamIdAndDone(Long id, Boolean done);
 }

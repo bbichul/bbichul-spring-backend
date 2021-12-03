@@ -3,6 +3,7 @@ package site.bbichul.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import site.bbichul.dto.TeamProgressbarResponseDto;
 import site.bbichul.dto.TeamRequestDto;
 import site.bbichul.dto.TeamTaskRequestDto;
 import site.bbichul.models.TeamTask;
@@ -10,7 +11,6 @@ import site.bbichul.models.User;
 import site.bbichul.security.UserDetailsImpl;
 import site.bbichul.service.TeamService;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -62,5 +62,10 @@ public class TeamController {
     @PostMapping("/team/checkname")
     public String checkName(@RequestBody TeamRequestDto teamRequestDto) {
         return teamService.checkName(teamRequestDto);
+    }
+
+    @PostMapping("/team/progressbar")
+    public TeamProgressbarResponseDto getTeamProgressbar(TeamProgressbarResponseDto teamProgressbarResponseDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return teamService.getTeamProgressbar(teamProgressbarResponseDto, userDetails.getUser());
     }
 }
