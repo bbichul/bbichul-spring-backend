@@ -72,8 +72,9 @@
                 <!--                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>-->
                 <li><a id="login-button" class="getstarted scrollto" href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
                 </li>
-<!--                <li><a id="logout-button" onclick="log_out()" class="getstarted scrollto" href="#" data-toggle="modal" data-target="#loginModal">Log Out</a>-->
-<!--                </li>-->
+                <span id="usernames" style="color: white"></span>
+                <li><a id="logout-button" onclick="log_out()" class="getstarted scrollto" href="#" data-toggle="modal" data-target="#loginModal">Log Out</a>
+                </li>
 
 
 
@@ -83,10 +84,8 @@
 
     </div>
 
-    <span id="username" style="color: white"></span>님
-    <a href="/user/logout" id="logout-text" onclick="log_out()">
-        로그아웃
-    </a>
+
+
 </header><!-- End Header -->
 
 <!-- ======= Hero Section ======= -->
@@ -307,14 +306,16 @@
                 <div class="input-box">
                     <label>닉네임</label>
                     <input type="text" id="nickname">
+                    <p id="help-id" class="help is-hidden"></p>
+                    <p id="help-id-login" class="help is-danger"></p>
                     <p id="can-using">사용해도 되는 닉네임 입니다.</p>
                     <p id="cant-using">이미 사용중인 닉네임 입니다.</p>
                     <button type="button" onclick="nickname_check()">중복확인</button>
                 </div>
                 <div class="input-box">
                     <label>비밀번호</label>
-                    <input type="password" id="signup_password" placeholder="비밀번호를 입력해주세요.">
-                    <p>영어 또는 숫자로 6글자 이상으로 작성해주세요</p>
+                    <input type="password" id="signup_password">
+                    <p id="help-password" class="help is-hidden"></p>
                     <button type="button" id="signup_password_eye">비밀번호 보기</button>
                 </div>
             </div>

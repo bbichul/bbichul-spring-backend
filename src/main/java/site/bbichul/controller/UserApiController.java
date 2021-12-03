@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import site.bbichul.dto.JwtResponse;
 import site.bbichul.dto.SignupRequestDto;
 import site.bbichul.dto.UserDto;
-import site.bbichul.models.UserInfo;
 import site.bbichul.service.UserService;
 import site.bbichul.utills.JwtTokenUtil;
 
@@ -43,6 +42,13 @@ public class UserApiController {
         final String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
     }
+    //닉네임 중복 체크
+    @PostMapping(value = "/check")
+    public String checkUser(@RequestBody UserDto userDto){
+        System.out.println(userDto);
+        return userService.checkUser(userDto);
+    }
+
 
     private void authenticate(String username, String password) throws Exception {
         try {

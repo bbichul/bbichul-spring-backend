@@ -1,8 +1,10 @@
 package site.bbichul.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import site.bbichul.dto.GraphRequestDto;
 import site.bbichul.dto.TimeRequestDto;
 
 import javax.persistence.*;
@@ -31,7 +33,7 @@ public class Time extends TimeStamped {
     @Column(nullable = false)
     private int study_time;
 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
@@ -47,6 +49,8 @@ public class Time extends TimeStamped {
         this.study_time = timeRequestDto.getStudy_time();
 
     }
+
+
     public void updateStudyTime(int study_time){
         this.study_time = study_time;
     }

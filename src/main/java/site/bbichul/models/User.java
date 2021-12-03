@@ -7,6 +7,8 @@ import lombok.Setter;
 import site.bbichul.dto.UserDto;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter // get 함수를 일괄적으로 만들어줍니다.
@@ -56,6 +58,10 @@ public class User extends TimeStamped {
     @OneToOne
     @JoinColumn(name = "userInfo_id",nullable = true)
     private UserInfo userInfo;
+
+    @OneToMany(mappedBy = "user")
+    List<Time> times = new ArrayList<>();
+
 
 
 
