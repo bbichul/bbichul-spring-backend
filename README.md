@@ -17,21 +17,29 @@ https://bbichul.site/
 * 최대환  
 * 
 #### 프론트엔드
-- 언어
-<img src="https://static.codenary.co.kr/framework_logo/javascript.png" width="30"> 자바스크립트
+- 언어  
+<img src="https://static.codenary.co.kr/framework_logo/javascript.png" width="40"> 자바스크립트
 
 #### 백엔드
-- 언어
-<img src="https://static.codenary.co.kr/framework_logo/java.png" width="30">자바
-- 프레임워크
-<img src="https://static.codenary.co.kr/framework_logo/springboot.png" width="30">스프링부트
+- 언어  
+<img src="https://static.codenary.co.kr/framework_logo/java.png" width="40">자바
+- 프레임워크  
+<img src="https://static.codenary.co.kr/framework_logo/springboot.png" width="40">스프링부트
 
 #### 데이터베이스
-- DB
-<img src="https://static.codenary.co.kr/framework_logo/mysql.png" width="30">MySQL
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FKC7de%2FbtqzYU6vFEU%2FfJuhaPvy1FSzFWNSbNw391%2Fimg.png" width="30">H2
-- ORM
-<img src="https://media.vlpt.us/images/devyu/post/4c730e1b-d406-464d-960c-4fe22fbad034/image.png" width="30">JPA
+- DB  
+<img src="https://static.codenary.co.kr/framework_logo/mysql.png" width="40">MySQL
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FKC7de%2FbtqzYU6vFEU%2FfJuhaPvy1FSzFWNSbNw391%2Fimg.png" width="40">H2
+- ORM  
+<img src="https://media.vlpt.us/images/devyu/post/4c730e1b-d406-464d-960c-4fe22fbad034/image.png" width="40">JPA
+
+#### 데브옵스
+<img src="https://static.codenary.co.kr/framework_logo/githubaction.png" width="40">깃 액션
+
+#### 협업툴
+<img src="https://static.codenary.co.kr/framework_logo/slack.png" width="40">슬랙  
+<img src="https://static.codenary.co.kr/framework_logo/github.png" width="40">깃 허브
+
 
 ### 📌 기술 선택 이유! - <a href="https://github.com/Dae-Hwan/BBI-CHUL-spring/wiki/%EA%B8%B0%EC%88%A0-%EC%84%A0%ED%83%9D-%EC%9D%B4%EC%9C%A0" >상세보기 - WIKI 이동</a>
 
