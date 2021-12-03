@@ -33,6 +33,10 @@ https://bbichul.site/
 
 ### 📌 기술 선택 이유! - <a href="https://github.com/Dae-Hwan/BBI-CHUL-spring/wiki/%EA%B8%B0%EC%88%A0-%EC%84%A0%ED%83%9D-%EC%9D%B4%EC%9C%A0" > 상세보기 - WIKI 이동</a>
 
+### 📌 ERD
+<img width="1503" alt="스크린샷 2021-12-03 오후 7 34 10" src="https://user-images.githubusercontent.com/74276716/144588270-b9a96922-8ff0-4693-af09-35ecd7d70a23.png">
+
+
 ### 📌 주요 기능 - <a href="https://github.com/Dae-Hwan/BBI-CHUL-spring/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C" > 상세보기 - WIKI 이동</a>
 
 1.체크인/아웃기능  
