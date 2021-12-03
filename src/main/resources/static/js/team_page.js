@@ -1,8 +1,3 @@
-//유저이름 가져오기
-let user = localStorage.getItem("username")
-$("#username").html(user);
-
-
 // ajax 시 헤더 부분에 토큰 넣어주고 코드를 줄일 수 있다
 $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
     if(localStorage.getItem('token')) {
@@ -10,46 +5,45 @@ $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
     }
 });
 
-// let team = ""
 
 $(document).ready(function () {
     teamCheck();
     document.getElementById('team-name').readOnly = false;
     $("input[name=checked-team]").val('')
     /*    pieChartDraw();*/
-    // $('.progress-value > span').each(function () {
-    //     $(this).prop('Counter', 0).animate({
-    //         Counter: $(this).text()
-    //     }, {
-    //         duration: 1500,
-    //         easing: 'swing',
-    //         step: function (now) {
-    //             $(this).text(Math.ceil(now));
-    //         }
-    //     });
-    // });
+    $('.progress-value > span').each(function () {
+        $(this).prop('Counter', 0).animate({
+            Counter: $(this).text()
+        }, {
+            duration: 1500,
+            easing: 'swing',
+            step: function (now) {
+                $(this).text(Math.ceil(now));
+            }
+        });
+    });
 });
 
 //progress bar
-// function get_progressbar() {
-//     $.ajax({
-//         type: "POST",
-//         url: "/get-progressbar",
-//         data: {},
-//         success: function (response) {
-//             let percent = response['percent']
-//             let done_count = response['done_count']
-//
-//             $('.progress-value').css('font-size', `25px`);
-//             $('.progress-value').css('line-height', `44px`);
-//             $('.progress-value').append(`${percent}%`)
-//
-//             $('#percent-bar').css('width', `${percent}%`);
-//             $('#percent-bar').css('font-size', `18px`);
-//             $('#percent-bar').append(`${done_count}개`)
-//         }
-//     })
-// }
+function get_progressbar() {
+    $.ajax({
+        type: "POST",
+        url: "team/progressbar",
+        success: function (response) {
+            console.log(response)
+            let percent = response['percent']
+            let done_count = response['doneCount']
+
+            $('.progress-value').css('font-size', `25px`);
+            $('.progress-value').css('line-height', `44px`);
+            $('.progress-value').append(`${percent}%`)
+
+            $('#percent-bar').css('width', `${percent}%`);
+            $('#percent-bar').css('font-size', `18px`);
+            $('#percent-bar').append(`${done_count}개`)
+        }
+    })
+}
 
 // 팀 소속 여부 확인
 function teamCheck() {
@@ -104,6 +98,7 @@ function createTeam() {
                     let team = response
                     $('#team').append(team)
                     checkstatus();
+                    showtask();
                 }
             }
         })
@@ -186,7 +181,7 @@ function showtask() {
         type: "GET",
         url: "/team/task",
         success: function (response) {
-            // get_progressbar()
+            get_progressbar()
             for (let i = 0; i < response.length; i++) {
                 let task = response[i]['task']
                 let done = response[i]['done']
