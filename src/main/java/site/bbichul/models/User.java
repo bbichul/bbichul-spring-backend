@@ -60,6 +60,11 @@ public class User extends TimeStamped {
     @JoinColumn(name = "userInfo_id",nullable = true)
     private UserInfo userInfo;
 
+    // 회원상태
+    @Column(nullable = true, length = 100)
+    private boolean status;
+
+
     @OneToMany(mappedBy = "user")
     List<Time> times = new ArrayList<>();
 
@@ -69,6 +74,9 @@ public class User extends TimeStamped {
     public User(UserDto userDto, Long userId) {
         this.isStudying = userDto.isIsstudying();
 
+    }
+    public void updateStatus(UserDto userDto){
+        this.status = userDto.isStatus();
     }
 
     public void usernameUpdate(UsernameDto usernameDto) {
