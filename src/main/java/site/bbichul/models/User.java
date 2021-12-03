@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import site.bbichul.dto.UserDto;
+import site.bbichul.dto.UsernameDto;
 
 import javax.persistence.*;
 
@@ -62,6 +63,11 @@ public class User extends TimeStamped {
     public User(UserDto userDto, Long userId) {
         this.isStudying = userDto.isIsstudying();
 
+    }
+
+    public void usernameUpdate(UsernameDto usernameDto) {
+        System.out.println(usernameDto.getUsername());
+        this.username = usernameDto.getUsername();
     }
 
     public void updateStudy(UserDto userDto){
