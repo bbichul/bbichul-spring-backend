@@ -65,6 +65,7 @@ public class UserService {
         );
         user.updateStudy(userDto);
     }
+
     // 닉네임 중복 체크
     public String checkUser(UserDto userDto){
         String username = userDto.getUsername();
@@ -76,6 +77,14 @@ public class UserService {
             message = "사용할 수 있는 닉네임입니다.";
         }
         return message;
+    }
+    // 회원 상태 체크
+    @Transactional
+    public void setStatus(UserDto userDto, String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new NullPointerException("그럴리가 없쥬")
+        );
+        user.updateStatus(userDto);
     }
 
 }

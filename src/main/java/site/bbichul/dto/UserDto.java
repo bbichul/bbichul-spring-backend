@@ -13,4 +13,5 @@ public class UserDto {
     private String password;
     private boolean isstudying;
     private Long team_id;
+    private boolean status;
 }
