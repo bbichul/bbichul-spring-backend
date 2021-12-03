@@ -124,17 +124,14 @@ function get_resolution_modal() {
 }
 
 function post_nickname_modal() {
-    let changed_nickname = $("#nickname").val()
-    console.log(changed_nickname)
+    let username = $("#nickname").val()
+    let json = {"username": username}
+
     $.ajax({
         type: "POST",
         url: "/nickname-modal",
-        headers: {
-            Authorization:  getCookie('access_token')
-        },
-        data: {
-            changed_nickname: changed_nickname
-        },
+        contentType: "application/json",
+        data: JSON.stringify(json),
         success: function (response) {
             if (response['msg'] == '성공') {
                 get_nickname_modal()
@@ -151,13 +148,10 @@ function get_nickname_modal() {
     $.ajax({
         type: "GET",
         url: "/nickname-modal",
-        headers: {
-            Authorization:  getCookie('access_token')
-        },
-        data: {
-        },
+        contentType: "application/json",
+        data: {},
         success: function (response) {
-            let nickname = response['nick_name']
+            let nickname = response['nickName']
             $('.present-nickname').text(`${nickname}`)
         }
     })
