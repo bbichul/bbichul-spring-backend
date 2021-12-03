@@ -6,12 +6,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import site.bbichul.dto.JwtResponse;
 import site.bbichul.dto.SignupRequestDto;
 import site.bbichul.dto.UserDto;
+import site.bbichul.security.UserDetailsImpl;
 import site.bbichul.service.UserService;
 import site.bbichul.utills.JwtTokenUtil;
 
@@ -47,6 +49,13 @@ public class UserApiController {
     public String checkUser(@RequestBody UserDto userDto){
         System.out.println(userDto);
         return userService.checkUser(userDto);
+    }
+
+    // 회원 상태 체크
+    @PostMapping("/status")
+    public void updatestatus(@RequestBody UserDto userDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        String username = userDetails.getUsername();
+        userService.setStatus(userDto, username);
     }
 
 

@@ -244,28 +244,26 @@ function post_new_password() {
     })
 }
 
-
+//회원 탈퇴
 function withdrawal() {
-    let password = $('#new-password').val()
+
+    let start = {"status": true}
+
     $.ajax({
-        type: "DELETE",
-        url: "/withdrawal",
-        headers: {
-            Authorization:  getCookie('access_token')
-        },
-        data: {
-            password: password
-        },
+        type: "POST",
+        url: "/status",
+        contentType: 'application/json',
+        data: JSON.stringify(start),
+
         success: function (response) {
-            if (response['msg'] == 'SUCCESS') {
-                alert('회원 탈퇴되었습니다.')
-                deleteCookie('access_token')
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
             location.href ="/";
-            }
+            alert("회원탈퇴가 완료되었습니다")
+
         }
     })
 }
-
 
 // 진행바
 $(document).ready(function(){
