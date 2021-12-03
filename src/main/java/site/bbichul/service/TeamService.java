@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import site.bbichul.dto.TeamRequestDto;
 import site.bbichul.dto.TeamTaskRequestDto;
+import site.bbichul.dto.TeamProgressbarResponseDto;
 import site.bbichul.models.Team;
 import site.bbichul.models.TeamTask;
 import site.bbichul.models.User;
@@ -104,6 +105,7 @@ public class TeamService {
     public String checkName(TeamRequestDto teamRequestDto) {
         String teamname = teamRequestDto.getTeamname();
         String message;
+
         Optional<Team> result = teamRepository.findByTeamname(teamname);
         if (result.isPresent()) {
             message = "중복되는 팀 이름입니다. 다시 입력해주세요.";
@@ -111,5 +113,23 @@ public class TeamService {
             message = "사용할 수 있는 팀 이름입니다.";
         }
         return message;
+    }
+
+    public TeamProgressbarResponseDto getTeamProgressbar(TeamProgressbarResponseDto teamProgressbarResponseDto, User user) {
+        Long teamId = user.getTeam().getId();
+        Long doneCount = teamTaskRepository.countByTeamIdAndDone(teamId, true);
+        Long notDoneCount = teamTaskRepository.countByTeamIdAndDone(teamId, false);
+        Integer total = (int) (doneCount + notDoneCount);
+        Integer percent = (int) Math.round(((double) doneCount / total) * 100);
+
+        if (total == 0) {
+            teamProgressbarResponseDto.setDoneCount(0L);
+            teamProgressbarResponseDto.setPercent(0);
+        } else {
+            teamProgressbarResponseDto.setDoneCount(doneCount);
+            teamProgressbarResponseDto.setPercent(percent);
+        }
+
+        return teamProgressbarResponseDto;
     }
 }
