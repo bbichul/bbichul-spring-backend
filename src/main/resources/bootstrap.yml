@@ -1,6 +1,6 @@
 aws:
   secretsmanager:
-    name: bbichul-rds
+    name: bbichul
 cloud:
   aws:
     region:
