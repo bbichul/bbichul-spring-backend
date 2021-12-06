@@ -1,4 +1,4 @@
-name: bbichul-backend
+name: bbichul-spring-backend
 
 on:
   push:
