@@ -1,10 +1,12 @@
 //달력에 필요한 변수들 선언, 초기화
-let date = new Date();
+let date;
 let btn_year_month_day = ''; //텍스트 박스와 캘린더 연동 위한 달력 버튼 ID 값 저장
 
 let nick_name;
 let team_name;
 let selected_cal_now;
+let rCheck;
+
 
 $(document).ready(function () {
     getInfo()
@@ -81,6 +83,7 @@ const renderCalendar = () => {
 const prevMonth = () => {
     date.setDate(1);
     date.setMonth(date.getMonth() - 1);
+    sessionStorage.setItem("date", date);
     renderCalendar();
     getMemo();
 }
@@ -88,6 +91,7 @@ const prevMonth = () => {
 const nextMonth = () => {
     date.setDate(1);
     date.setMonth(date.getMonth() + 1);
+    sessionStorage.setItem("date", date);
     renderCalendar();
     getMemo();
 }
@@ -97,11 +101,29 @@ const goToday = () => {
     renderCalendar();
 }
 
+function checkingOnce() {
+    rCheck = sessionStorage.getItem("rCheck");
+    nick_name = sessionStorage.getItem("username");
+
+    if (rCheck == null){
+        selected_cal_now = "P1";
+        sessionStorage.setItem("selected_cal_now", selected_cal_now);
+        rCheck = sessionStorage.setItem("rCheck", true);
+        date = new Date();
+        sessionStorage.setItem("date", date)
+
+    }else if (rCheck) {
+        selected_cal_now = sessionStorage.getItem("selected_cal_now");
+        date = new Date(sessionStorage.getItem("date"));
+    }
+}
+
 
 //캘린더 페이지 접속 시 가져오는 정보
 function getInfo() {
 
-    selected_cal_now = 'P1'
+    checkingOnce()
+
 
     $.ajax({
         type: "GET",
@@ -113,9 +135,6 @@ function getInfo() {
         async: false, //전역변수에 값을 저장하기 위해 동기 방식으로 전환,
         data: {},
         success: function (response) {
-            console.log(response)
-            nick_name = localStorage.getItem("username");
-
             let team_calendar_count;
             let user_calendar_count;
             for (let i = 0; i < response.length; i++) {
@@ -130,12 +149,12 @@ function getInfo() {
 
             }
 
-            if (team_calendar_count > 0) {
-                selected_cal_now = 'T1';
-                $("#dropdownMenuLink").text(team_name + " 캘린더 1");
 
-            } else {
-                $("#dropdownMenuLink").text(nick_name + " 캘린더 1");
+            if (selected_cal_now.substr(0,1) =="T") {
+                $("#dropdownMenuLink").text(team_name + " 캘린더 " + selected_cal_now.substr(1,2));
+
+            } else if(selected_cal_now.substr(0,1) =="P"){
+                $("#dropdownMenuLink").text(nick_name + " 캘린더 " + selected_cal_now.substr(1,2));
             }
 
             for (let i = 0; i < response.length; i++) {
@@ -223,7 +242,6 @@ function addCalender() {
         "isPrivated" : is_private
     }
 
-    console.log(doc)
 
     $.ajax({
         type: "POST",
@@ -248,7 +266,8 @@ function setCalender(obj) {
         alert("현재 선택 된 캘린더입니다.")
     } else {
 
-        selected_cal_now = select_calender_id;
+        selected_cal_now= select_calender_id;
+        sessionStorage.setItem("selected_cal_now", selected_cal_now)
 
         let private_or_team = selected_cal_now.substr(0, 1);
         let calender_num = selected_cal_now.substr(1, 1);
@@ -260,6 +279,9 @@ function setCalender(obj) {
             $('#dropdownMenuLink').text(nick_name + " 캘린더 " + calender_num);
             alert(nick_name + " 캘린더"+ calender_num+ "로 변경 되었습니다.");
         }
+
+        date = new Date();
+        sessionStorage.setItem("date", date)
 
         renderCalendar();
         getMemo();
@@ -279,6 +301,7 @@ function getMemo() {
         url: `/calendars/option?calendarType=${selected_cal_now}`,
         // data: {calendarType: selected_cal_now},
         success: function (response) {
+            console.log(response)
 
             for (let i = 0; i < response.length; i++) {
                 let text_id = response[i].dateData + "text";
@@ -324,7 +347,7 @@ $("#calenderNote").on("propertychange change keyup paste input", function () {
 });
 
 //유저이름 가져오기
-$("#username").html(localStorage.getItem("username"));
+$("#username").html(sessionStorage.getItem("username"));
 
 
 //TODO: 메모 타이틀 넣어서 노션 캘린더 비스무리하게 만들기,,

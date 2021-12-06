@@ -159,7 +159,7 @@ public class CalendarService {
                     () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MATCHED_CALENDAR)
             );
 
-            calendarId = userCalendar.getTeam().getId();
+            calendarId = userCalendar.getId();
 
         }
 
