@@ -1,6 +1,6 @@
 //새로고침마다 로그인 상태에 따라 로그인/아웃이 바뀜
 $(document).ready(function () {
-    if(localStorage.getItem("token") == null){
+    if(sessionStorage.getItem("token") == null){
         $('#login-button').show()
         $('#usernames').hide()
         $('#logout-button').hide()
@@ -30,7 +30,7 @@ $('#signup_password_eye').on("mousedown", function(){
 
 // 메인페이지 진입전 로그인 확인 기능
 function main_login_check() {
-    if(localStorage.getItem("token") == null){
+    if(sessionStorage.getItem("token") == null){
         alert('로그인 해주세요')
         location.href ="/";
     } else { location.href = "/main_page.html"; }
@@ -96,8 +96,8 @@ function login() {
         data: JSON.stringify(info),
         success: function (response) {
             alert("로그인완료")
-            localStorage.setItem("token", response['token']);
-            localStorage.setItem("username", response['username']);
+            sessionStorage.setItem("token", response['token']);
+            sessionStorage.setItem("username", response['username']);
             location.href = '/';
 
         },
@@ -109,8 +109,9 @@ function login() {
 
 //로그아웃
 function log_out() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
+    // sessionStorage.removeItem('token');
+    // sessionStorage.removeItem('username');
+    sessionStorage.clear()
     alert('로그아웃 되었습니다')
     location.href ="/";
 }
@@ -148,7 +149,7 @@ function nickname_check() {
 }
 
 //유저이름 가져오기
-let user = localStorage.getItem("username")
+let user = sessionStorage.getItem("username")
 let temp_html = `
 <span >${user}님</span>
 `
@@ -159,7 +160,7 @@ $('#usernames').append(temp_html)
 
 // ajax 시 헤더 부분에 토큰 넣어주고 코드를 줄일 수 있다
 $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
-    if(localStorage.getItem('token')) {
-        jqXHR.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    if(sessionStorage.getItem('token')) {
+        jqXHR.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
     }
 });
