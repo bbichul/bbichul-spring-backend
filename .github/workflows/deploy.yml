@@ -3,7 +3,7 @@ name: bbichul-backend
 on:
   push:
     branches:
-      - release/1.0
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
