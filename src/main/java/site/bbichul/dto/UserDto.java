@@ -11,7 +11,7 @@ import lombok.Setter;
 public class UserDto {
     private String username;
     private String password;
-    private boolean isstudying;
-    private Long team_id;
+    private boolean isStudying;
+    private Long teamId;
     private boolean status;
 }

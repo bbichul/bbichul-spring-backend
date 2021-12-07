@@ -27,7 +27,7 @@ public class TimeService {
         time.setYear(timeRequestDto.getYear());
         time.setMonth(timeRequestDto.getMonth());
         time.setDay(timeRequestDto.getDay());
-        time.setWeekday(timeRequestDto.getWeekday());
+        time.setWeekDay(timeRequestDto.getWeekDay());
 
         // timeRepository 에 찾은 id, year, month, day 가져와서 확인하기
         Time time1 = timeRepository.findByUserIdAndYearAndMonthAndDay(user.getId(), timeRequestDto.getYear(), timeRequestDto.getMonth(), timeRequestDto.getDay()).orElse( null
@@ -36,13 +36,13 @@ public class TimeService {
         User findUser = userRepository.findById(user.getId()).orElseThrow(
                 () -> new NullPointerException("그럴리가 없쥬")
         );
-        findUser.setStudying(timeRequestDto.isIsstudying());
+        findUser.setStudying(timeRequestDto.isStudying());
 
         if (time1 == null) {
-            time.setStudy_time(timeRequestDto.getStudy_time());
+            time.setStudyTime(timeRequestDto.getStudyTime());
             timeRepository.save(time);
         } else {
-            time1.updateStudyTime(timeRequestDto.getStudy_time() + time1.getStudy_time());
+            time1.updateStudyTime(timeRequestDto.getStudyTime() + time1.getStudyTime());
         }
         return time;
     }
@@ -55,37 +55,37 @@ public class TimeService {
         time.setYear(timeRequestDto.getYear());
         time.setMonth(timeRequestDto.getMonth());
         time.setDay(timeRequestDto.getDay());
-        time.setWeekday(timeRequestDto.getWeekday());
+        time.setWeekDay(timeRequestDto.getWeekDay());
 
         Time time3 = new Time(timeRequestDto, user);
         time3.setYear(timeRequestDto.getYear());
         time3.setMonth(timeRequestDto.getMonth());
         time3.setDay(timeRequestDto.getDay()-1);
-        time3.setWeekday(timeRequestDto.getWeekday());
+        time3.setWeekDay(timeRequestDto.getWeekDay());
 
         // timeRepository 에 찾은 id, year, month, day 가져와서 확인하기
         Time time2 =  timeRepository.findByUserIdAndYearAndMonthAndDay(user.getId(), timeRequestDto.getYear(), timeRequestDto.getMonth(), timeRequestDto.getDay()-1).orElse( null
         );
 
-        int ytime = timeRequestDto.getYesterday_time();
+        int ytime = timeRequestDto.getYesterdayTime();
         // userRepository 에 유저 아이디 가져오기
         User findUser = userRepository.findById(user.getId()).orElseThrow(
                 () -> new NullPointerException("그럴리가 없쥬")
         );
-        findUser.setStudying(timeRequestDto.isIsstudying());
+        findUser.setStudying(timeRequestDto.isStudying());
 
         if(ytime != 0){
 
-            time.setStudy_time(timeRequestDto.getStudy_time() - ytime);
+            time.setStudyTime(timeRequestDto.getStudyTime() - ytime);
             timeRepository.save(time);
 
             if (time2 != null ){
 
-                time2.updateStudyTime(timeRequestDto.getStudy_time()+ ytime);
+                time2.updateStudyTime(timeRequestDto.getStudyTime()+ ytime);
 
             }  else {
 
-                time3.setStudy_time(ytime);
+                time3.setStudyTime(ytime);
                 timeRepository.save(time3);
             }
         }

@@ -28,14 +28,14 @@ public class Time extends TimeStamped {
     private int day;
 
     @Column(nullable = false)
-    private int weekday;
+    private int weekDay;
 
     @Column(nullable = false)
-    private int study_time;
+    private int studyTime;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_id",nullable = false)
+    @JoinColumn(name = "userId",nullable = false)
     private User user;
 ;
 
@@ -45,13 +45,13 @@ public class Time extends TimeStamped {
         this.year = timeRequestDto.getYear();
         this.month = timeRequestDto.getMonth();
         this.day = timeRequestDto.getDay();
-        this.weekday = timeRequestDto.getWeekday();
-        this.study_time = timeRequestDto.getStudy_time();
+        this.weekDay = timeRequestDto.getWeekDay();
+        this.studyTime = timeRequestDto.getStudyTime();
 
     }
 
 
-    public void updateStudyTime(int study_time){
-        this.study_time = study_time;
+    public void updateStudyTime(int studyTime){
+        this.studyTime = studyTime;
     }
 }

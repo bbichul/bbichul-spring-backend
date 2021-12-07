@@ -46,7 +46,7 @@ public class GraphService {
 
 
         for (Time day : time) {
-            day_time_list.set(day.getDay(), day.getStudy_time());
+            day_time_list.set(day.getDay(), day.getStudyTime());
         }
 
 
@@ -65,14 +65,14 @@ public class GraphService {
         ArrayList weekdayAvgStudyTimeList = new ArrayList();
 
         for (int weekday = 0; weekday <7; weekday++) {
-            List<Time> weeklyUserData = timeRepository.findAllByUserIdAndYearAndMonthAndWeekday(user.getId(),year, month, weekday);
+            List<Time> weeklyUserData = timeRepository.findAllByUserIdAndYearAndMonthAndWeekDay(user.getId(),year, month, weekday);
             weekdayAvgStudyTimeList.add(0);
 
             int weekdaySum = 0;
             int dayCount = 0;
 
             for (Time day : weeklyUserData) {
-                weekdaySum += day.getStudy_time();
+                weekdaySum += day.getStudyTime();
                 dayCount += 1;
             }
             int weekdayAvgStudyTime = 1;

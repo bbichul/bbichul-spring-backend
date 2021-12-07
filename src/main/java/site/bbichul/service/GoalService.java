@@ -79,7 +79,7 @@ public class GoalService {
                 continue;
             }
 
-            study_time_sum += time.getStudy_time();
+            study_time_sum += time.getStudyTime();
         }
         int done_hour = study_time_sum / 3600;
 

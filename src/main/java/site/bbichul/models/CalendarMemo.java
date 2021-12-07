@@ -23,10 +23,10 @@ public class CalendarMemo {
     private UserCalendar userCalendar;
 
 
-    @Column(nullable = false, length = 200)
+    @Column(nullable = false, length = 50)
     private String dateData;
 
-    @Column(nullable = true, length = 500)
+    @Column(nullable = true, columnDefinition = "TEXT")
     private String contents;
 
 

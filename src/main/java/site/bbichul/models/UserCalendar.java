@@ -20,20 +20,20 @@ public class UserCalendar {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "userId", nullable = true)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "teamId")
+    @JoinColumn(name = "teamId", nullable = true)
     private Team team;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int userCount;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int teamCount;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String calendarType;
 
     public UserCalendar(User user){

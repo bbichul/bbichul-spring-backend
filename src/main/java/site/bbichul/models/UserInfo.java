@@ -35,14 +35,14 @@ public class UserInfo {
     @Column(nullable = true)
     private int goalHour;
 
-    @Column(nullable = true, length = 200)
+    @Column(nullable = true, length = 500)
     private String content;
 
     public UserInfo(ResolutionRequestDto requestDto) {
         this.content = requestDto.getContent();
-        this.startDate = requestDto.getStart_date();
-        this.endDate = requestDto.getEnd_date();
-        this.goalHour = requestDto.getGoal_hour();
+        this.startDate = requestDto.getStartDate();
+        this.endDate = requestDto.getEndDate();
+        this.goalHour = requestDto.getGoalHour();
     }
 
     public void resolutionUpdate(ResolutionRequestDto requestDto) {
@@ -50,8 +50,8 @@ public class UserInfo {
     }
 
     public void goalUpdate(GoalRequestDto requestDto) {
-        this.startDate = requestDto.getStart_date();
-        this.endDate = requestDto.getEnd_date();
-        this.goalHour = requestDto.getGoal_hour();
+        this.startDate = requestDto.getStartDate();
+        this.endDate = requestDto.getEndDate();
+        this.goalHour = requestDto.getGoalHour();
     }
 }

@@ -43,7 +43,7 @@ public class TimeController {
         timeRequestDto.setDay(day);
 
         int weekday = localDate.getDayOfWeek().getValue();
-        timeRequestDto.setWeekday(weekday);
+        timeRequestDto.setWeekDay(weekday);
 
         Time time = timeService.upsertTime(timeRequestDto, userDetails.getUser());
 
@@ -76,7 +76,7 @@ public class TimeController {
         timeRequestDto.setDay(day);
 
         int weekday = localDate.getDayOfWeek().getValue();
-        timeRequestDto.setWeekday(weekday);
+        timeRequestDto.setWeekDay(weekday);
 
         Time time = timeService.upsertStudy(timeRequestDto, userDetails.getUser());
 

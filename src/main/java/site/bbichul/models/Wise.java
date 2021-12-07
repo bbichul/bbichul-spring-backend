@@ -15,10 +15,10 @@ public class Wise {
     @Id
     private Long id;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 100)
     private String name;
 
-    @Column(nullable = true)
+    @Column(nullable = false, length = 500)
     private String wise;
 
 }

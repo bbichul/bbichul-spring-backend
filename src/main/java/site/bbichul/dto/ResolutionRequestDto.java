@@ -9,7 +9,7 @@ import java.util.Date;
 @Getter
 public class ResolutionRequestDto {
     private String content;
-    private Date end_date;
-    private Date start_date;
-    private int goal_hour;
+    private Date endDate;
+    private Date startDate;
+    private int goalHour;
 }

@@ -44,24 +44,24 @@ public class User extends TimeStamped {
 
     // 팀 아이디(외래키) MANYTOONE
     @ManyToOne
-    @JoinColumn(name = "team_id",nullable = true )
+    @JoinColumn(name = "teamId",nullable = true )
     private Team team;
 
     // 팀장 팀원 역할
-    @Column(nullable = true, length = 100)
+    @Column(nullable = true, length = 50)
     private String position;
 
 
-    @Column(nullable = false)
+    @Column(nullable = true, length = 50)
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
     @OneToOne
-    @JoinColumn(name = "userInfo_id",nullable = true)
+    @JoinColumn(name = "userInfoId",nullable = true)
     private UserInfo userInfo;
 
     // 회원상태
-    @Column(nullable = true, length = 100)
+    @Column(nullable = true)
     private boolean status;
 
 
@@ -72,7 +72,7 @@ public class User extends TimeStamped {
 
 
     public User(UserDto userDto, Long userId) {
-        this.isStudying = userDto.isIsstudying();
+        this.isStudying = userDto.isStudying();
 
     }
     public void updateStatus(UserDto userDto){
@@ -85,7 +85,7 @@ public class User extends TimeStamped {
     }
 
     public void updateStudy(UserDto userDto){
-        this.isStudying = userDto.isIsstudying();
+        this.isStudying = userDto.isStudying();
     }
 
 }

@@ -84,6 +84,7 @@ public class UserService {
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new NullPointerException("그럴리가 없쥬")
         );
+
         if (user.getTeam() != null) {
             user.setTeam(null);
         }
