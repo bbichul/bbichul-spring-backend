@@ -1,5 +1,6 @@
 package site.bbichul.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,13 +17,13 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/calendars")
+@RequestMapping("/api/calendars")
 @Slf4j
 public class CalendarController {
 
     private final CalendarService calendarService;
 
-
+    @Operation(description = "달력 정보 가져오기", method = "GET")
     @GetMapping
     public List<UserCalendar> getCalendarInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("GET /info HTTP/1.1");
@@ -31,7 +32,7 @@ public class CalendarController {
         return calendarService.getUserInfo(username);
     }
 
-
+    @Operation(description = "메모 추가하기", method = "PUT")
     @PutMapping("/calendar/memo")
     public void updateCalendarMemo(@RequestBody CalendarMemoDto calendarMemoDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         log.info("PUT /memo HTTP/1.1");
@@ -39,7 +40,7 @@ public class CalendarController {
     }
 
 
-
+    @Operation(description = "메모 불러오기", method = "GET")
     @GetMapping("/calendar/memo")
     public CalendarMemoResponseDto getMemoClickedDay(@RequestParam("id") Long calendarId, @RequestParam("date") String dateData , @AuthenticationPrincipal UserDetailsImpl userDetails){
         log.info("GET /memo HTTP/1.1");
@@ -47,7 +48,7 @@ public class CalendarController {
         return calendarService.getMemoClickedDay(calendarId, dateData);
     }
 
-
+    @Operation(description = "달력 변경하고 메모 가져오기", method = "GET")
     @GetMapping("/calendar")
     public List<CalendarMemo> getMemo(@RequestParam("id") Long calendarId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("GET /option HTTP/1.1");
@@ -55,7 +56,7 @@ public class CalendarController {
         return calendarService.getTypeAllMemo(calendarId);
     }
 
-
+    @Operation(description = "달력 추가하기", method = "POST")
     @PostMapping("/calendar")
     public String addCalendar(@RequestBody CalenderDto calenderDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("POST /option HTTP/1.1");

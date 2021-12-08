@@ -1,9 +1,11 @@
 package site.bbichul.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import site.bbichul.dto.TimeRequestDto;
 import site.bbichul.dto.UserDto;
@@ -15,18 +17,20 @@ import java.time.LocalDate;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/api")
 public class TimeController {
 
     private final TimeService timeService;
     private final UserService userService;
 
-    // 공부시작 true 보내기
+    @Operation(description = "공부 시작시 check-in 기능", method = "POST")
     @PostMapping("/times/check-in")
     public void startStudy(@RequestBody UserDto userDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         String username = userDetails.getUsername();
         userService.setStudy(userDto, username);
     }
-    //공부시간 저장 및 check-out
+
+    @Operation(description = "공부시간 저장 및 check-out", method = "POST")
     @PostMapping("/times/check-out")
     public Time createTime(@RequestBody TimeRequestDto timeRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
 
