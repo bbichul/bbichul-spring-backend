@@ -28,13 +28,13 @@ public class GoalService {
     public Map<String, String> updateGoal(GoalRequestDto goalRequestDto, User user) {
 
         UserInfo userInfo = userInfoRepository.findById(user.getUserInfo().getId()).orElseThrow(
-                () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다.")
+                () -> new IllegalArgumentException("INVALID USER")
         );
         userInfo.goalUpdate(goalRequestDto);
 
 
         Map<String, String> map = new HashMap();	//<키 자료형, 값 자료형>
-        map.put("msg", "성공");
+        map.put("msg", "SUCCESS");
 
         return map;
     }
@@ -42,16 +42,16 @@ public class GoalService {
     public Map<String, Object> getGoal(User user) {
 
         UserInfo userInfo = userInfoRepository.findById(user.getUserInfo().getId()).orElseThrow(
-                () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
+                () -> new NullPointerException("INVALID USER")
         );
         if (userInfo.getStartDate() == null) {
             Map<String, Object> map = new HashMap();
             map.put("startDate", "");
             map.put("endDate", "");
-            map.put("d_day", 0);
+            map.put("dDay", 0);
             map.put("percent", 0);
-            map.put("goal_hour", 0);
-            map.put("done_hour", 0);
+            map.put("goalHour", 0);
+            map.put("doneHour", 0);
             return map;
         }
         Map<String, Object> map = new HashMap();
@@ -95,10 +95,10 @@ public class GoalService {
 
         map.put("startDate", userInfo.getStartDate());
         map.put("endDate", userInfo.getEndDate());
-        map.put("d_day", d_day);
+        map.put("dDay", d_day);
         map.put("percent", percent);
-        map.put("goal_hour", userInfo.getGoalHour());
-        map.put("done_hour", done_hour);
+        map.put("goalHour", userInfo.getGoalHour());
+        map.put("doneHour", done_hour);
 
         return map;
     }

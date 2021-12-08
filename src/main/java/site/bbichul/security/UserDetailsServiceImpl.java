@@ -11,6 +11,8 @@ import site.bbichul.repository.UserRepository;
 
 @RequiredArgsConstructor
 @Service
+
+// UserDetailsService : DB에 저장된 회원의 아이디, 비밀번호와 비교함
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
@@ -22,7 +24,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user1 = userRepository.findByUsernameAndStatus(username, false).orElseThrow(
                 () -> new UsernameNotFoundException("아이다가 탈퇴 상태 입니다")
         );
-
 
         return new UserDetailsImpl(user1);
 

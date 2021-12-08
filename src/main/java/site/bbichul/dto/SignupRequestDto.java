@@ -1,11 +1,9 @@
 package site.bbichul.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import site.bbichul.models.UserInfo;
+import lombok.Data;
 
-@Setter
-@Getter
+@Data
+
 public class SignupRequestDto {
     private String username;
     private String password;

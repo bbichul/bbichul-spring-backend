@@ -1,12 +1,10 @@
 package site.bbichul.models;
 
-import lombok.Builder;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import site.bbichul.dto.UserDto;
-import site.bbichul.dto.UsernameDto;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,6 @@ public class User extends TimeStamped {
         this.role = role;
         this.userInfo = userInfo;
     }
-
 
     // ID가 자동으로 생성 및 증가합니다.
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,7 +39,7 @@ public class User extends TimeStamped {
     @Column(nullable = true)
     private boolean isStudying;
 
-    // 팀 아이디(외래키) MANYTOONE
+    // 팀 아이디(외래키)
     @ManyToOne
     @JoinColumn(name = "teamId",nullable = true )
     private Team team;
@@ -51,11 +48,12 @@ public class User extends TimeStamped {
     @Column(nullable = true, length = 50)
     private String position;
 
-
+    // 유저 , 어드민
     @Column(nullable = true, length = 50)
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
+    // 개인 정보 아이디
     @OneToOne
     @JoinColumn(name = "userInfoId",nullable = true)
     private UserInfo userInfo;
@@ -64,26 +62,16 @@ public class User extends TimeStamped {
     @Column(nullable = true)
     private boolean status;
 
-
     @OneToMany(mappedBy = "user")
     List<Time> times = new ArrayList<>();
 
-
-
-
-    public User(UserDto userDto, Long userId) {
+    public User(UserDto userDto) {
         this.isStudying = userDto.isStudying();
 
     }
     public void updateStatus(UserDto userDto){
         this.status = userDto.isStatus();
     }
-
-    public void usernameUpdate(UsernameDto usernameDto) {
-        System.out.println(usernameDto.getUsername());
-        this.username = usernameDto.getUsername();
-    }
-
     public void updateStudy(UserDto userDto){
         this.isStudying = userDto.isStudying();
     }

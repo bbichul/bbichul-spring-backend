@@ -1,11 +1,11 @@
 package site.bbichul.dto;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
-public class CalendarMemoDto {
+@Builder
+public class CalendarMemoResponseDto {
 
     private Long CalendarId;
     private String dateData;

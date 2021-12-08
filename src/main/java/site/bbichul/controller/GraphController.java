@@ -17,17 +17,11 @@ public class GraphController {
 
     private final GraphService graphService;
 
-    @PostMapping("/line-graph")
-    public Map<String, Object> drawLineGraph(@RequestBody GraphRequestDto graphRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    @GetMapping("/users/graph")
+    public Map<String, Object> drawLineGraph(@RequestParam String type,@RequestParam Integer year, @RequestParam Integer month, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
-        return graphService.drawLineGraph(graphRequestDto, userDetails.getUser());
+        return graphService.drawLineGraph(type, year, month, userDetails.getUser());
 
     }
 
-
-    @PostMapping("/bar-graph")
-    public Map<String, Object> drawBarGraph(@RequestBody GraphRequestDto graphRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-
-        return graphService.drawBarGraph(graphRequestDto, userDetails.getUser());
-    }
 }

@@ -25,56 +25,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http.csrf().disable(); //다른 출처 리소스를 거부함
         http.headers().frameOptions().disable();
 
         http.authorizeRequests()
-                // images 폴더 내의 파일 로그인 없이 허용
-                .antMatchers("/img/**").permitAll()
-                // css 폴더를 login 없이 허용
-                .antMatchers("/css/**").permitAll()
-                // css 폴더를 login 없이 허용
-                .antMatchers("/vendor/**").permitAll()
-                // audio 폴더 사용
-                .antMatchers("/audio/**").permitAll()
-                // js 폴더를 login 없이 허용
-                .antMatchers("/js/**").permitAll()
-                // user 폴더를 login 없이도 사용
+
+                // user 를 login 없이도 사용
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/").permitAll()
 
                 .antMatchers("/login").permitAll()
                 // 모든 html 사용
                 .antMatchers("/**.html").permitAll()
                 // 닉네임 중복체크 사용
                 .antMatchers("/check").permitAll()
-                //카카오 로그인 사용
-                .antMatchers("/login/kakao").permitAll()
+
                 .antMatchers("/signup").permitAll()
-                .antMatchers("/").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .formLogin()
-                .loginPage("/")
-                .permitAll()
-                .and()
-                .logout()
-                .logoutUrl("/user/logout")
-//                .permitAll()
-                .and()
                 .exceptionHandling();
-
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
-
+    // 비밀번호 암호화
     @Bean
     public BCryptPasswordEncoder encodePassword() {
         return new BCryptPasswordEncoder();
     }
 
+    // 인증을 마침
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {

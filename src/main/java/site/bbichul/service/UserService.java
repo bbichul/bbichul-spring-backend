@@ -25,8 +25,6 @@ public class UserService {
     private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
     private final PasswordEncoder passwordEncoder;
 
-    private final AuthenticationManager authenticationManager;
-
     public User registerUser(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
 
@@ -50,7 +48,6 @@ public class UserService {
 
         UserInfo userInfo = new UserInfo();
         userInfoRepository.save(userInfo);
-
 
         User user = new User(username, password, role, userInfo);
         userRepository.save(user);
@@ -78,6 +75,7 @@ public class UserService {
         }
         return message;
     }
+
     // 회원 상태 체크
     @Transactional
     public void setStatus(UserDto userDto, String username) {
@@ -88,7 +86,6 @@ public class UserService {
         if (user.getTeam() != null) {
             user.setTeam(null);
         }
-
         user.updateStatus(userDto);
     }
 

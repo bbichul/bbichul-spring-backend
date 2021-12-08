@@ -27,7 +27,7 @@ public class UserApiController {
     private final UserService userService;
 
     // 로그인 기능
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/login", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody UserDto userDto) throws Exception {
         authenticate(userDto.getUsername(), userDto.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
@@ -35,29 +35,28 @@ public class UserApiController {
         return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
     }
     // 회원가입 기능
-    @PostMapping(value = "/signup")
+    @PostMapping(value = "/users/signup")
     public ResponseEntity<?> createUser(@RequestBody SignupRequestDto userDto) throws Exception {
-//        UserInfo userInfo = userService.registerUserInfo();
         userService.registerUser(userDto);
         authenticate(userDto.getUsername(), userDto.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername()));
     }
+
     //닉네임 중복 체크
-    @PostMapping(value = "/check")
+    @PostMapping(value = "/users/check")
     public String checkUser(@RequestBody UserDto userDto){
         System.out.println(userDto);
         return userService.checkUser(userDto);
     }
 
     // 회원 상태 체크
-    @PostMapping("/status")
-    public void updatestatus(@RequestBody UserDto userDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    @PostMapping("/users/withdrawal")
+    public void updateStatus(@RequestBody UserDto userDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         String username = userDetails.getUsername();
         userService.setStatus(userDto, username);
     }
-
 
     private void authenticate(String username, String password) throws Exception {
         try {
