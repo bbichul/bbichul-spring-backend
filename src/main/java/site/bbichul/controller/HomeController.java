@@ -9,7 +9,7 @@ import site.bbichul.security.UserDetailsImpl;
 @RestController
 public class HomeController {
 
-    @GetMapping("/api/")
+    @GetMapping("/")
     public String home() {
         return "OK";
     }
