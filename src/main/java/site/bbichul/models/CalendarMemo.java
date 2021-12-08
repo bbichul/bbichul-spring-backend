@@ -1,13 +1,10 @@
 package site.bbichul.models;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import site.bbichul.dto.CalendarMemoDto;
 
 import javax.persistence.*;
-import javax.xml.soap.Text;
 
 
 @NoArgsConstructor
@@ -29,11 +26,6 @@ public class CalendarMemo {
     @Column(nullable = true, columnDefinition = "TEXT")
     private String contents;
 
-
-    public CalendarMemo(CalendarMemoDto calendarMemoDto) {
-        this.dateData = calendarMemoDto.getDateData();
-        this.contents = calendarMemoDto.getContents();
-    }
 
     public CalendarMemo(CalendarMemoDto calendarMemoDto, UserCalendar userCalendar) {
         this.userCalendar = userCalendar;
