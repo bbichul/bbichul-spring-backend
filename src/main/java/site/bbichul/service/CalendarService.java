@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.bbichul.dto.CalendarMemoDto;
+import site.bbichul.dto.CalendarMemoResponseDto;
 import site.bbichul.exception.BbichulErrorCode;
 import site.bbichul.exception.BbichulException;
 import site.bbichul.models.CalendarMemo;
@@ -70,45 +71,25 @@ public class CalendarService {
     }
 
 
-    public CalendarMemo getMemoClickedDay(String dateData,String calendarType, String username) {
-        User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new BbichulException(BbichulErrorCode.NOT_FOUND_USER));
+    public CalendarMemoResponseDto getMemoClickedDay(Long id, String dateData) {
 
-        UserCalendar userCalendar = null;
-        Long calendarId = null;
-        if (calendarType.substring(0, 1).equals("P")) {
-            userCalendar = userCalendarRepository.findByUserIdAndCalendarType(
-                    user.getId(),
-                    calendarType).orElseThrow(
-                    () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MATCHED_CALENDAR)
-            );
-
-            calendarId = userCalendar.getId();
-        } else if (calendarType.substring(0, 1).equals("T")) {
-            userCalendar = userCalendarRepository.findByTeamIdAndCalendarType(
-                    user.getTeam().getId(),
-                    calendarType).orElseThrow(
-                    () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MATCHED_CALENDAR)
-            );
-
-            calendarId = userCalendar.getId();
-        }
 
         try{
-            CalendarMemo calendarMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(calendarId, dateData).orElseThrow(
+            CalendarMemo calendarMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(id, dateData).orElseThrow(
                     ()-> new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
-            return calendarMemo;
+            return CalendarMemoResponseDto.builder()
+                    .dateData(calendarMemo.getDateData())
+                    .contents(calendarMemo.getContents())
+                    .build();
+
         }catch (BbichulException e){
-            CalendarMemoDto calendarMemoDto = new CalendarMemoDto();
-            calendarMemoDto.setCalendarType(calendarType);
-            calendarMemoDto.setDateData(dateData);
-            calendarMemoDto.setContents("");
-            System.out.println(calendarMemoDto);
-            return new CalendarMemo(calendarMemoDto);
+            return CalendarMemoResponseDto.builder()
+                    .dateData(dateData)
+                    .contents("")
+                    .build();
         }
 
     }
-//
 
 //
 //

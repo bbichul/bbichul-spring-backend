@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import site.bbichul.dto.CalendarMemoDto;
+import site.bbichul.dto.CalendarMemoResponseDto;
 import site.bbichul.models.CalendarMemo;
 import site.bbichul.models.UserCalendar;
 import site.bbichul.security.UserDetailsImpl;
@@ -39,11 +40,10 @@ public class CalendarController {
 
 
     @GetMapping("/calendar/memo")
-    public CalendarMemo getMemoClickedDay(@RequestParam Long id, @RequestParam String dateData , @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public CalendarMemoResponseDto getMemoClickedDay(@RequestParam Long id, @RequestParam String dateData , @AuthenticationPrincipal UserDetailsImpl userDetails){
         log.info("GET /memo HTTP/1.1");
 
-        String username= userDetails.getUsername();
-        return calendarService.getMemoClickedDay(dateData,calendarType, username);
+        return calendarService.getMemoClickedDay(id, dateData);
     }
 
 
