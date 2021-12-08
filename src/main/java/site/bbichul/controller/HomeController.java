@@ -9,7 +9,6 @@ import site.bbichul.security.UserDetailsImpl;
 @RestController
 public class HomeController {
 
-    @Operation(description = "서버 연결 확인", method = "GET")
     @GetMapping("/api/")
     public String home() {
         return "OK";
