@@ -41,6 +41,9 @@ dependencies {
 	// JSOUP 스크래핑
 	implementation 'org.jsoup:jsoup:1.13.1'
 
+	//swagger
+	implementation 'org.springdoc:springdoc-openapi-ui:1.5.13'
+
 }
 
 jar {

@@ -33,6 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
 
+                .antMatchers("/swagger-ui.html","/swagger-ui/**","/v3/api-docs/**").permitAll()
+
                 // user 를 login 없이도 사용
                 .antMatchers("/users/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
