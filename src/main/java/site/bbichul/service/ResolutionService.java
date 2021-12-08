@@ -21,16 +21,16 @@ public class ResolutionService {
     public String updateResolution(ResolutionRequestDto userInfoRequestDto, User user) {
 
         UserInfo userInfo = userInfoRepository.findById(user.getUserInfo().getId()).orElseThrow(
-                () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다.")
+                () -> new IllegalArgumentException("INVALID USER")
         );
         userInfo.resolutionUpdate(userInfoRequestDto);
 
-        return "성공";
+        return "SUCCESS";
     }
     public UserInfo getResolution(User user) {
 
         return userInfoRepository.findById(user.getUserInfo().getId()).orElseThrow(
-                () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
+                () -> new NullPointerException("INVALID USER")
         );
     }
 }

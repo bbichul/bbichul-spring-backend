@@ -23,8 +23,4 @@ public class ChangeUsernameController {
         return changeUsernameService.getUsername(userDetails.getUser());
     }
 
-//    @GetMapping("/nickname-modal")
-//    public Map<String,Object> changeUsername(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-//        return changeUsernameService.getUsername(userDetails.getUser());
-//    }
 }
