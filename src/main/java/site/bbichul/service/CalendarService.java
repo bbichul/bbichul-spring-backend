@@ -109,13 +109,11 @@ public class CalendarService {
                 () -> new BbichulException(BbichulErrorCode.NOT_FOUND_USER)
         );
 
-        boolean isPrivateEmptied = userCalendarRepository.findAllByUserId(user.getId()).isEmpty();
+        boolean isCalendarEmptied = userCalendarRepository.findAllByUserId(user.getId()).isEmpty();
 
 
-        if (isPrivateEmptied) {
-            UserCalendar userCalendar = new UserCalendar(user);
-            userCalendar.setCalendarType("P1");
-            userCalendar.setUserCount(1);
+        if (isCalendarEmptied) {
+            UserCalendar userCalendar = new UserCalendar(user, true);
             userCalendarRepository.save(userCalendar);
         }
 
@@ -124,15 +122,11 @@ public class CalendarService {
             boolean isTeamEmptied = userCalendarRepository.findAllByTeamId(getTeamCalendarId).isEmpty();
 
             if (isTeamEmptied) {
-                UserCalendar userCalendarT = new UserCalendar(user.getTeam());
-                userCalendarT.setCalendarType("T1");
-                userCalendarT.setTeamCount(1);
-
+                UserCalendar userCalendarT = new UserCalendar(user.getTeam(), false);
                 userCalendarRepository.save(userCalendarT);
             }
         }
         Long teamId = user.getTeam() != null ? user.getTeam().getId() : null;
-
         return userCalendarRepository.findAllByUserIdOrTeamId(user.getId(), teamId);
     }
 

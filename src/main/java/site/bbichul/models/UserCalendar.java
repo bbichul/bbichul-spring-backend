@@ -27,21 +27,18 @@ public class UserCalendar {
     @JoinColumn(name = "teamId", nullable = true)
     private Team team;
 
-    @Column(nullable = true)
-    private int userCount;
+    @Column(nullable = false)
+    private Boolean isPrivate;
 
-    @Column(nullable = true)
-    private int teamCount;
 
-    @Column(nullable = false, length = 50)
-    private String calendarType;
-
-    public UserCalendar(User user){
+    public UserCalendar(User user, boolean isPrivate){
         this.user = user;
+        this.isPrivate = isPrivate;
     }
 
-    public UserCalendar(Team team){
+    public UserCalendar(Team team, boolean isPrivate){
         this.team = team;
+        this.isPrivate = isPrivate;
     }
 
 }

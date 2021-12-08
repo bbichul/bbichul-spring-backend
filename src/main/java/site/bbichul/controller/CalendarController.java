@@ -22,7 +22,7 @@ public class CalendarController {
     private final CalendarService calendarService;
 
 
-    @GetMapping("/info")
+    @GetMapping("/")
     public List<UserCalendar> getCalendarInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("GET /info HTTP/1.1");
 
@@ -47,7 +47,7 @@ public class CalendarController {
         calendarService.updateMemo(calendarMemoDto, username);
     }
 
-    @GetMapping("/option")
+    @GetMapping("/calendar")
     public List<CalendarMemo> getMemo(@RequestParam String calendarType,@AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("GET /option HTTP/1.1");
 
@@ -56,7 +56,7 @@ public class CalendarController {
     }
 
 
-    @PostMapping("/option")
+    @PostMapping("/calendar")
     public String addCalendar(@RequestBody CalenderDto calenderDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("POST /option HTTP/1.1");
 
