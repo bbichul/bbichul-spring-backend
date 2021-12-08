@@ -18,12 +18,12 @@ public class ResolutionController {
     private final ResolutionService resolutionService;
 
 
-    @PutMapping("/resolution")
+    @PutMapping("users/resolution")
     public String updateResolution(@RequestBody ResolutionRequestDto userInfoRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return resolutionService.updateResolution(userInfoRequestDto, userDetails.getUser());
     }
 
-    @GetMapping("/resolution")
+    @GetMapping("users/resolution")
     public UserInfo getResolution(@AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         return resolutionService.getResolution(userDetails.getUser());
