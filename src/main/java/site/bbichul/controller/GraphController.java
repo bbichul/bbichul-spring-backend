@@ -24,10 +24,4 @@ public class GraphController {
 
     }
 
-
-//    @GetMapping("/users/graph")
-//    public Map<String, Object> drawBarGraph(@RequestBody GraphRequestDto graphRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-//
-//        return graphService.drawBarGraph(graphRequestDto, userDetails.getUser());
-//    }
 }
