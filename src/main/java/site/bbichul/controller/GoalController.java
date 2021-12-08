@@ -18,12 +18,12 @@ public class GoalController {
 
     private final GoalService goalService;
 
-    @PutMapping("/goal")
+    @PutMapping("/users/goal")
     public Map<String, String> updateGoal(@RequestBody GoalRequestDto goalRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return goalService.updateGoal(goalRequestDto, userDetails.getUser());
     }
 
-    @GetMapping("/goal")
+    @GetMapping("/users/goal")
     public Map<String,Object> getGoal(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return goalService.getGoal(userDetails.getUser());
     }
