@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
 
-                .antMatchers(HttpMethod.OPTIONS, "/**/").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
 
                 // user 를 login 없이도 사용
                 .antMatchers("/user/**").permitAll()
