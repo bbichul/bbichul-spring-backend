@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-	//	// aws secrets
+//	// aws secrets
 	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.0.3'
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws-secrets-manager-config:2.2.6.RELEASE'
 
@@ -31,13 +31,16 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// 스프링 시큐리티
-//	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// JWT 토큰
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
 	implementation group: 'org.json', name: 'json', version: '20160810'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// JSOUP 스크래핑
 	implementation 'org.jsoup:jsoup:1.13.1'
+
 }
 
 jar {

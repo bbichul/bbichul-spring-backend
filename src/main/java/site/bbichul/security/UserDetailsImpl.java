@@ -5,9 +5,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import site.bbichul.models.User;
 import site.bbichul.models.UserRole;
-
 import java.util.ArrayList;
 import java.util.Collection;
+
 
 public class UserDetailsImpl implements UserDetails {
 
