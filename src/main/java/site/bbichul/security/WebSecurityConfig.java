@@ -34,17 +34,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
 
                 // user 를 login 없이도 사용
-                .antMatchers("/user/**").permitAll()
+                .antMatchers("/users/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/").permitAll()
 
-                .antMatchers("/login").permitAll()
                 // 모든 html 사용
                 .antMatchers("/**.html").permitAll()
                 // 닉네임 중복체크 사용
-                .antMatchers("/check").permitAll()
-
-                .antMatchers("/signup").permitAll()
+//                .antMatchers("users/check").permitAll()
+//                .antMatchers("users/signup").permitAll()
+//                .antMatchers("users/login").permitAll()
 
                 .anyRequest().authenticated()
                 .and()
