@@ -53,10 +53,10 @@ public class TimeController {
 
         Time time;
         if (yesterdayTime != 0){
-             time = timeService.upsertTime(timeRequestDto, userDetails.getUser());
+            time = timeService.upsertStudy(timeRequestDto, userDetails.getUser());
 
         }else {
-             time = timeService.upsertStudy(timeRequestDto, userDetails.getUser());
+            time = timeService.upsertTime(timeRequestDto, userDetails.getUser());
         }
 
         return time;
