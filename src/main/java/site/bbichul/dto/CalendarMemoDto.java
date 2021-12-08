@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CalendarMemoDto {
 
-    private Long idx;
+    private Long CalendarId;
     private String dateData;
     private String contents;
 }

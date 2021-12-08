@@ -61,21 +61,21 @@ public class CalendarService {
 
 
         try{
-            CalendarMemo getMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(calendarMemoDto.getIdx(), calendarMemoDto.getDateData()).orElseThrow(
+            CalendarMemo getMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(calendarMemoDto.getCalendarId(), calendarMemoDto.getDateData()).orElseThrow(
                     () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
             getMemo.updateMemo(calendarMemoDto);
         }catch (BbichulException e){
-            CalendarMemo calendarMemo = new CalendarMemo(calendarMemoDto, userCalendarRepository.getById(calendarMemoDto.getIdx()));
+            CalendarMemo calendarMemo = new CalendarMemo(calendarMemoDto, userCalendarRepository.getById(calendarMemoDto.getCalendarId()));
             calendarMemoRepository.save(calendarMemo);
         }
     }
 
 
-    public CalendarMemoResponseDto getMemoClickedDay(Long id, String dateData) {
+    public CalendarMemoResponseDto getMemoClickedDay(Long CalendarId, String dateData) {
 
 
         try{
-            CalendarMemo calendarMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(id, dateData).orElseThrow(
+            CalendarMemo calendarMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(CalendarId, dateData).orElseThrow(
                     ()-> new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
             return CalendarMemoResponseDto.builder()
                     .dateData(calendarMemo.getDateData())
@@ -91,41 +91,13 @@ public class CalendarService {
 
     }
 
-//
-//
-//
-//    public List<CalendarMemo> getTypeAllMemo(String calendarType, String username) {
-//
-//        User user = userRepository.findByUsername(username).orElseThrow(
-//                () -> new BbichulException(BbichulErrorCode.NOT_FOUND_USER));
-//
-//        UserCalendar userCalendar;
-//        Long calendarId = null;
-//        if (calendarType.substring(0, 1).equals("P")) {
-//            userCalendar = userCalendarRepository.findByUserIdAndCalendarType(
-//                    user.getId(),
-//                    calendarType).orElseThrow(
-//                    () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MATCHED_CALENDAR)
-//            );
-//
-//            calendarId = userCalendar.getId();
-//        } else if (calendarType.substring(0, 1).equals("T")) {
-//
-//            userCalendar = userCalendarRepository.findByTeamIdAndCalendarType(
-//                    user.getTeam().getId(),
-//                    calendarType).orElseThrow(
-//                    () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MATCHED_CALENDAR)
-//            );
-//
-//            calendarId = userCalendar.getId();
-//
-//        }
-//
-//        List<CalendarMemo> calendarMemoList = calendarMemoRepository.findAllByUserCalendarId(calendarId);
-//
-//        return calendarMemoList;
-//
-//    }
+    public List<CalendarMemo> getTypeAllMemo(Long calendarId) {
+
+        List<CalendarMemo> calendarMemoList = calendarMemoRepository.findAllByUserCalendarId(calendarId);
+
+        return calendarMemoList;
+
+    }
 //
 //    @Transactional
 //    public void addCalendar(boolean isPrivated, String username) {

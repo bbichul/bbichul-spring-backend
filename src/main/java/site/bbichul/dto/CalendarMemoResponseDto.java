@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class CalendarMemoResponseDto {
 
-    private Long id;
+    private Long CalendarId;
     private String dateData;
     private String contents;
 }

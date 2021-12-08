@@ -40,23 +40,22 @@ public class CalendarController {
 
 
     @GetMapping("/calendar/memo")
-    public CalendarMemoResponseDto getMemoClickedDay(@RequestParam Long id, @RequestParam String dateData , @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public CalendarMemoResponseDto getMemoClickedDay(@RequestParam("id") Long calendarId, @RequestParam("date") String dateData , @AuthenticationPrincipal UserDetailsImpl userDetails){
         log.info("GET /memo HTTP/1.1");
 
-        return calendarService.getMemoClickedDay(id, dateData);
+        return calendarService.getMemoClickedDay(calendarId, dateData);
     }
 
 
-//
-//    @GetMapping("/calendar")
-//    public List<CalendarMemo> getMemo(@RequestParam String calendarType,@AuthenticationPrincipal UserDetailsImpl userDetails) {
-//        log.info("GET /option HTTP/1.1");
-//
-//        String username = userDetails.getUsername();
-//        return calendarService.getTypeAllMemo(calendarType, username);
-//    }
-//
-//
+
+    @GetMapping("/calendar")
+    public List<CalendarMemo> getMemo(@RequestParam("id") Long calendarId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        log.info("GET /option HTTP/1.1");
+
+        return calendarService.getTypeAllMemo(calendarId);
+    }
+
+
 //    @PostMapping("/calendar")
 //    public String addCalendar(@RequestBody CalenderDto calenderDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 //        log.info("POST /option HTTP/1.1");
