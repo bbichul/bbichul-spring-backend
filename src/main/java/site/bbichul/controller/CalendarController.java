@@ -6,6 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import site.bbichul.dto.CalendarMemoDto;
 import site.bbichul.dto.CalendarMemoResponseDto;
+import site.bbichul.dto.CalenderDto;
 import site.bbichul.models.CalendarMemo;
 import site.bbichul.models.UserCalendar;
 import site.bbichul.security.UserDetailsImpl;
@@ -47,7 +48,6 @@ public class CalendarController {
     }
 
 
-
     @GetMapping("/calendar")
     public List<CalendarMemo> getMemo(@RequestParam("id") Long calendarId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("GET /option HTTP/1.1");
@@ -56,14 +56,13 @@ public class CalendarController {
     }
 
 
-//    @PostMapping("/calendar")
-//    public String addCalendar(@RequestBody CalenderDto calenderDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-//        log.info("POST /option HTTP/1.1");
-//
-//        String username = userDetails.getUsername();
-//        boolean isPrivate = calenderDto.getIsPrivate();
-//        calendarService.addCalendar(isPrivate, username);
-//        return "캘린더가 추가되었습니다 !";
-//    }
+    @PostMapping("/calendar")
+    public String addCalendar(@RequestBody CalenderDto calenderDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        log.info("POST /option HTTP/1.1");
+
+        String username = userDetails.getUsername();
+        calendarService.addCalendar(calenderDto, username);
+        return "캘린더가 추가되었습니다 !";
+    }
 
 }

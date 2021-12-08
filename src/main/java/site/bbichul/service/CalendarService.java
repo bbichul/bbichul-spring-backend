@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.bbichul.dto.CalendarMemoDto;
 import site.bbichul.dto.CalendarMemoResponseDto;
+import site.bbichul.dto.CalenderDto;
 import site.bbichul.exception.BbichulErrorCode;
 import site.bbichul.exception.BbichulException;
 import site.bbichul.models.CalendarMemo;
@@ -98,46 +99,22 @@ public class CalendarService {
         return calendarMemoList;
 
     }
-//
-//    @Transactional
-//    public void addCalendar(boolean isPrivated, String username) {
-//
-//        User user = userRepository.findByUsername(username).orElseThrow(
-//                () -> new BbichulException(BbichulErrorCode.NOT_FOUND_USER));
-//
-//
-//        List<UserCalendar> userCalendarList = null;
-//        UserCalendar userCalendar = null;
-//        if (isPrivated) {
-//            userCalendarList = userCalendarRepository.findAllByUserId(user.getId());
-//
-//            int listLength = userCalendarList.size();
-//
-//            for (int i = 0; i < listLength; i++) {
-//                userCalendarList.get(i).setUserCount(listLength+1);
-//            }
-//
-//            userCalendar = new UserCalendar(user);
-//            userCalendar.setUserCount(listLength+1);
-//            userCalendar.setCalendarType("P" + Integer.toString(listLength+1));
-//
-//
-//        } else if (!isPrivated) {
-//
-//            userCalendarList = userCalendarRepository.findAllByTeamId(user.getTeam().getId());
-//
-//            int listLength = userCalendarList.size();
-//
-//            for (int i = 0; i < listLength; i++) {
-//                userCalendarList.get(i).setTeamCount(listLength+1);
-//            }
-//
-//            userCalendar = new UserCalendar(user.getTeam());
-//            userCalendar.setUserCount(listLength+1);
-//            userCalendar.setCalendarType("T" + Integer.toString(listLength+1));
-//        }
-//
-//        userCalendarRepository.save(userCalendar);
-//    }
+
+    @Transactional
+    public void addCalendar(CalenderDto calenderDto, String username) {
+
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new BbichulException(BbichulErrorCode.NOT_FOUND_USER));
+
+
+        UserCalendar userCalendar = null;
+        if (calenderDto.getIsPrivate()) {
+            userCalendar = new UserCalendar(user, calenderDto.getIsPrivate());
+        } else {
+            userCalendar = new UserCalendar(user.getTeam(), calenderDto.getIsPrivate());
+        }
+
+        userCalendarRepository.save(userCalendar);
+    }
 }
 
