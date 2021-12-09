@@ -16,6 +16,9 @@ https://bbichul.site/
 * 김성훈  
 * 최대환  
 
+### 📌 아키텍처
+![image (8)](https://user-images.githubusercontent.com/90130141/145380368-67bb2a8c-fa6f-43f7-bfc2-d11305531b25.png)
+
 ### 🛠 기술스택
 ||프론트엔드|백엔드|
 |---|---|---|
@@ -30,6 +33,10 @@ https://bbichul.site/
 ### 📌 브랜치관리 - <a href="https://github.com/choidaehwan/bbichul-spring/wiki#%EB%B8%8C%EB%9E%9C%EC%B9%98-%EA%B4%80%EB%A6%AC" > 상세보기 - WIKI 이동</a>
 
 ### 📌 API문서 - <a href="https://github.com/choidaehwan/bbichul-spring/wiki/API%EB%AC%B8%EC%84%9C" > 상세보기 - WIKI 이동</a>
+### 📌 API문서 자동화 - - <a href="https://api.bbichul.shop/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/" > 상세보기 - Swagger 이동 </a>
+![image](https://user-images.githubusercontent.com/90130141/145380676-01760825-2432-46ff-84ae-ac7c91e7c8b1.png)
+
+
 
 ### 📌 기술 선택 이유! - <a href="https://github.com/Dae-Hwan/BBI-CHUL-spring/wiki/%EA%B8%B0%EC%88%A0-%EC%84%A0%ED%83%9D-%EC%9D%B4%EC%9C%A0" > 상세보기 - WIKI 이동</a>
 
