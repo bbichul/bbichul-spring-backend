@@ -24,7 +24,7 @@ public class CalendarController {
     private final CalendarService calendarService;
 
     @Operation(description = "달력 정보 가져오기", method = "GET")
-    @GetMapping
+    @GetMapping("/info")
     public List<UserCalendar> getCalendarInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("GET /info HTTP/1.1");
 
