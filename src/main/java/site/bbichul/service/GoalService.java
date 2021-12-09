@@ -81,7 +81,7 @@ public class GoalService {
 
             studyTimeSum += time.getStudyTime();
         }
-        int done_hour = studyTimeSum / 3600;
+        int doneHour = studyTimeSum / 3600;
 
         long calculate = userInfo.getEndDate().getTime() - userInfo.getStartDate().getTime();
 
@@ -98,7 +98,7 @@ public class GoalService {
         map.put("dDay", dDay);
         map.put("percent", percent);
         map.put("goalHour", userInfo.getGoalHour());
-        map.put("doneHour", done_hour);
+        map.put("doneHour", doneHour);
 
         return map;
     }
