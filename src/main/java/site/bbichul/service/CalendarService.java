@@ -27,7 +27,6 @@ public class CalendarService {
     private final CalendarMemoRepository calendarMemoRepository;
 
 
-
     @Transactional
     public List<UserCalendar> getUserInfo(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(
