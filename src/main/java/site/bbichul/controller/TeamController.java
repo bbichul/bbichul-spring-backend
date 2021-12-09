@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import site.bbichul.dto.TeamProgressbarResponseDto;
 import site.bbichul.dto.TeamRequestDto;
 import site.bbichul.dto.TeamTaskRequestDto;
-import site.bbichul.models.Team;
 import site.bbichul.models.TeamTask;
 import site.bbichul.models.User;
 import site.bbichul.security.UserDetailsImpl;
