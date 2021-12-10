@@ -17,7 +17,8 @@ https://bbichul.site/
 * 최대환  
 
 ### 📌 아키텍처
-![image (8)](https://user-images.githubusercontent.com/90130141/145380368-67bb2a8c-fa6f-43f7-bfc2-d11305531b25.png)
+![image](https://user-images.githubusercontent.com/83940013/145501889-d1b40c29-0e0b-4939-9c6c-fd11c869ba63.png)
+
 
 ### 🛠 기술스택
 ||프론트엔드|백엔드|
