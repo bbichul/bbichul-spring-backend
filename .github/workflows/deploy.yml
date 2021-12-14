@@ -3,7 +3,7 @@ name: bbichul-spring-backend
 on:
   push:
     branches:
-      - main
+      - release1.1
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -58,8 +58,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: bbichul-eb
-          environment_name: Bbichuleb-env
+          application_name: bbichulsite
+          environment_name: Bbichulsite-env
           version_label: github-action-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip

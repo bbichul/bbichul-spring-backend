@@ -4,9 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import site.bbichul.dto.GraphRequestDto;
-import site.bbichul.dto.ResolutionRequestDto;
-import site.bbichul.models.UserInfo;
 import site.bbichul.security.UserDetailsImpl;
 import site.bbichul.service.GraphService;
 

@@ -27,7 +27,6 @@ public class CalendarService {
     private final CalendarMemoRepository calendarMemoRepository;
 
 
-
     @Transactional
     public List<UserCalendar> getUserInfo(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(
@@ -51,7 +50,7 @@ public class CalendarService {
                 userCalendarRepository.save(userCalendarT);
             }
         }
-        Long teamId = user.getTeam() != null ? user.getTeam().getId() : null;
+        Long teamId = user.getTeam() != null ? user.getTeam().getId() : -1;
         return userCalendarRepository.findAllByUserIdOrTeamId(user.getId(), teamId);
     }
 
