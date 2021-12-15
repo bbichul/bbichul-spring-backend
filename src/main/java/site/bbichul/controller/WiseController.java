@@ -21,3 +21,4 @@ public class WiseController {
         return wiseService.getWises();
     }
 }
+
