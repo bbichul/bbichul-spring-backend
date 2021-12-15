@@ -33,4 +33,8 @@ public class TeamTask extends TimeStamped {
         this.task = teamTaskRequestDto.getTask();
         this.done = teamTaskRequestDto.getDone();
     }
+
+    public void taskUpdate(TeamTaskRequestDto requestDto) {
+        this.task = requestDto.getTask();
+    }
 }
