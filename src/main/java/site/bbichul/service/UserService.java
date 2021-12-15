@@ -58,7 +58,7 @@ public class UserService {
     @Transactional
     public void setStudy(UserDto userDto, String username) {
         User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new NullPointerException("그럴리가 없쥬")
+                () -> new NullPointerException("현재 유저가 공부하고 있지 않습니다")
         );
         user.updateStudy(userDto);
     }
@@ -80,7 +80,7 @@ public class UserService {
     @Transactional
     public void setStatus(UserDto userDto, String username) {
         User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new NullPointerException("그럴리가 없쥬")
+                () -> new NullPointerException("현재 유저가 탈퇴 상태가 아닙니다")
         );
 
         if (user.getTeam() != null) {
