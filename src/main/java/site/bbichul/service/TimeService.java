@@ -34,7 +34,7 @@ public class TimeService {
         );
         // userRepository 에 유저 아이디 가져오기
         User findUser = userRepository.findById(user.getId()).orElseThrow(
-                () -> new NullPointerException("그럴리가 없쥬")
+                () -> new NullPointerException("유저가 없습니다")
         );
         findUser.setStudying(timeRequestDto.isStudying());
 
@@ -70,7 +70,7 @@ public class TimeService {
 
         // userRepository 에 유저 아이디 가져오기
         User findUser = userRepository.findById(user.getId()).orElseThrow(
-                () -> new NullPointerException("그럴리가 없쥬")
+                () -> new NullPointerException("유저가 없습니다")
         );
         findUser.setStudying(timeRequestDto.isStudying());
 
