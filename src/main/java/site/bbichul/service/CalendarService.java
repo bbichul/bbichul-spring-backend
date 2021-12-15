@@ -115,5 +115,18 @@ public class CalendarService {
 
         userCalendarRepository.save(userCalendar);
     }
+
+
+    @Transactional
+    public void deleteCalendar(Long calendarId) {
+
+
+        System.out.println(11111111);
+        calendarMemoRepository.deleteAllByUserCalendarId(calendarId);
+
+        System.out.println(2222222);
+        userCalendarRepository.deleteById(calendarId);
+
+    }
 }
 

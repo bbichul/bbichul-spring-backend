@@ -66,4 +66,12 @@ public class CalendarController {
         return "캘린더가 추가되었습니다 !";
     }
 
+    @Operation(description = "달력 추가하기", method = "POST")
+    @DeleteMapping("/calendar")
+    public String deleteCalendar(@RequestParam("id") Long calendarId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        calendarService.deleteCalendar(calendarId);
+
+        return "선택한 캘린더가 삭제되었습니다.";
+    }
+
 }
