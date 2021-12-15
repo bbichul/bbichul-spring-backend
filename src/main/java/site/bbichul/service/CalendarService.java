@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.bbichul.dto.CalendarMemoDto;
 import site.bbichul.dto.CalendarMemoResponseDto;
-import site.bbichul.dto.CalenderDto;
+import site.bbichul.dto.CalendarDto;
 import site.bbichul.exception.BbichulErrorCode;
 import site.bbichul.exception.BbichulException;
 import site.bbichul.models.CalendarMemo;
@@ -36,8 +36,10 @@ public class CalendarService {
         boolean isCalendarEmptied = userCalendarRepository.findAllByUserId(user.getId()).isEmpty();
 
 
+        String calendarName= null;
         if (isCalendarEmptied) {
-            UserCalendar userCalendar = new UserCalendar(user, true);
+            calendarName = user.getUsername() + "의 캘린더 1";
+            UserCalendar userCalendar = new UserCalendar(user, true, calendarName);
             userCalendarRepository.save(userCalendar);
         }
 
@@ -46,7 +48,8 @@ public class CalendarService {
             boolean isTeamEmptied = userCalendarRepository.findAllByTeamId(getTeamCalendarId).isEmpty();
 
             if (isTeamEmptied) {
-                UserCalendar userCalendarT = new UserCalendar(user.getTeam(), false);
+                calendarName = "팀 " + user.getTeam().getTeamname() + "의 캘린더 1";
+                UserCalendar userCalendarT = new UserCalendar(user.getTeam(), false, calendarName);
                 userCalendarRepository.save(userCalendarT);
             }
         }
@@ -100,17 +103,18 @@ public class CalendarService {
     }
 
     @Transactional
-    public void addCalendar(CalenderDto calenderDto, String username) {
+    public void addCalendar(CalendarDto calendarDto, String username) {
 
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new BbichulException(BbichulErrorCode.NOT_FOUND_USER));
 
+        String calendarName = calendarDto.getCalendarName();
 
         UserCalendar userCalendar = null;
-        if (calenderDto.getIsPrivate()) {
-            userCalendar = new UserCalendar(user, calenderDto.getIsPrivate());
+        if (calendarDto.getIsPrivate()) {
+            userCalendar = new UserCalendar(user, calendarDto.getIsPrivate(), calendarName);
         } else {
-            userCalendar = new UserCalendar(user.getTeam(), calenderDto.getIsPrivate());
+            userCalendar = new UserCalendar(user.getTeam(), calendarDto.getIsPrivate(), calendarName);
         }
 
         userCalendarRepository.save(userCalendar);
@@ -119,14 +123,19 @@ public class CalendarService {
 
     @Transactional
     public void deleteCalendar(Long calendarId) {
-
-
-        System.out.println(11111111);
         calendarMemoRepository.deleteAllByUserCalendarId(calendarId);
 
-        System.out.println(2222222);
         userCalendarRepository.deleteById(calendarId);
+    }
 
+    @Transactional
+    public void renameCalendar(CalendarDto calendarDto) {
+
+        UserCalendar userCalendar = userCalendarRepository.findById(calendarDto.getCalendarId()).orElseThrow(
+                () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MATCHED_CALENDAR)
+        );
+
+        userCalendar.renameCalendar(calendarDto.getCalendarName());
     }
 }
 
