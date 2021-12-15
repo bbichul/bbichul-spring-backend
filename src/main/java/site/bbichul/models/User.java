@@ -60,7 +60,7 @@ public class User extends TimeStamped {
 
     // 회원상태
     @Column(nullable = true)
-    private boolean status;
+    private boolean status=true; 
 
     @OneToMany(mappedBy = "user")
     List<Time> times = new ArrayList<>();
