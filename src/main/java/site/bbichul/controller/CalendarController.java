@@ -66,7 +66,7 @@ public class CalendarController {
         return "캘린더가 추가되었습니다 !";
     }
 
-    @Operation(description = "달력 추가하기", method = "POST")
+    @Operation(description = "달력 삭제하기", method = "DELETE")
     @DeleteMapping("/calendar")
     public String deleteCalendar(@RequestParam("id") Long calendarId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         calendarService.deleteCalendar(calendarId);
@@ -74,7 +74,7 @@ public class CalendarController {
         return "선택한 캘린더가 삭제되었습니다.";
     }
 
-    @Operation(description = "달력 추가하기", method = "PATCH")
+    @Operation(description = "달력 이름 변경하기", method = "PATCH")
     @PatchMapping("/calendar")
     public String renameCalendar(@RequestBody CalendarDto calendarDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
