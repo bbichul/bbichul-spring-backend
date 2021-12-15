@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Can't find " + username));
         // status 까지 판별
-        User user1 = userRepository.findByUsernameAndStatus(username, false).orElseThrow(
+        User user1 = userRepository.findByUsernameAndStatus(username, true).orElseThrow(
                 () -> new UsernameNotFoundException("아이다가 탈퇴 상태 입니다")
         );
 
