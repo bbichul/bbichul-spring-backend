@@ -88,5 +88,15 @@ public class UserService {
         }
         user.updateStatus(userDto);
     }
+    // 회원 상태 복구
+    @Transactional
+    public void setRecover(UserDto userDto) {
+        String username = userDto.getUsername();
+
+        User user = userRepository.findByUsernameAndStatus(username,false).orElseThrow(
+                () -> new NullPointerException("계정 탈퇴가 확인되지 않은 아이디 입니다")
+        );
+        user.updateStatus(userDto);
+    }
 
 }
