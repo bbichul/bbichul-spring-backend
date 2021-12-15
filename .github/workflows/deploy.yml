@@ -3,7 +3,7 @@ name: bbichul-spring-backend
 on:
   push:
     branches:
-      - release1.1
+      - dev
 jobs:
   build:
     runs-on: ubuntu-latest

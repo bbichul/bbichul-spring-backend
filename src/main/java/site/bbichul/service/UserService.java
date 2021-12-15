@@ -58,7 +58,7 @@ public class UserService {
     @Transactional
     public void setStudy(UserDto userDto, String username) {
         User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new NullPointerException("그럴리가 없쥬")
+                () -> new NullPointerException("현재 유저가 공부하고 있지 않습니다")
         );
         user.updateStudy(userDto);
     }
@@ -80,12 +80,22 @@ public class UserService {
     @Transactional
     public void setStatus(UserDto userDto, String username) {
         User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new NullPointerException("그럴리가 없쥬")
+                () -> new NullPointerException("현재 유저가 탈퇴 상태가 아닙니다")
         );
 
         if (user.getTeam() != null) {
             user.setTeam(null);
         }
+        user.updateStatus(userDto);
+    }
+    // 회원 상태 복구
+    @Transactional
+    public void setRecover(UserDto userDto) {
+        String username = userDto.getUsername();
+
+        User user = userRepository.findByUsernameAndStatus(username,false).orElseThrow(
+                () -> new NullPointerException("계정 탈퇴가 확인되지 않은 아이디 입니다")
+        );
         user.updateStatus(userDto);
     }
 
