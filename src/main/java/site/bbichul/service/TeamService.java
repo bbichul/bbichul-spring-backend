@@ -136,7 +136,6 @@ public class TeamService {
     @Transactional
     public void updateTask(TeamTaskRequestDto teamTaskRequestDto) {
         Long id = teamTaskRequestDto.getId();
-
         Optional<TeamTask> teamtask = teamTaskRepository.findById(id);
         teamtask.get().taskUpdate(teamTaskRequestDto);
     }
