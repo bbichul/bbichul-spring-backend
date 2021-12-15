@@ -1,13 +1,11 @@
 package site.bbichul.models;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import site.bbichul.dto.TeamTaskRequestDto;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @Getter
 @Setter
