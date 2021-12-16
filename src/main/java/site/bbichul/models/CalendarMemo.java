@@ -3,6 +3,7 @@ package site.bbichul.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import site.bbichul.dto.CalendarMemoDto;
+import site.bbichul.utills.CalendarMemoValidator;
 
 import javax.persistence.*;
 
@@ -27,12 +28,14 @@ public class CalendarMemo {
     private String contents;
 
     public CalendarMemo(CalendarMemoDto calendarMemoDto, UserCalendar userCalendar) {
+        CalendarMemoValidator.validateCreateCalendarMemo(calendarMemoDto, userCalendar);
         this.userCalendar = userCalendar;
         this.dateData = calendarMemoDto.getDateData();
         this.contents = calendarMemoDto.getContents();
     }
 
     public void updateMemo(CalendarMemoDto calendarMemoDto){
+        CalendarMemoValidator.validateUpdateCalendarMemo(calendarMemoDto);
         this.dateData = calendarMemoDto.getDateData();
         this.contents = calendarMemoDto.getContents();
     }
