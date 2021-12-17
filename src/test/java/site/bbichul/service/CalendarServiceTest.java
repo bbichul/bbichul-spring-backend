@@ -1,5 +1,6 @@
 package site.bbichul.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,6 +8,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import site.bbichul.dto.CalendarMemoDto;
+import site.bbichul.exception.BbichulErrorCode;
+import site.bbichul.exception.BbichulException;
+import site.bbichul.models.CalendarMemo;
 import site.bbichul.models.Team;
 import site.bbichul.models.User;
 import site.bbichul.models.UserCalendar;
@@ -19,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -34,13 +40,12 @@ class CalendarServiceTest {
     @Mock
     UserRepository userRepository;
 
-
     @InjectMocks
     CalendarService calendarService;
 
 
     @Test
-    @DisplayName("팀이 없는 유저가 캘린더를 가지고 있지 않은 경우")
+    @DisplayName("캘린더1 자동 생성 성공")
     void getUserInfoWhenDontHaveCalendar() {
 
         //given
@@ -73,7 +78,7 @@ class CalendarServiceTest {
     }
 
     @Test
-    @DisplayName("팀에 아직 캘린더가 없는 경우")
+    @DisplayName("팀 캘린더 자동 생성 성공")
     void getUserInfoNotFoundTeamCalendar() {
         //given
 
@@ -116,32 +121,74 @@ class CalendarServiceTest {
     }
 
 
-
     @Test
-    void updateMemoNotFoundMemo() {
+    @DisplayName("dateDate 형식 미준수 업데이트 실패")
+    void updateMemo_BrokenFormat_dateData() {
+
         //given
+        CalendarMemoDto calendarMemoDto = new CalendarMemoDto();
+        calendarMemoDto.setCalendarId(1L);
+        calendarMemoDto.setContents("가나다라");
+        calendarMemoDto.setDateData("2021Y12M230");
 
 
         //when
+        BbichulException bbichulException = assertThrows(BbichulException.class, () -> calendarService.updateMemo(calendarMemoDto));
 
-
-
+        //then
+        assertEquals(BbichulErrorCode.BROKEN_FORMAT_DATEDATA.getMessage(), bbichulException.getDetailMessage());
     }
+
+
+    @Test
+    @DisplayName("메모 찾지 못해 새로 저장")
+    void updateMemo_NotFoundMemo_SaveMemo() {
+        //given
+        CalendarMemoDto calendarMemoDto = new CalendarMemoDto();
+        calendarMemoDto.setCalendarId(1L);
+        calendarMemoDto.setContents("가나다라");
+        calendarMemoDto.setDateData("2021Y12M17");
+
+        given(calendarMemoRepository.findByUserCalendarIdAndDateData(
+                calendarMemoDto.getCalendarId(),
+                calendarMemoDto.getDateData())
+        ).willThrow(BbichulException.class);
+
+        User user = new User();
+        user.setUsername("나무");
+        user.setId(1L);
+
+        UserCalendar userCalendar = new UserCalendar(user, true, "업데이트테스트");
+
+        given(userCalendarRepository.getById(calendarMemoDto.getCalendarId())).willReturn(userCalendar);
+
+        ArgumentCaptor<CalendarMemo> captor = ArgumentCaptor.forClass(CalendarMemo.class);
+
+
+        //when
+        calendarService.updateMemo(calendarMemoDto);
+
+        //then
+        verify(calendarMemoRepository, times(1)).
+                save(captor.capture());
+        CalendarMemo calendarMemo = captor.getValue();
+
+        assertEquals(calendarMemo.getContents(), calendarMemoDto.getContents());
+        assertEquals(calendarMemo.getDateData(), calendarMemoDto.getDateData());
+        assertEquals(userCalendar, calendarMemo.getUserCalendar());
+    }
+
+
+
+
 
     @Test
     void getMemoClickedDay() {
     }
 
-    @Test
-    void getTypeAllMemo() {
-    }
 
     @Test
     void addCalendar() {
-    }
-
-    @Test
-    void deleteCalendar() {
     }
 
     @Test
