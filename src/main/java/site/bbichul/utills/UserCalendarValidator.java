@@ -9,7 +9,7 @@ import site.bbichul.models.User;
 public class UserCalendarValidator {
 
     public static void validateCreateUserCalendar(User user, boolean isPrivate, String calendarName) {
-        if(user == null) {
+        if (user == null) {
             throw new BbichulException(BbichulErrorCode.CANT_VERIFY_USER);
         }
 
@@ -17,7 +17,7 @@ public class UserCalendarValidator {
             throw new BbichulException(BbichulErrorCode.NOT_CHECKED_PRIVATE_USER_CALENDAR);
         }
 
-        if (calendarName.trim().length() == 0) {
+        if (calendarName == null || calendarName.trim().length() == 0) {
             throw new BbichulException(BbichulErrorCode.CANT_INPUT_VACUUM);
         }
     }
@@ -31,7 +31,7 @@ public class UserCalendarValidator {
             throw new BbichulException(BbichulErrorCode.CHECKED_PRIVATE_TEAM_CALENDAR);
         }
 
-        if (calendarName.trim().length() == 0) {
+        if (calendarName == null || calendarName.trim().length() == 0) {
             throw new BbichulException(BbichulErrorCode.CANT_INPUT_VACUUM);
         }
 
