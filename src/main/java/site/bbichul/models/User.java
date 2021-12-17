@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import site.bbichul.dto.UserDto;
+import site.bbichul.utills.UserValidator;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
 public class User extends TimeStamped {
 
     public User(String username, String password, UserRole role, UserInfo userInfo) {
+        UserValidator.validateCreateUser(username,password,role,userInfo);
         this.username = username;
         this.password = password;
         this.role = role;
