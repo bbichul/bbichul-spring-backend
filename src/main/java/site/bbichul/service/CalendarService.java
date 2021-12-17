@@ -15,6 +15,7 @@ import site.bbichul.models.UserCalendar;
 import site.bbichul.repository.CalendarMemoRepository;
 import site.bbichul.repository.UserCalendarRepository;
 import site.bbichul.repository.UserRepository;
+import site.bbichul.utills.CalendarMemoValidator;
 
 import java.util.List;
 
@@ -62,6 +63,7 @@ public class CalendarService {
     @Transactional
     public void updateMemo(CalendarMemoDto calendarMemoDto) {
 
+        CalendarMemoValidator.validateServiceDateData(calendarMemoDto.getDateData());
 
         try{
             CalendarMemo getMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(calendarMemoDto.getCalendarId(), calendarMemoDto.getDateData()).orElseThrow(
@@ -76,6 +78,7 @@ public class CalendarService {
 
     public CalendarMemoResponseDto getMemoClickedDay(Long CalendarId, String dateData) {
 
+        CalendarMemoValidator.validateServiceDateData(dateData);
 
         try{
             CalendarMemo calendarMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(CalendarId, dateData).orElseThrow(

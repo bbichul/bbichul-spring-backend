@@ -3,6 +3,7 @@ package site.bbichul.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import site.bbichul.utills.UserCalendarValidator;
 
 import javax.persistence.*;
 
@@ -32,12 +33,14 @@ public class UserCalendar {
 
 
     public UserCalendar(User user, boolean isPrivate, String calendarName){
+        UserCalendarValidator.validateCreateUserCalendar(user, isPrivate, calendarName);
         this.user = user;
         this.isPrivate = isPrivate;
         this.calendarName = calendarName;
     }
 
     public UserCalendar(Team team, boolean isPrivate, String calendarName){
+        UserCalendarValidator.validateCreateTeamCalendar(team, isPrivate, calendarName);
         this.team = team;
         this.isPrivate = isPrivate;
         this.calendarName = calendarName;
