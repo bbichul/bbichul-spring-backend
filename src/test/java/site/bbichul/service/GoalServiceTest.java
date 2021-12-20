@@ -44,7 +44,7 @@ public class GoalServiceTest {
     GoalService goalService;
 
     @Test
-    @DisplayName("팀이 없는 유저가 캘린더를 가지고 있지 않은 경우")
+    @DisplayName("목표설정 성공케이스")
     void updateGoal() throws ParseException {
         //given
         User user = new User();
@@ -75,7 +75,7 @@ public class GoalServiceTest {
 
 
     @Test
-    @DisplayName("팀이 없는 유저가 캘린더를 가지고 있지 않은 경우")
+    @DisplayName("목표 조회 성공 케이스")
     void getGoal() throws ParseException {
         //given
         User user = new User();
