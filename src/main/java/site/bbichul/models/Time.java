@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.val;
 import site.bbichul.dto.TimeRequestDto;
+import site.bbichul.utills.TimeValidator;
+
 import javax.persistence.*;
 
 @Setter
@@ -48,6 +51,16 @@ public class Time extends TimeStamped {
         this.weekDay = timeRequestDto.getWeekDay();
         this.studyTime = timeRequestDto.getStudyTime();
 
+
+    }
+    public Time(int year, int month, int day, int weekDay, int studyTime, User user){
+        TimeValidator.validateCreateTime(year, month, day, weekDay, studyTime);
+        this.user =user;
+        this.year = year;
+        this.month = month;
+        this.day = day;
+        this.weekDay = weekDay;
+        this.studyTime = studyTime;
     }
 
     public void updateStudyTime(int studyTime){

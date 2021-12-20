@@ -5,9 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import site.bbichul.dto.UserDto;
+import site.bbichul.utills.UserValidator;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Setter
 @Getter // get 함수를 일괄적으로 만들어줍니다.
@@ -15,11 +18,26 @@ import java.util.List;
 @Entity // DB 테이블 역할을 합니다.
 public class User extends TimeStamped {
 
-    public User(String username, String password, UserRole role, UserInfo userInfo) {
+    public User(String username, String password, UserRole role, UserInfo userInfo,String position,boolean status,boolean studying,Team team) {
+        UserValidator.validateCreateUser(username,password,role,userInfo);
         this.username = username;
         this.password = password;
         this.role = role;
         this.userInfo = userInfo;
+        this.position =position;
+        this.status = status;
+        this.studying = studying;
+        this.team = team;
+    }
+    public User(String username, String password, UserRole role, UserInfo userInfo) {
+        this.username =username;
+        this.password = password;
+        this.role = role;
+        this.userInfo =userInfo;
+    }
+    public User(String username, String password){
+        this.username = username;
+        this.password = password;
     }
 
     // ID가 자동으로 생성 및 증가합니다.
@@ -69,6 +87,7 @@ public class User extends TimeStamped {
         this.studying = userDto.isStudying();
 
     }
+
     public void updateStatus(UserDto userDto){
         this.status = userDto.isStatus();
     }
