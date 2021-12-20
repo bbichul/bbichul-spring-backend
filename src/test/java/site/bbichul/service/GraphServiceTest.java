@@ -45,8 +45,8 @@ public class GraphServiceTest {
     GraphService graphService;
 
     @Test
-    @DisplayName("팀이 없는 유저가 캘린더를 가지고 있지 않은 경우")
-    void getGraph() {
+    @DisplayName("주별 시간그래프 성공케이스")
+    void getLineGraph() {
         //given
         User user = new User();
         user.setUsername("최대환");
@@ -62,12 +62,6 @@ public class GraphServiceTest {
         time.setWeekDay(0);
         time.setYear(2021);
         time.setUser(user);
-
-        System.out.println(user);
-        System.out.println(time.getUser().getUsername());
-
-//        ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
-//        System.out.println(captor);
 
         List<Time> timeList = new ArrayList<>();
         timeList.add(time);
@@ -95,6 +89,48 @@ public class GraphServiceTest {
         System.out.println(dayTimeList);
 
         assertEquals(result.get("dayTimeList"), dayTimeList);
+
+    }
+
+    @Test
+    @DisplayName("주별 시간그래프 성공케이스")
+    void getbarGraph() {
+        //given
+        User user = new User();
+        user.setUsername("최대환");
+        user.setId(1L);
+        user.setPassword("123456");
+        user.setStatus(true);
+
+        Time time = new Time();
+        time.setId(1L);
+        time.setDay(20);
+        time.setStudyTime(53535);
+        time.setMonth(12);
+        time.setWeekDay(0);
+        time.setYear(2021);
+        time.setUser(user);
+
+        List<Time> timeList = new ArrayList<>();
+        timeList.add(time);
+
+        given(userRepository.findByUsername("최대환")).willReturn(Optional.of(user));
+        given(timeRepository.findById(1L)).willReturn(Optional.of(time));
+        given(timeRepository.findAllByUserIdAndYearAndMonthAndWeekDay(user.getId(), 2021, 12, 0)).willReturn(timeList);
+
+
+//        when
+        Map<String, Object> result = graphService.drawLineGraph("bar",2021, 12, user);
+
+        //then
+        assertEquals(result.get("monday"), 53535 / 60);
+        assertEquals(result.get("tuesday"), 0);
+        assertEquals(result.get("wednesday"), 0);
+        assertEquals(result.get("thursday"), 0);
+        assertEquals(result.get("friday"), 0);
+        assertEquals(result.get("saturday"), 0);
+        assertEquals(result.get("sunday"), 0);
+
 
     }
 }
