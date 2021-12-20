@@ -19,7 +19,7 @@ import java.util.Locale;
 public class User extends TimeStamped {
 
     public User(String username, String password, UserRole role, UserInfo userInfo,String position,boolean status,boolean studying,Team team) {
-        UserValidator.validateCreateUser(username,password,role,userInfo);
+
         this.username = username;
         this.password = password;
         this.role = role;
@@ -30,6 +30,7 @@ public class User extends TimeStamped {
         this.team = team;
     }
     public User(String username, String password, UserRole role, UserInfo userInfo) {
+        UserValidator.validateCreateUser(username,password,role,userInfo);
         this.username =username;
         this.password = password;
         this.role = role;
