@@ -2,11 +2,13 @@ package site.bbichul.models;
 
 
 import org.junit.jupiter.api.*;
+import org.springframework.test.context.ActiveProfiles;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
-
+@ActiveProfiles("test")
 class UserTest {
 
     @Nested
