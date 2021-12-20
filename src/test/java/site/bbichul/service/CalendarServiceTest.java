@@ -1,6 +1,5 @@
 package site.bbichul.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,7 +7,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import site.bbichul.dto.CalendarDto;
 import site.bbichul.dto.CalendarMemoDto;
+import site.bbichul.dto.CalendarMemoResponseDto;
 import site.bbichul.exception.BbichulErrorCode;
 import site.bbichul.exception.BbichulException;
 import site.bbichul.models.CalendarMemo;
@@ -26,7 +27,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class CalendarServiceTest {
@@ -45,8 +47,8 @@ class CalendarServiceTest {
 
 
     @Test
-    @DisplayName("캘린더1 자동 생성 성공")
-    void getUserInfoWhenDontHaveCalendar() {
+    @DisplayName("유저캘린더_자동 생성_성공")
+    void getUserInfo_UserCalendar_AutoSave() {
 
         //given
         User user = new User();
@@ -78,8 +80,8 @@ class CalendarServiceTest {
     }
 
     @Test
-    @DisplayName("팀 캘린더 자동 생성 성공")
-    void getUserInfoNotFoundTeamCalendar() {
+    @DisplayName("팀 캘린더_자동 생성_성공")
+    void getUserInfo_TeamCalendar_AutoCreate() {
         //given
 
         User user = new User();
@@ -120,9 +122,8 @@ class CalendarServiceTest {
 
     }
 
-
     @Test
-    @DisplayName("dateDate 형식 미준수 업데이트 실패")
+    @DisplayName("dateDate 형식 미준수_업데이트_실패")
     void updateMemo_BrokenFormat_dateData() {
 
         //given
@@ -133,15 +134,17 @@ class CalendarServiceTest {
 
 
         //when
-        BbichulException bbichulException = assertThrows(BbichulException.class, () -> calendarService.updateMemo(calendarMemoDto));
+        BbichulException bbichulException = assertThrows(BbichulException.class,
+                () -> calendarService.updateMemo(calendarMemoDto));
 
         //then
+        assertEquals(BbichulErrorCode.BROKEN_FORMAT_DATEDATA, bbichulException.getBbichulErrorCode());
         assertEquals(BbichulErrorCode.BROKEN_FORMAT_DATEDATA.getMessage(), bbichulException.getDetailMessage());
     }
 
 
     @Test
-    @DisplayName("메모 찾지 못해 새로 저장")
+    @DisplayName("메모 새로 저장_메모 저장_성공")
     void updateMemo_NotFoundMemo_SaveMemo() {
         //given
         CalendarMemoDto calendarMemoDto = new CalendarMemoDto();
@@ -179,20 +182,140 @@ class CalendarServiceTest {
     }
 
 
+    @Test
+    @DisplayName("dateDate 형식 미준수_메모 불러오기_실패")
+    void fail_getMemoClickedDay_Broken_dateData() {
+        //given
 
+        Long calendarId = 1L;
+        String dateData = "2023년 12월 31일";
 
+        //when
+        BbichulException bbichulException = assertThrows(BbichulException.class,
+                () -> calendarService.getMemoClickedDay(calendarId, dateData));
+
+        //then
+        assertEquals(BbichulErrorCode.BROKEN_FORMAT_DATEDATA, bbichulException.getBbichulErrorCode());
+        assertEquals(BbichulErrorCode.BROKEN_FORMAT_DATEDATA.getMessage(), bbichulException.getDetailMessage());
+
+    }
 
     @Test
-    void getMemoClickedDay() {
+    @DisplayName("메모 불러오기_빈 메모_성공")
+    void success_getMemoClickedDay_EmptyMemo() {
+        //given
+        UserCalendar userCalendar = new UserCalendar();
+        userCalendar.setId(1L);
+        userCalendar.setCalendarName("테스트 캘린더");
+
+        CalendarMemoDto calendarMemoDto = new CalendarMemoDto();
+        calendarMemoDto.setContents("하나둘셋");
+        calendarMemoDto.setDateData("2021Y12M17");
+
+        CalendarMemo calendarMemo = new CalendarMemo(calendarMemoDto, userCalendar);
+
+        given(calendarMemoRepository.findByUserCalendarIdAndDateData(1L, "2021Y12M17"))
+                .willThrow(new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
+        //when
+        CalendarMemoResponseDto calendarMemoResponseDto = calendarService.getMemoClickedDay(userCalendar.getId(), calendarMemoDto.getDateData());
+
+        //then
+        assertEquals("", calendarMemoResponseDto.getContents());
+        assertEquals(calendarMemoDto.getDateData(), calendarMemoResponseDto.getDateData());
+
+
+    }
+
+    @Test
+    @DisplayName("메모 불러오기_기입력 메모_성공")
+    void success_getMemoClickedDay_Memo() {
+
+        //given
+        UserCalendar userCalendar = new UserCalendar();
+        userCalendar.setId(1L);
+        userCalendar.setCalendarName("테스트 캘린더");
+
+        CalendarMemoDto calendarMemoDto = new CalendarMemoDto();
+        calendarMemoDto.setContents("하나둘셋");
+        calendarMemoDto.setDateData("2021Y12M17");
+
+        CalendarMemo calendarMemo = new CalendarMemo(calendarMemoDto, userCalendar);
+
+        given(calendarMemoRepository.findByUserCalendarIdAndDateData(1L, "2021Y12M17"))
+                .willReturn(Optional.of(calendarMemo));
+        //when
+        CalendarMemoResponseDto calendarMemoResponseDto = calendarService.getMemoClickedDay(userCalendar.getId(), calendarMemoDto.getDateData());
+
+        //then
+        assertEquals(calendarMemoDto.getContents(), calendarMemoResponseDto.getContents());
+        assertEquals(calendarMemoDto.getDateData(), calendarMemoResponseDto.getDateData());
+
+
     }
 
 
     @Test
-    void addCalendar() {
+    @DisplayName("개인 캘린더 생성_성공")
+    void addUserCalendar() {
+        //given
+        User user = new User();
+        user.setId(1L);
+        user.setUsername("테스트용");
+
+        CalendarDto calendarDto = new CalendarDto();
+        calendarDto.setCalendarId(1L);
+        calendarDto.setCalendarName("유저캘린더테스트용");
+        calendarDto.setIsPrivate(true);
+
+        given(userRepository.findByUsername("테스트용")).willReturn(Optional.of(user));
+
+        ArgumentCaptor<UserCalendar> captor = ArgumentCaptor.forClass(UserCalendar.class);
+
+        //when
+        calendarService.addCalendar(calendarDto, "테스트용");
+
+        //then
+        verify(userCalendarRepository, times(1)).save(captor.capture());
+        UserCalendar userCalendar = captor.getValue();
+
+        assertEquals(user, userCalendar.getUser());
+        assertEquals(calendarDto.getCalendarName(), userCalendar.getCalendarName());
+        assertEquals(true, userCalendar.getIsPrivate());
+
     }
 
     @Test
-    void renameCalendar() {
+    @DisplayName("팀 캘린더 생성팀_성공")
+    void addTeamCalendar() {
+        //given
+        User user = new User();
+        user.setId(1L);
+        user.setUsername("테스트용");
+
+        Team team = new Team();
+        team.setTeamname("팀캘린더");
+        team.setId(1L);
+        user.setTeam(team);
+
+        CalendarDto calendarDto = new CalendarDto();
+        calendarDto.setCalendarId(1L);
+        calendarDto.setCalendarName("팀캘린더테스트용");
+        calendarDto.setIsPrivate(false);
+
+        given(userRepository.findByUsername("테스트용")).willReturn(Optional.of(user));
+
+        ArgumentCaptor<UserCalendar> captor = ArgumentCaptor.forClass(UserCalendar.class);
+
+        //when
+        calendarService.addCalendar(calendarDto, "테스트용");
+
+        //then
+        verify(userCalendarRepository, times(1)).save(captor.capture());
+        UserCalendar userCalendar = captor.getValue();
+
+        assertEquals(team, userCalendar.getTeam());
+        assertEquals(calendarDto.getCalendarName(), userCalendar.getCalendarName());
+        assertEquals(false, userCalendar.getIsPrivate());
     }
 
 }
