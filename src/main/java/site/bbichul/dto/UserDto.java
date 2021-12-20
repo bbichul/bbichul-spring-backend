@@ -7,7 +7,7 @@ import lombok.Data;
 public class UserDto {
     private String username;
     private String password;
-    private boolean isStudying;
+    private boolean studying;
     private Long teamId;
     private boolean status;
 }

@@ -1,13 +1,11 @@
 package site.bbichul.models;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import site.bbichul.dto.TeamTaskRequestDto;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @Getter
 @Setter
@@ -32,5 +30,9 @@ public class TeamTask extends TimeStamped {
     public TeamTask(TeamTaskRequestDto teamTaskRequestDto) {
         this.task = teamTaskRequestDto.getTask();
         this.done = teamTaskRequestDto.getDone();
+    }
+
+    public void taskUpdate(TeamTaskRequestDto requestDto) {
+        this.task = requestDto.getTask();
     }
 }
