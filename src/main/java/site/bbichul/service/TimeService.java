@@ -30,7 +30,8 @@ public class TimeService {
         time.setWeekDay(timeRequestDto.getWeekDay());
 
         // timeRepository 에 찾은 id, year, month, day 가져와서 확인하기
-        Time todayTime = timeRepository.findByUserIdAndYearAndMonthAndDay(user.getId(), timeRequestDto.getYear(), timeRequestDto.getMonth(), timeRequestDto.getDay()).orElse( null
+        Time todayTime = timeRepository.findByUserIdAndYearAndMonthAndDay(user.getId(), timeRequestDto.getYear(),
+                timeRequestDto.getMonth(), timeRequestDto.getDay()).orElse( null
         );
         // userRepository 에 유저 아이디 가져오기
         User findUser = userRepository.findById(user.getId()).orElseThrow(
@@ -44,7 +45,7 @@ public class TimeService {
         } else {
             todayTime.updateStudyTime(timeRequestDto.getStudyTime() + todayTime.getStudyTime());
         }
-        return time;
+        return todayTime;
     }
 
     // 00시 기준 전날 다음날 공부 저장
@@ -88,6 +89,7 @@ public class TimeService {
                 timeRepository.save(yesterdayTime);
             }
         }
-        return time;
+        return setYesterdayTime;
     }
+
 }
