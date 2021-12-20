@@ -23,8 +23,12 @@ public class Team {
     @Column(nullable = false, length = 100)
     private String teamname;
 
-    public Team(String teamname) {
+    public Team(String teamname, Long id) {
+        this.id = id;
         this.teamname = teamname;
     }
 
+    public Team(String teamname) {
+        this.teamname = teamname;
+    }
 }

@@ -2,7 +2,6 @@ package site.bbichul.models;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import site.bbichul.dto.CalendarDto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
