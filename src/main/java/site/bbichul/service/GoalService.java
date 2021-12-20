@@ -59,7 +59,7 @@ public class GoalService {
         Long btwDate = userInfo.getEndDate().getTime() - userInfo.getStartDate().getTime();
         Long btwDateDays = btwDate / ( 24*60*60*1000);
 
-        int studyTimeSum = 0;
+        int study_time_sum = 0;
         for (int i = 0; i < btwDateDays + 1L; i++) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(userInfo.getStartDate());
@@ -79,26 +79,26 @@ public class GoalService {
                 continue;
             }
 
-            studyTimeSum += time.getStudyTime();
+            study_time_sum += time.getStudyTime();
         }
-        int doneHour = studyTimeSum / 3600;
+        int done_hour = study_time_sum / 3600;
 
         long calculate = userInfo.getEndDate().getTime() - userInfo.getStartDate().getTime();
 
-        int dDay = (int) calculate / (24*60*60*1000);
+        int d_day = (int) calculate / (24*60*60*1000);
 
-        int percent = (int) Math.round(((double) doneHour / userInfo.getGoalHour()) * 100);
+        int percent = (int) Math.round(((double) done_hour / userInfo.getGoalHour()) * 100);
 
-        if (doneHour == 0) {
+        if (done_hour == 0) {
             percent = 0;
         }
 
         map.put("startDate", userInfo.getStartDate());
         map.put("endDate", userInfo.getEndDate());
-        map.put("dDay", dDay);
+        map.put("dDay", d_day);
         map.put("percent", percent);
         map.put("goalHour", userInfo.getGoalHour());
-        map.put("doneHour", doneHour);
+        map.put("doneHour", done_hour);
 
         return map;
     }

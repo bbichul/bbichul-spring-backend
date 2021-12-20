@@ -13,6 +13,6 @@ public class TimeRequestDto {
     private int day;
     private int weekDay;
     private int studyTime;
-    private boolean studying;
+    private boolean isStudying;
     private int yesterdayTime;
 }

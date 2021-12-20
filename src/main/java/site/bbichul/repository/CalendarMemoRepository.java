@@ -13,6 +13,4 @@ public interface CalendarMemoRepository extends JpaRepository<CalendarMemo, Long
     Optional<CalendarMemo> findByUserCalendarIdAndDateData(Long id, String dateData);
 
     List<CalendarMemo> findAllByUserCalendarId(Long calendarId);
-
-    void deleteAllByUserCalendarId(Long calendarId);
 }

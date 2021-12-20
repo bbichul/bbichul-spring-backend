@@ -37,7 +37,7 @@ public class User extends TimeStamped {
 
     // 공부중 유무
     @Column(nullable = true)
-    private boolean studying;
+    private boolean isStudying;
 
     // 팀 아이디(외래키)
     @ManyToOne
@@ -60,20 +60,20 @@ public class User extends TimeStamped {
 
     // 회원상태
     @Column(nullable = true)
-    private boolean status=true; 
+    private boolean status;
 
     @OneToMany(mappedBy = "user")
     List<Time> times = new ArrayList<>();
 
     public User(UserDto userDto) {
-        this.studying = userDto.isStudying();
+        this.isStudying = userDto.isStudying();
 
     }
     public void updateStatus(UserDto userDto){
         this.status = userDto.isStatus();
     }
     public void updateStudy(UserDto userDto){
-        this.studying = userDto.isStudying();
+        this.isStudying = userDto.isStudying();
     }
 
 }

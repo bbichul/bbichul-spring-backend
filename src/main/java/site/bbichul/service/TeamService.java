@@ -132,11 +132,4 @@ public class TeamService {
 
         return teamProgressbarResponseDto;
     }
-
-    @Transactional
-    public void updateTask(TeamTaskRequestDto teamTaskRequestDto) {
-        Long id = teamTaskRequestDto.getId();
-        Optional<TeamTask> teamtask = teamTaskRepository.findById(id);
-        teamtask.get().taskUpdate(teamTaskRequestDto);
-    }
 }

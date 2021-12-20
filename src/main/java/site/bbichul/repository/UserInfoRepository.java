@@ -8,7 +8,6 @@ import site.bbichul.models.User;
 import site.bbichul.models.UserInfo;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -17,7 +16,8 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
 //    @Transactional
 //    Optional<UserInfo> findById(Long id);
 
+    @Transactional
+    Optional<UserInfo>findById(Long id);
 
     Long getById(UserInfo userInfo);
-
 }

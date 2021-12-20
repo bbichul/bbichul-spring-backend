@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import site.bbichul.dto.TeamProgressbarResponseDto;
 import site.bbichul.dto.TeamRequestDto;
 import site.bbichul.dto.TeamTaskRequestDto;
+import site.bbichul.models.Team;
 import site.bbichul.models.TeamTask;
 import site.bbichul.models.User;
 import site.bbichul.security.UserDetailsImpl;
@@ -39,12 +40,6 @@ public class TeamController {
         return teamService.addTask(teamTaskRequestDto, userDetails.getUser());
     }
 
-    @Operation(description = "to do list의 task 내용 변경", method = "PUT")
-    @PutMapping("/teams/task")
-    public void updateTask(@RequestBody TeamTaskRequestDto teamTaskRequestDto) {
-        teamService.updateTask(teamTaskRequestDto);
-    }
-
     @Operation(description = "to do list의 task 조회", method = "GET")
     @GetMapping("/teams/task")
     public List<TeamTask> showTask(@AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -58,7 +53,7 @@ public class TeamController {
     }
 
     @Operation(description = "to do list의 task 상태 변경", method = "PUT")
-    @PutMapping("/teams/tasks/status")
+    @PutMapping("/teams/task")
     public void changeTask(@RequestBody TeamTaskRequestDto teamTaskRequestDto) {
         teamService.changeTask(teamTaskRequestDto);
     }

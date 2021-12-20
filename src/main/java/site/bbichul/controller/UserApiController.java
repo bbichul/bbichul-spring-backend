@@ -60,11 +60,6 @@ public class UserApiController {
         String username = userDetails.getUsername();
         userService.setStatus(userDto, username);
     }
-    @Operation(description = "회원 복구", method = "POST")
-    @PostMapping("/users/recover")
-    public void updateRecovery(@RequestBody UserDto userDto) {
-        userService.setRecover(userDto);
-    }
 
     private void authenticate(String username, String password) throws Exception {
         try {
