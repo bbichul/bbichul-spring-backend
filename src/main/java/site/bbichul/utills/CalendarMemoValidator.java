@@ -14,19 +14,19 @@ public class CalendarMemoValidator {
             throw new BbichulException(BbichulErrorCode.CANT_VERIFY_CALENDAR);
         }
 
-        if (calendarMemoDto.getDateData().matches(pattern)) {
+        if (!calendarMemoDto.getDateData().matches(pattern)) {
             throw new BbichulException(BbichulErrorCode.BROKEN_FORMAT_DATEDATA);
         }
     }
 
     public static void validateUpdateCalendarMemo(CalendarMemoDto calendarMemoDto) {
-        if (calendarMemoDto.getDateData().matches(pattern)) {
+        if (!calendarMemoDto.getDateData().matches(pattern)) {
             throw new BbichulException(BbichulErrorCode.BROKEN_FORMAT_DATEDATA);
         }
     }
 
     public static void validateServiceDateData(String dateDate) {
-        if (dateDate.matches(pattern)){
+        if (!dateDate.matches(pattern)){
             throw new BbichulException(BbichulErrorCode.BROKEN_FORMAT_DATEDATA);
         }
     }
