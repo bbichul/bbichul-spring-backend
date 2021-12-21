@@ -38,6 +38,8 @@ dependencies {
 	implementation group: 'org.json', name: 'json', version: '20160810'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+	testImplementation 'org.springframework.security:spring-security-test'
+
 	// JSOUP 스크래핑
 	implementation 'org.jsoup:jsoup:1.13.1'
 
