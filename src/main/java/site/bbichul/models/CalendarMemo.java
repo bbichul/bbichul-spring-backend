@@ -1,11 +1,11 @@
 package site.bbichul.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import site.bbichul.dto.CalendarMemoDto;
 import site.bbichul.utills.CalendarMemoValidator;
-
 import javax.persistence.*;
 
 
@@ -18,6 +18,7 @@ public class CalendarMemo {
     @Id
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userCalendarId",nullable = true)
     private UserCalendar userCalendar;
