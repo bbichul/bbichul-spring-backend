@@ -33,7 +33,7 @@ public class NaverScraping {
             wise1.setName(name);
             wise1.setWise(wise);
 
-            wiseRepository.save(wise1);
+            wiseRepository.save(wise1); 
 
         }
         return "okay";
