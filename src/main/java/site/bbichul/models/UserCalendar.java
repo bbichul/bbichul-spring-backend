@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import site.bbichul.utills.UserCalendarValidator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Data
@@ -24,6 +26,9 @@ public class UserCalendar {
     @ManyToOne
     @JoinColumn(name = "teamId", nullable = true)
     private Team team;
+
+    @OneToMany(mappedBy = "userCalendar", cascade = CascadeType.REMOVE)
+    List<CalendarMemo> memos = new ArrayList<>();
 
     @Column(nullable = false)
     private Boolean isPrivate;

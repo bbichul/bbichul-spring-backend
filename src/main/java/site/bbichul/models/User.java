@@ -73,15 +73,18 @@ public class User extends TimeStamped {
     private UserRole role;
 
     // 개인 정보 아이디
-    @OneToOne
+    @OneToOne(cascade=CascadeType.REMOVE)
     @JoinColumn(name = "userInfoId",nullable = true)
     private UserInfo userInfo;
 
     // 회원상태
     @Column(nullable = true)
-    private boolean status=true; 
+    private boolean status=true;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    List<UserCalendar> calendars = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     List<Time> times = new ArrayList<>();
 
     public User(UserDto userDto) {
