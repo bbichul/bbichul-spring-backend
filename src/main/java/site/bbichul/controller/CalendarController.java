@@ -70,7 +70,7 @@ public class CalendarController {
     @DeleteMapping("/calendar")
     public String deleteCalendar(@RequestParam("id") Long calendarId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("[USER : {}] Request DELETE /api/calendars/calendar HTTP/1.1", userDetails.getUsername());
-        calendarService.deleteCalendar(calendarId);
+        calendarService.deleteCalendar(calendarId, userDetails.getUsername());
 
         return "선택한 캘린더가 삭제되었습니다.";
     }
@@ -79,7 +79,7 @@ public class CalendarController {
     @PatchMapping("/calendar")
     public String renameCalendar(@RequestBody CalendarDto calendarDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("[USER : {}] Request PATCH /api/calendars/calendar HTTP/1.1", userDetails.getUsername());
-        calendarService.renameCalendar(calendarDto);
+        calendarService.renameCalendar(calendarDto, userDetails.getUsername());
 
         return "캘린더 이름이 " + calendarDto.getCalendarName() + "으로 변경되었습니다.";
     }
