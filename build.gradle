@@ -43,6 +43,7 @@ dependencies {
 	//로깅 시스템 logback core
 	implementation group: 'ch.qos.logback', name: 'logback-core', version: '1.2.9'
 
+	implementation 'com.github.maricn:logback-slack-appender:1.4.0'
 
 
 
