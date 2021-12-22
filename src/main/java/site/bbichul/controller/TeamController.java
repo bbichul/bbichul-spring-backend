@@ -26,21 +26,21 @@ public class TeamController {
     @Operation(description = "팀 소속 여부 확인", method = "GET")
     @GetMapping("/teams")
     public String checkTeam(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("GET /api/teams HTTP/1.1");
+        log.info("[USER : {}] Request GET /api/teams HTTP/1.1", userDetails.getUsername());
         return teamService.checkTeam(userDetails.getUser());
     }
 
     @Operation(description = "팀 만들기", method = "POST")
     @PostMapping("/teams")
     public String createTeam(@RequestBody TeamRequestDto teamRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("POST /api/teams HTTP/1.1");
+        log.info("[USER : {}] Request POST /api/teams HTTP/1.1", userDetails.getUsername());
         return teamService.createTeam(teamRequestDto, userDetails.getUser());
     }
 
     @Operation(description = "to do list의 task 저장", method = "POST")
     @PostMapping("/teams/task")
     public TeamTask addTask(@RequestBody TeamTaskRequestDto teamTaskRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("POST /api/teams/task HTTP/1.1");
+        log.info("[USER : {}] Request POST /api/teams/task HTTP/1.1", userDetails.getUsername());
         return teamService.addTask(teamTaskRequestDto, userDetails.getUser());
     }
 
@@ -54,7 +54,7 @@ public class TeamController {
     @Operation(description = "to do list의 task 조회", method = "GET")
     @GetMapping("/teams/task")
     public List<TeamTask> showTask(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("GET /api/teams/task HTTP/1.1");
+        log.info("[USER : {}] Request GET /api/teams/task HTTP/1.1", userDetails.getUsername());
         return teamService.showTask(userDetails.getUser());
     }
 
@@ -75,14 +75,14 @@ public class TeamController {
     @Operation(description = "팀원 출결 현황 조회", method = "GET")
     @GetMapping("/teams/status")
     public List<User> checkStatus(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("PUT /api/teams/tasks/status HTTP/1.1");
+        log.info("[USER : {}] Request PUT /api/teams/tasks/status HTTP/1.1", userDetails.getUsername());
         return teamService.checkStatus(userDetails.getUser());
     }
 
     @Operation(description = "팀 가입", method = "POST")
     @PostMapping("/teams/signup")
     public String signupTeam(@RequestBody TeamRequestDto teamRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("POST /api/teams/signup HTTP/1.1");
+        log.info("[USER : {} Request] POST /api/teams/signup HTTP/1.1", userDetails.getUsername());
         return teamService.signupTeam(teamRequestDto, userDetails.getUser());
     }
 
@@ -96,7 +96,7 @@ public class TeamController {
     @Operation(description = "to do list의 전체 진행상황 그래프 조회", method = "POST")
     @PostMapping("/teams/task/graph")
     public TeamProgressbarResponseDto getTeamProgressbar(TeamProgressbarResponseDto teamProgressbarResponseDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("POST /api/teams/task/graph HTTP/1.1");
+        log.info("[USER : {}] Request POST /api/teams/task/graph HTTP/1.1", userDetails.getUsername());
         return teamService.getTeamProgressbar(teamProgressbarResponseDto, userDetails.getUser());
     }
 }

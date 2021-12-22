@@ -23,14 +23,14 @@ public class ResolutionController {
     @Operation(description = "각오 설정", method = "PUT")
     @PutMapping("/users/resolution")
     public String updateResolution(@RequestBody ResolutionRequestDto userInfoRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("PUT /api/users/resolution HTTP/1.1");
+        log.info("[USER : {}] Request PUT /api/users/resolution HTTP/1.1", userDetails.getUsername());
         return resolutionService.updateResolution(userInfoRequestDto, userDetails.getUser());
     }
 
     @Operation(description = "각오 조회", method = "GET")
     @GetMapping("/users/resolution")
     public UserInfo getResolution(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("GET /api/users/resolution HTTP/1.1");
+        log.info("[USER : {}] Request GET /api/users/resolution HTTP/1.1", userDetails.getUsername());
         return resolutionService.getResolution(userDetails.getUser());
     }
 

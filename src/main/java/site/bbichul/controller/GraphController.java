@@ -20,7 +20,7 @@ public class GraphController {
     @Operation(description = "공부시간 그래프 조회", method = "GET")
     @GetMapping("/api/users/graph")
     public Map<String, Object> drawLineGraph(@RequestParam String type,@RequestParam Integer year, @RequestParam Integer month, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("GET /api/users/graph HTTP/1.1");
+        log.info("[USER : {}] Request GET /api/users/graph HTTP/1.1", userDetails.getUsername());
         return graphService.drawLineGraph(type, year, month, userDetails.getUser());
 
     }

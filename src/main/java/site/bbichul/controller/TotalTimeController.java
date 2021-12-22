@@ -31,7 +31,7 @@ public class TotalTimeController {
     @Operation(description = "총 공부시간 조회", method = "GET")
     @GetMapping("/users/time")
     public Map<String, Integer> getTotalTime(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("GET /api/users/time HTTP/1.1");
+        log.info("[USER : {}] Request GET /api/users/time HTTP/1.1", userDetails.getUsername());
         return totalTimeService.getTotalTime(userDetails.getUser());
     }
 }

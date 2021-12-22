@@ -2,6 +2,7 @@ package site.bbichul.service;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.bbichul.dto.CalendarMemoDto;
@@ -19,6 +20,7 @@ import site.bbichul.utills.CalendarMemoValidator;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CalendarService {

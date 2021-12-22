@@ -22,14 +22,14 @@ public class GoalController {
     @Operation(description = "개인 목표 설정", method = "PUT")
     @PutMapping("/users/goal")
     public Map<String, String> updateGoal(@RequestBody GoalRequestDto goalRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("PUT /api/users/goal HTTP/1.1");
+        log.info("[USER : {}] Request PUT /api/users/goal HTTP/1.1", userDetails.getUsername());
         return goalService.updateGoal(goalRequestDto, userDetails.getUser());
     }
 
     @Operation(description = "개인 목표 조회", method = "GET")
     @GetMapping("/users/goal")
     public Map<String,Object> getGoal(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("GET /api/users/goal HTTP/1.1");
+        log.info("[USER : {}] Request GET /api/users/goal HTTP/1.1", userDetails.getUsername());
         return goalService.getGoal(userDetails.getUser());
     }
 }
