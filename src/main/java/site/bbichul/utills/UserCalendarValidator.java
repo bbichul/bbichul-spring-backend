@@ -1,11 +1,13 @@
 package site.bbichul.utills;
 
 
+import lombok.extern.slf4j.Slf4j;
 import site.bbichul.exception.BbichulErrorCode;
 import site.bbichul.exception.BbichulException;
 import site.bbichul.models.Team;
 import site.bbichul.models.User;
 
+@Slf4j
 public class UserCalendarValidator {
 
     public static void validateCreateUserCalendar(User user, boolean isPrivate, String calendarName) {
