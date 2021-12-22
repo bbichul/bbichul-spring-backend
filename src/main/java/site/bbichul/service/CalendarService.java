@@ -2,6 +2,7 @@ package site.bbichul.service;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.bbichul.dto.CalendarMemoDto;
@@ -19,6 +20,7 @@ import site.bbichul.utills.CalendarMemoValidator;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CalendarService {
@@ -52,6 +54,7 @@ public class CalendarService {
                 calendarName = "팀 " + user.getTeam().getTeamname() + "의 캘린더 1";
                 UserCalendar userCalendarT = new UserCalendar(user.getTeam(), false, calendarName);
                 userCalendarRepository.save(userCalendarT);
+                log.info("[USER : {}] Service Auto Create, Team {} Calendar", user.getUsername(), user.getTeam().getTeamname());
             }
         }
         Long teamId = user.getTeam() != null ? user.getTeam().getId() : -1;
@@ -69,9 +72,11 @@ public class CalendarService {
             CalendarMemo getMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(calendarMemoDto.getCalendarId(), calendarMemoDto.getDateData()).orElseThrow(
                     () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
             getMemo.updateMemo(calendarMemoDto);
+            log.info("Service updateMemo, CalendarId : {}, date : {}", calendarMemoDto.getCalendarId(), calendarMemoDto.getDateData());
         }catch (BbichulException e){
             CalendarMemo calendarMemo = new CalendarMemo(calendarMemoDto, userCalendarRepository.getById(calendarMemoDto.getCalendarId()));
             calendarMemoRepository.save(calendarMemo);
+            log.info("Service saveMemo, CalendarId : {}, date : {}", calendarMemoDto.getCalendarId(), calendarMemoDto.getDateData());
         }
     }
 
@@ -117,6 +122,7 @@ public class CalendarService {
         if (calendarDto.getIsPrivate()) {
             userCalendar = new UserCalendar(user, calendarDto.getIsPrivate(), calendarName);
         } else {
+            log.info("[USER : {}] Service create Team Calendar : {}", username, calendarName);
             userCalendar = new UserCalendar(user.getTeam(), calendarDto.getIsPrivate(), calendarName);
         }
 
@@ -125,19 +131,21 @@ public class CalendarService {
 
 
     @Transactional
-    public void deleteCalendar(Long calendarId) {
+    public void deleteCalendar(Long calendarId, String username) {
         calendarMemoRepository.deleteAllByUserCalendarId(calendarId);
 
         userCalendarRepository.deleteById(calendarId);
+        log.info("[User :{}] Service Delete Calendar calendarId : {}",username, calendarId);
     }
 
     @Transactional
-    public void renameCalendar(CalendarDto calendarDto) {
+    public void renameCalendar(CalendarDto calendarDto, String username) {
 
         UserCalendar userCalendar = userCalendarRepository.findById(calendarDto.getCalendarId()).orElseThrow(
                 () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MATCHED_CALENDAR)
         );
 
+        log.info("[User : {}] Service rename Calendar : {} -> {}", username, userCalendar.getCalendarName(), calendarDto.getCalendarName());
         userCalendar.renameCalendar(calendarDto.getCalendarName());
     }
 }
