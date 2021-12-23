@@ -2,7 +2,7 @@
 
     <springProperty name="SLACK_WEBHOOK_URI" source="logging.slack.webhook-uri"/>
     <appender name="SLACK" class="com.github.maricn.logback.SlackAppender">
-        <webhookUri>${webhook_uri}</webhookUri>
+        <webhookUri>${webhook-uri}</webhookUri>
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %msg %n</pattern>
         </layout>
