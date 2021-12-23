@@ -17,7 +17,6 @@ public class HomeController {
     public String test() {
         log.error("Slack error alarm");
         log.info("Slack log info");
-        log.debug("Slack log debug");
         return "test";
     }
 }
