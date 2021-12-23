@@ -2,6 +2,7 @@ package site.bbichul.utills;
 
 
 import lombok.extern.slf4j.Slf4j;
+import site.bbichul.dto.CalendarDto;
 import site.bbichul.exception.BbichulErrorCode;
 import site.bbichul.exception.BbichulException;
 import site.bbichul.models.Team;
@@ -36,6 +37,5 @@ public class UserCalendarValidator {
         if (calendarName == null || calendarName.trim().length() == 0) {
             throw new BbichulException(BbichulErrorCode.CANT_INPUT_VACUUM);
         }
-
     }
 }

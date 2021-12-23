@@ -28,15 +28,14 @@ public class CalendarController {
     public List<UserCalendar> getCalendarInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("[USER : {} ] Request GET /api/calendars/info HTTP/1.1", userDetails.getUsername());
 
-        String username = userDetails.getUsername();
-        return calendarService.getUserInfo(username);
+        return calendarService.getUserInfo(userDetails.getUser());
     }
 
     @Operation(description = "메모 추가하기", method = "PUT")
     @PutMapping("/calendar/memo")
     public void updateCalendarMemo(@RequestBody final CalendarMemoDto calendarMemoDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         log.info("[USER : {}] Request PUT /api/calendars/memo HTTP/1.1", userDetails.getUsername());
-        calendarService.updateMemo(calendarMemoDto);
+        calendarService.updateMemo(calendarMemoDto, userDetails.getUser());
     }
 
 
@@ -45,7 +44,7 @@ public class CalendarController {
     public CalendarMemoResponseDto getMemoClickedDay(@RequestParam("id") final Long calendarId, @RequestParam("date") String dateData , @AuthenticationPrincipal UserDetailsImpl userDetails){
         log.info("[USER : {}] Request GET /api/calendars/memo HTTP/1.1", userDetails.getUsername());
 
-        return calendarService.getMemoClickedDay(calendarId, dateData);
+        return calendarService.getMemoClickedDay(calendarId, dateData, userDetails.getUser());
     }
 
     @Operation(description = "달력 변경하고 메모 가져오기", method = "GET")
@@ -53,7 +52,7 @@ public class CalendarController {
     public List<CalendarMemo> getMemo(@RequestParam("id") final Long calendarId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("[USER : {}] Request GET /api/calendars/option HTTP/1.1", userDetails.getUsername());
 
-        return calendarService.getTypeAllMemo(calendarId);
+        return calendarService.getTypeAllMemo(calendarId, userDetails.getUser());
     }
 
     @Operation(description = "달력 추가하기", method = "POST")
@@ -70,7 +69,7 @@ public class CalendarController {
     @DeleteMapping("/calendar")
     public String deleteCalendar(@RequestParam("id") final Long calendarId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("[USER : {}] Request DELETE /api/calendars/calendar HTTP/1.1", userDetails.getUsername());
-        calendarService.deleteCalendar(calendarId, userDetails.getUsername());
+        calendarService.deleteCalendar(calendarId, userDetails.getUser());
 
         return "선택한 캘린더가 삭제되었습니다.";
     }
@@ -79,7 +78,7 @@ public class CalendarController {
     @PatchMapping("/calendar")
     public String renameCalendar(@RequestBody final CalendarDto calendarDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("[USER : {}] Request PATCH /api/calendars/calendar HTTP/1.1", userDetails.getUsername());
-        calendarService.renameCalendar(calendarDto, userDetails.getUsername());
+        calendarService.renameCalendar(calendarDto, userDetails.getUser());
 
         return "캘린더 이름이 " + calendarDto.getCalendarName() + "으로 변경되었습니다.";
     }
