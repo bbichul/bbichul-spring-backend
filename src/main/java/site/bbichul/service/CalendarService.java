@@ -118,10 +118,9 @@ public class CalendarService {
     }
 
     @Transactional
-    public void addCalendar(CalendarDto calendarDto, String username) {
+    public void addCalendar(CalendarDto calendarDto, User user) {
 
-        User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new BbichulException(BbichulErrorCode.NOT_FOUND_USER));
+        validateUser(user);
 
         String calendarName = calendarDto.getCalendarName();
 
@@ -129,7 +128,7 @@ public class CalendarService {
         if (calendarDto.getIsPrivate()) {
             userCalendar = new UserCalendar(user, calendarDto.getIsPrivate(), calendarName);
         } else {
-            log.info("[USER : {}] Service create Team Calendar : {}", username, calendarName);
+            log.info("[USER : {}] Service create Team Calendar : {}", user.getUsername(), calendarName);
             userCalendar = new UserCalendar(user.getTeam(), calendarDto.getIsPrivate(), calendarName);
         }
 

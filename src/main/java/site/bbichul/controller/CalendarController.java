@@ -60,8 +60,7 @@ public class CalendarController {
     public String addCalendar(@RequestBody final CalendarDto calendarDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("[USER : {}] Request POST /api/calendars/option HTTP/1.1", userDetails.getUsername());
 
-        String username = userDetails.getUsername();
-        calendarService.addCalendar(calendarDto, username);
+        calendarService.addCalendar(calendarDto, userDetails.getUser());
         return "캘린더가 추가되었습니다 !";
     }
 
