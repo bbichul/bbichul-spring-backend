@@ -5,7 +5,7 @@ on:
     branches:
       - dev
 jobs:
-  build:
+  build-and-push-image:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
