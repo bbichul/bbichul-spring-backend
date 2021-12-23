@@ -6,3 +6,5 @@
 [14:10:37.595] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 8.038 seconds (JVM running for 8.602)  
 [14:59:16.912] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
 [14:59:21.622] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 7.085 seconds (JVM running for 7.83)  
+[15:10:21.180] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[15:10:26.325] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 7.526 seconds (JVM running for 8.198)  

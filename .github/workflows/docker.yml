@@ -48,13 +48,6 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Get current time
-        uses: 1466587594/get-current-time@v2
-        id: current-time
-        with:
-          format: YYYY-MM-DDTHH-mm-ss
-          utcOffset: "+09:00"
-
       # 8. 도커 이미지 빌드 후 ECR 업로드
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
