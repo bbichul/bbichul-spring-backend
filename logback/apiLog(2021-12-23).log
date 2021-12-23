@@ -1,0 +1,4 @@
+[09:01:17.992] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[09:01:23.646] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 9.254 seconds (JVM running for 10.29)  
+[10:55:33.227] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[10:55:40.241] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 9.55 seconds (JVM running for 10.286)  
