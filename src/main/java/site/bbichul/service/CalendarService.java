@@ -17,6 +17,7 @@ import site.bbichul.repository.CalendarMemoRepository;
 import site.bbichul.repository.UserCalendarRepository;
 import site.bbichul.repository.UserRepository;
 import site.bbichul.utills.CalendarMemoValidator;
+import site.bbichul.utills.CalendarServiceValidator;
 
 import java.util.List;
 
@@ -31,15 +32,15 @@ public class CalendarService {
 
 
     @Transactional
-    public List<UserCalendar> getUserInfo(String username) {
-        User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new BbichulException(BbichulErrorCode.NOT_FOUND_USER)
-        );
+    public List<UserCalendar> getUserInfo(User user) {
+
+        validateUser(user);
+
 
         boolean isCalendarEmptied = userCalendarRepository.findAllByUserId(user.getId()).isEmpty();
 
 
-        String calendarName= null;
+        String calendarName = null;
         if (isCalendarEmptied) {
             calendarName = user.getUsername() + "의 캘린더 1";
             UserCalendar userCalendar = new UserCalendar(user, true, calendarName);
@@ -62,18 +63,19 @@ public class CalendarService {
     }
 
 
-
     @Transactional
-    public void updateMemo(CalendarMemoDto calendarMemoDto) {
+    public void updateMemo(CalendarMemoDto calendarMemoDto, User user) {
 
-        CalendarMemoValidator.validateServiceDateData(calendarMemoDto.getDateData());
+        validateUser(user);
+        validateUserOwnCalendar(calendarMemoDto.getCalendarId(), user);
+        CalendarServiceValidator.validateServiceDateData(calendarMemoDto.getDateData());
 
-        try{
+        try {
             CalendarMemo getMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(calendarMemoDto.getCalendarId(), calendarMemoDto.getDateData()).orElseThrow(
                     () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
             getMemo.updateMemo(calendarMemoDto);
             log.info("Service updateMemo, CalendarId : {}, date : {}", calendarMemoDto.getCalendarId(), calendarMemoDto.getDateData());
-        }catch (BbichulException e){
+        } catch (BbichulException e) {
             CalendarMemo calendarMemo = new CalendarMemo(calendarMemoDto, userCalendarRepository.getById(calendarMemoDto.getCalendarId()));
             calendarMemoRepository.save(calendarMemo);
             log.info("Service saveMemo, CalendarId : {}, date : {}", calendarMemoDto.getCalendarId(), calendarMemoDto.getDateData());
@@ -81,19 +83,21 @@ public class CalendarService {
     }
 
 
-    public CalendarMemoResponseDto getMemoClickedDay(Long CalendarId, String dateData) {
+    public CalendarMemoResponseDto getMemoClickedDay(Long calendarId, String dateData, User user) {
 
-        CalendarMemoValidator.validateServiceDateData(dateData);
+        validateUser(user);
+        validateUserOwnCalendar(calendarId, user);
+        CalendarServiceValidator.validateServiceDateData(dateData);
 
-        try{
-            CalendarMemo calendarMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(CalendarId, dateData).orElseThrow(
-                    ()-> new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
+        try {
+            CalendarMemo calendarMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(calendarId, dateData).orElseThrow(
+                    () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
             return CalendarMemoResponseDto.builder()
                     .dateData(calendarMemo.getDateData())
                     .contents(calendarMemo.getContents())
                     .build();
 
-        }catch (BbichulException e){
+        } catch (BbichulException e) {
             return CalendarMemoResponseDto.builder()
                     .dateData(dateData)
                     .contents("")
@@ -102,7 +106,10 @@ public class CalendarService {
 
     }
 
-    public List<CalendarMemo> getTypeAllMemo(Long calendarId) {
+    public List<CalendarMemo> getTypeAllMemo(Long calendarId, User user) {
+
+        validateUser(user);
+        validateUserOwnCalendar(calendarId, user);
 
         List<CalendarMemo> calendarMemoList = calendarMemoRepository.findAllByUserCalendarId(calendarId);
 
@@ -111,10 +118,9 @@ public class CalendarService {
     }
 
     @Transactional
-    public void addCalendar(CalendarDto calendarDto, String username) {
+    public void addCalendar(CalendarDto calendarDto, User user) {
 
-        User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new BbichulException(BbichulErrorCode.NOT_FOUND_USER));
+        validateUser(user);
 
         String calendarName = calendarDto.getCalendarName();
 
@@ -122,7 +128,7 @@ public class CalendarService {
         if (calendarDto.getIsPrivate()) {
             userCalendar = new UserCalendar(user, calendarDto.getIsPrivate(), calendarName);
         } else {
-            log.info("[USER : {}] Service create Team Calendar : {}", username, calendarName);
+            log.info("[USER : {}] Service create Team Calendar : {}", user.getUsername(), calendarName);
             userCalendar = new UserCalendar(user.getTeam(), calendarDto.getIsPrivate(), calendarName);
         }
 
@@ -131,22 +137,58 @@ public class CalendarService {
 
 
     @Transactional
-    public void deleteCalendar(Long calendarId, String username) {
+    public void deleteCalendar(Long calendarId, User user) {
+
+        validateUser(user);
+        validateUserOwnCalendar(calendarId, user);
+
         calendarMemoRepository.deleteAllByUserCalendarId(calendarId);
 
         userCalendarRepository.deleteById(calendarId);
-        log.info("[User :{}] Service Delete Calendar calendarId : {}",username, calendarId);
+        log.info("[User :{}] Service Delete Calendar calendarId : {}", user.getUsername(), calendarId);
     }
 
     @Transactional
-    public void renameCalendar(CalendarDto calendarDto, String username) {
+    public void renameCalendar(CalendarDto calendarDto, User user) {
+
+        validateUser(user);
+        validateUserOwnCalendar(calendarDto.getCalendarId(), user);
 
         UserCalendar userCalendar = userCalendarRepository.findById(calendarDto.getCalendarId()).orElseThrow(
                 () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MATCHED_CALENDAR)
         );
 
-        log.info("[User : {}] Service rename Calendar : {} -> {}", username, userCalendar.getCalendarName(), calendarDto.getCalendarName());
+        log.info("[User : {}] Service rename Calendar : {} -> {}", user, userCalendar.getCalendarName(), calendarDto.getCalendarName());
         userCalendar.renameCalendar(calendarDto.getCalendarName());
     }
+
+
+// 유효성 검사를 위해 DB 데이터를 찾는 메소드
+    private void validateUser(User user) {
+        userRepository.findByUsername(user.getUsername()).orElseThrow(
+                () -> new BbichulException(BbichulErrorCode.NOT_FOUND_USER)
+        );
+    }
+
+
+    private void validateUserOwnCalendar(Long calendarId, User user) {
+        UserCalendar userCalendar = userCalendarRepository.findByCalendarId(calendarId).orElseThrow(
+                () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MATCHED_CALENDAR)
+        );
+
+        if (userCalendar.getUser() != null) {
+            if (userCalendar.getUser().getId() != user.getId()) {
+                throw new BbichulException(BbichulErrorCode.NOT_FOUND_MATCHED_CALENDAR);
+            }
+        }
+        if (userCalendar.getTeam() != null) {
+            if (userCalendar.getTeam().getId() != user.getTeam().getId()) {
+                throw new BbichulException(BbichulErrorCode.NOT_FOUND_MATCHED_CALENDAR);
+            }
+        }
+    }
+
+//캘린더 서비스 끝 라인
 }
+
 
