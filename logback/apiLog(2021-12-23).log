@@ -2,3 +2,7 @@
 [09:01:23.646] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 9.254 seconds (JVM running for 10.29)  
 [10:55:33.227] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
 [10:55:40.241] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 9.55 seconds (JVM running for 10.286)  
+[14:10:32.527] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[14:10:37.595] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 8.038 seconds (JVM running for 8.602)  
+[14:59:16.912] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[14:59:21.622] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 7.085 seconds (JVM running for 7.83)  
