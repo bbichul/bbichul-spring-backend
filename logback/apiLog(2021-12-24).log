@@ -120,3 +120,5 @@ io.jsonwebtoken.ExpiredJwtException: JWT expired at 2021-12-22T22:12:31Z. Curren
 	at java.lang.Thread.run(Thread.java:748)
 [09:10:32.542] [nio-8080-exec-2] [ERROR] [s.b.controller.HomeController:18] --  Slack error alarm  
 [09:10:32.542] [nio-8080-exec-2] [INFO ] [s.b.controller.HomeController:19] --  Slack log info  
+[10:18:55.517] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[10:19:00.141] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 6.654 seconds (JVM running for 7.275)  
