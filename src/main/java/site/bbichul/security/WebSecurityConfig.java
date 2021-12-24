@@ -40,6 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/").permitAll()
+                .antMatchers("/alarm").permitAll()
 
                 // 모든 html 사용
                 .antMatchers("/**.html").permitAll()
