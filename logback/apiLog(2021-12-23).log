@@ -70,3 +70,5 @@ io.jsonwebtoken.ExpiredJwtException: JWT expired at 2021-12-22T22:12:31Z. Curren
 	at java.lang.Thread.run(Thread.java:748)
 [15:57:49.611] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
 [15:57:54.840] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 7.291 seconds (JVM running for 7.952)  
+[17:06:01.735] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[17:06:07.516] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 7.6 seconds (JVM running for 8.316)  
