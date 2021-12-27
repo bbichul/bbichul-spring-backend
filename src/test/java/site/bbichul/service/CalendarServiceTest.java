@@ -144,7 +144,7 @@ class CalendarServiceTest {
         defaultUserCalendar.setIsPrivate(true);
 
         given(userRepository.findByUsername("테스트용")).willReturn(Optional.of(defaultUser));
-        given(userCalendarRepository.findByCalendarId(1L)).willReturn(Optional.of(defaultUserCalendar));
+        given(userCalendarRepository.findById(1L)).willReturn(Optional.of(defaultUserCalendar));
 
 
         //when
@@ -176,7 +176,7 @@ class CalendarServiceTest {
                 calendarMemoDto.getDateData())
         ).willThrow(BbichulException.class);
 
-        given(userCalendarRepository.findByCalendarId(calendarMemoDto.getCalendarId())).willReturn(Optional.of(defaultUserCalendar));
+        given(userCalendarRepository.findById(calendarMemoDto.getCalendarId())).willReturn(Optional.of(defaultUserCalendar));
         given(userCalendarRepository.getById(calendarMemoDto.getCalendarId())).willReturn(defaultUserCalendar);
 
         ArgumentCaptor<CalendarMemo> captor = ArgumentCaptor.forClass(CalendarMemo.class);
@@ -205,7 +205,7 @@ class CalendarServiceTest {
         String dateData = "2023년 12월 31일";
 
         given(userRepository.findByUsername("테스트용")).willReturn(Optional.of(defaultUser));
-        given(userCalendarRepository.findByCalendarId(calendarId)).willReturn(Optional.of(defaultUserCalendar));
+        given(userCalendarRepository.findById(calendarId)).willReturn(Optional.of(defaultUserCalendar));
 
         //when
         BbichulException bbichulException = assertThrows(BbichulException.class,
@@ -229,7 +229,7 @@ class CalendarServiceTest {
         CalendarMemo calendarMemo = new CalendarMemo(calendarMemoDto, defaultUserCalendar);
 
         given(userRepository.findByUsername("테스트용")).willReturn(Optional.of(defaultUser));
-        given(userCalendarRepository.findByCalendarId(1L)).willReturn(Optional.of(defaultUserCalendar));
+        given(userCalendarRepository.findById(1L)).willReturn(Optional.of(defaultUserCalendar));
         given(calendarMemoRepository.findByUserCalendarIdAndDateData(1L, "2021Y12M17"))
                 .willThrow(new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
         //when
@@ -256,7 +256,7 @@ class CalendarServiceTest {
         CalendarMemo calendarMemo = new CalendarMemo(calendarMemoDto, defaultUserCalendar);
 
         given(userRepository.findByUsername("테스트용")).willReturn(Optional.of(defaultUser));
-        given(userCalendarRepository.findByCalendarId(1L)).willReturn(Optional.of(defaultUserCalendar));
+        given(userCalendarRepository.findById(1L)).willReturn(Optional.of(defaultUserCalendar));
         given(calendarMemoRepository.findByUserCalendarIdAndDateData(1L, "2021Y12M17"))
                 .willReturn(Optional.of(calendarMemo));
         //when
