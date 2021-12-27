@@ -172,7 +172,7 @@ public class CalendarService {
 
 
     private void validateUserOwnCalendar(Long calendarId, User user) {
-        UserCalendar userCalendar = userCalendarRepository.findByCalendarId(calendarId).orElseThrow(
+        UserCalendar userCalendar = userCalendarRepository.findById(calendarId).orElseThrow(
                 () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MATCHED_CALENDAR)
         );
 

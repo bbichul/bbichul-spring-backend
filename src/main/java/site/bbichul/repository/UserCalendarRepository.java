@@ -13,9 +13,9 @@ public interface UserCalendarRepository extends JpaRepository<UserCalendar, Long
 
     List<UserCalendar> findAllByUserId(Long userId);
 
-    List<UserCalendar> findAllByTeamId(Long getTeamCalendarId);
+    List<UserCalendar> findAllByTeamId(Long teamId);
 
     List<UserCalendar> findAllByUserIdOrTeamId(Long userId, Long teamId);
 
-    Optional<UserCalendar> findByCalendarId(Long calendarId);
+    Optional<UserCalendar> findById(Long id);
 }
