@@ -1,5 +1,6 @@
 package site.bbichul.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class UserCalendar {
     @JoinColumn(name = "userId", nullable = true)
     private User user;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "teamId", nullable = true)
     private Team team;

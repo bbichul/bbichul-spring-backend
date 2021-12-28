@@ -1,5 +1,6 @@
 package site.bbichul.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
+
 
     @OneToMany(mappedBy = "team",cascade = CascadeType.REMOVE)
     List<UserCalendar> calendars = new ArrayList<>();
