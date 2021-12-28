@@ -23,7 +23,7 @@ public class Team {
     @Id
     private Long id;
 
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "team",cascade = CascadeType.REMOVE)
     List<UserCalendar> calendars = new ArrayList<>();
 
