@@ -3,6 +3,7 @@ package site.bbichul.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import site.bbichul.dto.CalendarMemoDto;
 import site.bbichul.utills.CalendarMemoValidator;
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Getter
+@Setter
 public class CalendarMemo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

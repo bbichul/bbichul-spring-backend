@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import site.bbichul.dto.TeamRequestDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -28,8 +29,17 @@ public class Team {
     @Column(nullable = false, length = 100)
     private String teamname;
 
+    public Team(String teamname, Long id) {
+        this.id = id;
+        this.teamname = teamname;
+    }
+
     public Team(String teamname) {
         this.teamname = teamname;
     }
 
+    public Team(TeamRequestDto teamRequestDto) {
+        this.teamname = teamRequestDto.getTeamname();
+        this.id = teamRequestDto.getId();
+    }
 }
