@@ -86,6 +86,7 @@ class TeamServiceTest {
     @Test
     @DisplayName("팀명 중복확인 통과못한 경우")
     void checkName_Normal() {
+
         //given
         String teamname = "test";
         TeamRequestDto teamRequestDto = new TeamRequestDto();
