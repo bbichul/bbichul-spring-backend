@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class CalendarMemo {
+public class CalendarMemo extends TimeStamped{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
@@ -29,6 +29,9 @@ public class CalendarMemo {
 
     @Column(nullable = true, columnDefinition = "TEXT")
     private String contents;
+
+
+    private Integer version;
 
     public CalendarMemo(CalendarMemoDto calendarMemoDto, UserCalendar userCalendar) {
         CalendarMemoValidator.validateCreateCalendarMemo(calendarMemoDto, userCalendar);
