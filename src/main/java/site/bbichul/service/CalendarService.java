@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import site.bbichul.dto.CalendarDto;
 import site.bbichul.dto.CalendarMemoDto;
 import site.bbichul.dto.CalendarMemoResponseDto;
-import site.bbichul.dto.CalendarDto;
 import site.bbichul.exception.BbichulErrorCode;
 import site.bbichul.exception.BbichulException;
 import site.bbichul.models.CalendarMemo;
@@ -16,11 +16,8 @@ import site.bbichul.models.UserCalendar;
 import site.bbichul.repository.CalendarMemoRepository;
 import site.bbichul.repository.UserCalendarRepository;
 import site.bbichul.repository.UserRepository;
-import site.bbichul.utills.CalendarMemoValidator;
 import site.bbichul.utills.CalendarServiceValidator;
 
-import javax.persistence.OptimisticLockException;
-import java.io.BufferedInputStream;
 import java.util.List;
 
 @Slf4j
@@ -107,6 +104,7 @@ public class CalendarService {
             CalendarMemo calendarMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(calendarId, dateData).orElseThrow(
                     () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
             return CalendarMemoResponseDto.builder()
+                    .memoVersion(calendarMemo.getMemoVersion())
                     .dateData(calendarMemo.getDateData())
                     .contents(calendarMemo.getContents())
                     .build();
