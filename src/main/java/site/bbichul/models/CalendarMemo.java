@@ -30,7 +30,7 @@ public class CalendarMemo extends TimeStamped{
     @Column(nullable = true, columnDefinition = "TEXT")
     private String contents;
 
-
+    @Version
     private Integer version;
 
     public CalendarMemo(CalendarMemoDto calendarMemoDto, UserCalendar userCalendar) {
