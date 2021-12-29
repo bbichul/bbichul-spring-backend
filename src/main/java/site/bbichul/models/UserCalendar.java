@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-public class UserCalendar {
+public class UserCalendar extends TimeStamped{
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

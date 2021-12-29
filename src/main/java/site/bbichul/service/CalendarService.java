@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import site.bbichul.dto.CalendarDto;
 import site.bbichul.dto.CalendarMemoDto;
 import site.bbichul.dto.CalendarMemoResponseDto;
-import site.bbichul.dto.CalendarDto;
 import site.bbichul.exception.BbichulErrorCode;
 import site.bbichul.exception.BbichulException;
 import site.bbichul.models.CalendarMemo;
@@ -16,7 +16,6 @@ import site.bbichul.models.UserCalendar;
 import site.bbichul.repository.CalendarMemoRepository;
 import site.bbichul.repository.UserCalendarRepository;
 import site.bbichul.repository.UserRepository;
-import site.bbichul.utills.CalendarMemoValidator;
 import site.bbichul.utills.CalendarServiceValidator;
 
 import java.util.List;
@@ -73,7 +72,19 @@ public class CalendarService {
         try {
             CalendarMemo getMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(calendarMemoDto.getCalendarId(), calendarMemoDto.getDateData()).orElseThrow(
                     () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
+
+            if (getMemo.getMemoVersion() != calendarMemoDto.getMemoVersion()) {
+                StringBuffer tempBuffer = new StringBuffer();
+                tempBuffer.append(calendarMemoDto.getContents());
+                tempBuffer.append("\n\n\n");
+                tempBuffer.append(getMemo.getModifiedAt() + " 에 마지막으로 저장된 글과 병합되지 못했습니다. \n");
+                tempBuffer.append(getMemo.getContents());
+
+                calendarMemoDto.setContents(tempBuffer.toString());
+            }
+
             getMemo.updateMemo(calendarMemoDto);
+
             log.info("Service updateMemo, CalendarId : {}, date : {}", calendarMemoDto.getCalendarId(), calendarMemoDto.getDateData());
         } catch (BbichulException e) {
             CalendarMemo calendarMemo = new CalendarMemo(calendarMemoDto, userCalendarRepository.getById(calendarMemoDto.getCalendarId()));
@@ -93,6 +104,7 @@ public class CalendarService {
             CalendarMemo calendarMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(calendarId, dateData).orElseThrow(
                     () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
             return CalendarMemoResponseDto.builder()
+                    .memoVersion(calendarMemo.getMemoVersion())
                     .dateData(calendarMemo.getDateData())
                     .contents(calendarMemo.getContents())
                     .build();
