@@ -19,6 +19,8 @@ import site.bbichul.repository.UserRepository;
 import site.bbichul.utills.CalendarMemoValidator;
 import site.bbichul.utills.CalendarServiceValidator;
 
+import javax.persistence.OptimisticLockException;
+import java.io.BufferedInputStream;
 import java.util.List;
 
 @Slf4j
@@ -73,7 +75,19 @@ public class CalendarService {
         try {
             CalendarMemo getMemo = calendarMemoRepository.findByUserCalendarIdAndDateData(calendarMemoDto.getCalendarId(), calendarMemoDto.getDateData()).orElseThrow(
                     () -> new BbichulException(BbichulErrorCode.NOT_FOUND_MEMO));
+
+            if (getMemo.getMemoVersion() != calendarMemoDto.getMemoVersion()) {
+                StringBuffer tempBuffer = new StringBuffer();
+                tempBuffer.append(calendarMemoDto.getContents());
+                tempBuffer.append("\n\n\n");
+                tempBuffer.append(getMemo.getModifiedAt() + " 에 마지막으로 저장된 글과 병합되지 못했습니다. \n");
+                tempBuffer.append(getMemo.getContents());
+
+                calendarMemoDto.setContents(tempBuffer.toString());
+            }
+
             getMemo.updateMemo(calendarMemoDto);
+
             log.info("Service updateMemo, CalendarId : {}, date : {}", calendarMemoDto.getCalendarId(), calendarMemoDto.getDateData());
         } catch (BbichulException e) {
             CalendarMemo calendarMemo = new CalendarMemo(calendarMemoDto, userCalendarRepository.getById(calendarMemoDto.getCalendarId()));

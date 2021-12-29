@@ -31,7 +31,8 @@ public class CalendarMemo extends TimeStamped{
     private String contents;
 
     @Version
-    private Integer version;
+    @Column
+    private Integer memoVersion;
 
     public CalendarMemo(CalendarMemoDto calendarMemoDto, UserCalendar userCalendar) {
         CalendarMemoValidator.validateCreateCalendarMemo(calendarMemoDto, userCalendar);
