@@ -113,8 +113,7 @@ public class TeamService {
         return true;
     }
 
-    public TeamProgressbarResponseDto getTeamProgressbar(TeamProgressbarResponseDto teamProgressbarResponseDto, User user) {
-        Long teamId = user.getTeam().getId();
+    public TeamProgressbarResponseDto getTeamProgressbar(Long teamId, TeamProgressbarResponseDto teamProgressbarResponseDto) {
         Long doneCount = teamTaskRepository.countByTeamIdAndDone(teamId, true);
         Long notDoneCount = teamTaskRepository.countByTeamIdAndDone(teamId, false);
         Integer total = (int) (doneCount + notDoneCount);

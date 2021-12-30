@@ -76,7 +76,7 @@ public class TeamController {
     @Operation(description = "팀원 출결 현황 조회", method = "GET")
     @GetMapping("/teams/status")
     public List<User> checkStatus(@RequestParam("teamid") final Long teamId) {
-        log.info("[TEAMID : {}] Request PUT /api/teams/tasks/status HTTP/1.1", teamId);
+        log.info("[TEAMID : {}] Request GET /api/teams/tasks/status HTTP/1.1", teamId);
         return teamService.checkStatus(teamId);
     }
 
@@ -94,10 +94,10 @@ public class TeamController {
         return teamService.checkName(teamRequestDto);
     }
 
-    @Operation(description = "to do list의 전체 진행상황 그래프 조회", method = "POST")
-    @PostMapping("/teams/task/graph")
-    public TeamProgressbarResponseDto getTeamProgressbar(TeamProgressbarResponseDto teamProgressbarResponseDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("[USER : {}] Request POST /api/teams/task/graph HTTP/1.1", userDetails.getUsername());
-        return teamService.getTeamProgressbar(teamProgressbarResponseDto, userDetails.getUser());
+    @Operation(description = "to do list의 전체 진행상황 그래프 조회", method = "GET")
+    @GetMapping("/teams/task/graph")
+    public TeamProgressbarResponseDto getTeamProgressbar(@RequestParam("teamid") final Long teamId, TeamProgressbarResponseDto teamProgressbarResponseDto) {
+        log.info("[TEAMID : {}] Request GET /api/teams/task/graph HTTP/1.1", teamId);
+        return teamService.getTeamProgressbar(teamId, teamProgressbarResponseDto);
     }
 }
