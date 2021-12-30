@@ -38,7 +38,7 @@ public class MyTeamController {
     @Operation(description = "자기 팀 조회", method = "GET")
     @GetMapping("/users/team")
     public Map<String, Object> getTeam(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("[USER : {}] Request GET /api/users/resolution HTTP/1.1", userDetails.getUsername());
+        log.info("[USER : {}] Request GET /api/users/team HTTP/1.1", userDetails.getUsername());
         return myTeamService.getTeam(userDetails.getUser());
     }
 
