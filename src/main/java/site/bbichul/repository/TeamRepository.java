@@ -5,6 +5,6 @@ import site.bbichul.models.Team;
 
 import java.util.Optional;
 
-public interface TeamRepository extends JpaRepository<Team, String> {
+public interface TeamRepository extends JpaRepository<Team, Long> {
     Optional<Team> findByTeamname(String teamname);
 }

@@ -49,10 +49,13 @@ public class TeamService {
         return team.getTeamname();
     }
 
-    public TeamTask addTask(TeamTaskRequestDto teamTaskRequestDto, User user) {
+    public TeamTask addTask(TeamTaskRequestDto teamTaskRequestDto) {
         TeamTask teamTask = new TeamTask(teamTaskRequestDto);
+        Optional<Team> team = teamRepository.findById(teamTaskRequestDto.getTeamId());
+        team.orElseThrow(() -> new IllegalArgumentException("소속팀을 찾을 수 없습니다."));
+
         teamTask.setDone(false);
-        teamTask.setTeam(user.getTeam());
+        teamTask.setTeam(team.get());
         teamTaskRepository.save(teamTask);
 
         return teamTask;

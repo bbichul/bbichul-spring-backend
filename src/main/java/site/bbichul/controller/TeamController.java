@@ -39,9 +39,9 @@ public class TeamController {
 
     @Operation(description = "to do list의 task 저장", method = "POST")
     @PostMapping("/teams/task")
-    public TeamTask addTask(@RequestBody TeamTaskRequestDto teamTaskRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("[USER : {}] Request POST /api/teams/task HTTP/1.1", userDetails.getUsername());
-        return teamService.addTask(teamTaskRequestDto, userDetails.getUser());
+    public TeamTask addTask(@RequestBody TeamTaskRequestDto teamTaskRequestDto) {
+        log.info("[TEAMID : {}] Request POST /api/teams/task HTTP/1.1", teamTaskRequestDto.getTeamId());
+        return teamService.addTask(teamTaskRequestDto);
     }
 
     @Operation(description = "to do list의 task 내용 변경", method = "PUT")
