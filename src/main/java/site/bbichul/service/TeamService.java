@@ -61,8 +61,7 @@ public class TeamService {
         return teamTask;
     }
 
-    public List<TeamTask> showTask(User user) {
-        Long teamId = user.getTeam().getId();
+    public List<TeamTask> showTask(Long teamId) {
         List<TeamTask> teamTask = teamTaskRepository.findAllByTeamId(teamId);
         return teamTask;
     }

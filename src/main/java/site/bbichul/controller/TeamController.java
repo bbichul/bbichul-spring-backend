@@ -53,9 +53,9 @@ public class TeamController {
 
     @Operation(description = "to do list의 task 조회", method = "GET")
     @GetMapping("/teams/task")
-    public List<TeamTask> showTask(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("[USER : {}] Request GET /api/teams/task HTTP/1.1", userDetails.getUsername());
-        return teamService.showTask(userDetails.getUser());
+    public List<TeamTask> showTask(@RequestParam("teamid") final Long teamId) {
+        log.info("[TEAMID : {}] Request GET /api/teams/task HTTP/1.1", teamId);
+        return teamService.showTask(teamId);
     }
 
     @Operation(description = "to do list의 task 삭제", method = "DELETE")
