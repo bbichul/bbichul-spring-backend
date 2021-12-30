@@ -133,7 +133,10 @@ public class TeamService {
     @Transactional
     public void updateTask(TeamTaskRequestDto teamTaskRequestDto) {
         Long id = teamTaskRequestDto.getId();
+
         Optional<TeamTask> teamtask = teamTaskRepository.findById(id);
+        teamtask.orElseThrow(() -> new IllegalArgumentException("해당 task를 찾을 수 없습니다."));
+
         teamtask.get().taskUpdate(teamTaskRequestDto);
     }
 }
