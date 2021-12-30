@@ -1,0 +1,263 @@
+[11:49:48.286] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[11:49:53.744] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 7.853 seconds (JVM running for 8.523)  
+[11:50:36.110] [nio-8080-exec-4] [INFO ] [s.b.c.UserApiController:46] --  [USER : test4] Request POST /api/users/signup HTTP/1.1  
+[11:50:56.100] [nio-8080-exec-5] [WARN ] [s.b.c.JwtAuthenticationFilter:45] --  the token is expired and not valid anymore  
+io.jsonwebtoken.ExpiredJwtException: JWT expired at 2021-12-22T19:30:53Z. Current time: 2021-12-28T11:50:56Z, a difference of 490803098 milliseconds.  Allowed clock skew: 0 milliseconds.
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:385)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:481)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:541)
+	at site.bbichul.utills.JwtTokenUtil.getAllClaimsFromToken(JwtTokenUtil.java:42)
+	at site.bbichul.utills.JwtTokenUtil.getClaimFromToken(JwtTokenUtil.java:37)
+	at site.bbichul.utills.JwtTokenUtil.getUsernameFromToken(JwtTokenUtil.java:28)
+	at site.bbichul.controller.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:41)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:358)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:271)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1722)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+[11:51:26.313] [nio-8080-exec-9] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[11:51:26.317] [nio-8080-exec-9] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[11:58:08.605] [nio-8080-exec-2] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[11:58:12.766] [nio-8080-exec-3] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[11:58:12.780] [nio-8080-exec-3] [INFO ] [s.b.controller.TeamController:36] --  [USER : test4] Request POST /api/teams HTTP/1.1  
+[11:58:17.960] [nio-8080-exec-4] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[11:58:17.973] [nio-8080-exec-4] [INFO ] [s.b.controller.TeamController:36] --  [USER : test4] Request POST /api/teams HTTP/1.1  
+[11:59:04.155] [nio-8080-exec-5] [WARN ] [s.b.c.JwtAuthenticationFilter:45] --  the token is expired and not valid anymore  
+io.jsonwebtoken.ExpiredJwtException: JWT expired at 2021-12-09T21:37:18Z. Current time: 2021-12-28T11:59:04Z, a difference of 1606906154 milliseconds.  Allowed clock skew: 0 milliseconds.
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:385)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:481)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:541)
+	at site.bbichul.utills.JwtTokenUtil.getAllClaimsFromToken(JwtTokenUtil.java:42)
+	at site.bbichul.utills.JwtTokenUtil.getClaimFromToken(JwtTokenUtil.java:37)
+	at site.bbichul.utills.JwtTokenUtil.getUsernameFromToken(JwtTokenUtil.java:28)
+	at site.bbichul.controller.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:41)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:358)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:271)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1722)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+[11:59:29.238] [nio-8080-exec-8] [WARN ] [s.b.c.JwtAuthenticationFilter:45] --  the token is expired and not valid anymore  
+io.jsonwebtoken.ExpiredJwtException: JWT expired at 2021-12-09T21:37:18Z. Current time: 2021-12-28T11:59:29Z, a difference of 1606931237 milliseconds.  Allowed clock skew: 0 milliseconds.
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:385)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:481)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:541)
+	at site.bbichul.utills.JwtTokenUtil.getAllClaimsFromToken(JwtTokenUtil.java:42)
+	at site.bbichul.utills.JwtTokenUtil.getClaimFromToken(JwtTokenUtil.java:37)
+	at site.bbichul.utills.JwtTokenUtil.getUsernameFromToken(JwtTokenUtil.java:28)
+	at site.bbichul.controller.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:41)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:358)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:271)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1722)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+[12:00:13.609] [nio-8080-exec-9] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:00:13.612] [nio-8080-exec-9] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:00:13.655] [nio-8080-exec-9] [INFO ] [s.b.service.CalendarService:58] --  [USER : test4] Service Auto Create, Team 하하 Calendar  
+[12:00:34.737] [nio-8080-exec-2] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:00:34.739] [nio-8080-exec-2] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:07:07.638] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[12:07:13.379] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 8.195 seconds (JVM running for 9.392)  
+[12:07:22.857] [nio-8080-exec-2] [INFO ] [s.b.c.UserApiController:46] --  [USER : test4] Request POST /api/users/signup HTTP/1.1  
+[12:07:29.376] [nio-8080-exec-3] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:07:29.383] [nio-8080-exec-3] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:07:36.660] [nio-8080-exec-4] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:07:36.689] [nio-8080-exec-4] [INFO ] [s.b.controller.TeamController:36] --  [USER : test4] Request POST /api/teams HTTP/1.1  
+[12:07:50.623] [nio-8080-exec-5] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:07:50.628] [nio-8080-exec-5] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:23:27.260] [nio-8080-exec-5] [INFO ] [s.b.service.CalendarService:58] --  [USER : test4] Service Auto Create, Team 하하 Calendar  
+[12:24:50.431] [nio-8080-exec-7] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:24:50.434] [nio-8080-exec-7] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:31:23.977] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[12:31:29.345] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 7.68 seconds (JVM running for 8.381)  
+[12:31:37.836] [nio-8080-exec-2] [INFO ] [s.b.c.UserApiController:46] --  [USER : test4] Request POST /api/users/signup HTTP/1.1  
+[12:31:52.789] [nio-8080-exec-3] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:31:52.804] [nio-8080-exec-3] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:31:57.116] [nio-8080-exec-4] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:31:57.125] [nio-8080-exec-4] [INFO ] [s.b.controller.TeamController:36] --  [USER : test4] Request POST /api/teams HTTP/1.1  
+[12:32:42.885] [nio-8080-exec-5] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:32:42.890] [nio-8080-exec-5] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:32:42.928] [nio-8080-exec-5] [INFO ] [s.b.service.CalendarService:58] --  [USER : test4] Service Auto Create, Team 하하 Calendar  
+[12:33:39.232] [nio-8080-exec-7] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:33:39.234] [nio-8080-exec-7] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:35:05.622] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[12:35:11.004] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 7.693 seconds (JVM running for 8.421)  
+[12:35:18.132] [nio-8080-exec-1] [INFO ] [s.b.c.UserApiController:46] --  [USER : test4] Request POST /api/users/signup HTTP/1.1  
+[12:35:34.241] [nio-8080-exec-3] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:35:34.250] [nio-8080-exec-3] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:35:36.495] [nio-8080-exec-4] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:35:36.502] [nio-8080-exec-4] [INFO ] [s.b.controller.TeamController:36] --  [USER : test4] Request POST /api/teams HTTP/1.1  
+[12:35:38.951] [nio-8080-exec-5] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:35:38.955] [nio-8080-exec-5] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:35:38.994] [nio-8080-exec-5] [INFO ] [s.b.service.CalendarService:58] --  [USER : test4] Service Auto Create, Team 하하 Calendar  
+[12:35:46.725] [nio-8080-exec-7] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:35:46.728] [nio-8080-exec-7] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:35:47.375] [nio-8080-exec-8] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:35:47.377] [nio-8080-exec-8] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:36:07.278] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[12:36:12.461] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 7.486 seconds (JVM running for 8.196)  
+[12:36:36.334] [nio-8080-exec-2] [INFO ] [s.b.c.UserApiController:46] --  [USER : test4] Request POST /api/users/signup HTTP/1.1  
+[12:36:41.725] [nio-8080-exec-3] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:36:41.734] [nio-8080-exec-3] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:36:49.970] [nio-8080-exec-4] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:36:49.996] [nio-8080-exec-4] [INFO ] [s.b.controller.TeamController:36] --  [USER : test4] Request POST /api/teams HTTP/1.1  
+[12:36:54.822] [nio-8080-exec-5] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:36:54.829] [nio-8080-exec-5] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:36:54.867] [nio-8080-exec-5] [INFO ] [s.b.service.CalendarService:58] --  [USER : test4] Service Auto Create, Team 하하 Calendar  
+[12:36:55.600] [nio-8080-exec-7] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:36:55.602] [nio-8080-exec-7] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:38:08.277] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[12:38:14.438] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 8.584 seconds (JVM running for 9.946)  
+[12:38:22.100] [nio-8080-exec-2] [INFO ] [s.b.c.UserApiController:46] --  [USER : test4] Request POST /api/users/signup HTTP/1.1  
+[12:38:28.128] [nio-8080-exec-3] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:38:28.147] [nio-8080-exec-3] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:38:39.258] [nio-8080-exec-4] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:38:39.260] [nio-8080-exec-4] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:38:41.771] [nio-8080-exec-5] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:38:41.793] [nio-8080-exec-5] [INFO ] [s.b.controller.TeamController:36] --  [USER : test4] Request POST /api/teams HTTP/1.1  
+[12:38:48.169] [nio-8080-exec-6] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:38:48.173] [nio-8080-exec-6] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:38:48.211] [nio-8080-exec-6] [INFO ] [s.b.service.CalendarService:58] --  [USER : test4] Service Auto Create, Team 하하 Calendar  
+[12:42:36.009] [nio-8080-exec-8] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:42:36.015] [nio-8080-exec-8] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:52:36.765] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[12:52:42.080] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 7.962 seconds (JVM running for 8.71)  
+[12:52:49.415] [nio-8080-exec-2] [INFO ] [s.b.c.UserApiController:46] --  [USER : test4] Request POST /api/users/signup HTTP/1.1  
+[12:52:52.685] [nio-8080-exec-3] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:52:52.700] [nio-8080-exec-3] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:52:54.974] [nio-8080-exec-4] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:52:54.983] [nio-8080-exec-4] [INFO ] [s.b.controller.TeamController:36] --  [USER : test4] Request POST /api/teams HTTP/1.1  
+[12:52:57.127] [nio-8080-exec-5] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user test4, setting security context  
+[12:52:57.131] [nio-8080-exec-5] [INFO ] [s.b.c.CalendarController:29] --  [USER : test4 ] Request GET /api/calendars/info HTTP/1.1  
+[12:52:57.166] [nio-8080-exec-5] [INFO ] [s.b.service.CalendarService:58] --  [USER : test4] Service Auto Create, Team 하하 Calendar  

@@ -10,4 +10,5 @@ public class CalendarMemoResponseDto {
     private Long CalendarId;
     private String dateData;
     private String contents;
+    private Integer memoVersion;
 }

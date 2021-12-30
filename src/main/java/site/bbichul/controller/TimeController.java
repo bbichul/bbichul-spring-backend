@@ -2,6 +2,7 @@ package site.bbichul.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import site.bbichul.service.TimeService;
 import site.bbichul.service.UserService;
 import java.time.LocalDate;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
@@ -26,6 +28,7 @@ public class TimeController {
     @Operation(description = "공부 시작시 check-in 기능", method = "POST")
     @PostMapping("/times/check-in")
     public void startStudy(@RequestBody UserDto userDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        log.info("[USER : {}] Request POST /api/times/check-in HTTP/1.1", userDetails.getUsername());
         String username = userDetails.getUsername();
         userService.setStudy(userDto, username);
     }
@@ -33,6 +36,7 @@ public class TimeController {
     @Operation(description = "공부시간 저장 및 check-out", method = "POST")
     @PostMapping("/times/check-out")
     public Time createTime(@RequestBody TimeRequestDto timeRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        log.info("[USER : {}] Request POST /api/times/check-out HTTP/1.1", userDetails.getUsername());
 
         LocalDate localDate = LocalDate.now();
 
@@ -53,10 +57,10 @@ public class TimeController {
 
         Time time;
         if (yesterdayTime != 0){
-             time = timeService.upsertTime(timeRequestDto, userDetails.getUser());
+            time = timeService.upsertStudy(timeRequestDto, userDetails.getUser());
 
         }else {
-             time = timeService.upsertStudy(timeRequestDto, userDetails.getUser());
+            time = timeService.upsertTime(timeRequestDto, userDetails.getUser());
         }
 
         return time;
