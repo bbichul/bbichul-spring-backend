@@ -24,12 +24,12 @@ public class TeamService {
     private final UserRepository userRepository;
     private final TeamTaskRepository teamTaskRepository;
 
-    public String checkTeam(User user) {
+    public Object checkTeam(User user) {
         if (user.getTeam() == null) {
-            return "아직 소속된 팀이 없습니다.";
+            return false;
         }
 
-        return user.getTeam().getTeamname();
+        return user.getTeam();
     }
 
     @Transactional

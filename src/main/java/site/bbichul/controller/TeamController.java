@@ -25,7 +25,7 @@ public class TeamController {
 
     @Operation(description = "팀 소속 여부 확인", method = "GET")
     @GetMapping("/teams")
-    public String checkTeam(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public Object checkTeam(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("[USER : {}] Request GET /api/teams HTTP/1.1", userDetails.getUsername());
         return teamService.checkTeam(userDetails.getUser());
     }
