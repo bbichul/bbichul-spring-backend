@@ -10,4 +10,5 @@ public class TeamTaskRequestDto {
     private Long id;
     private String task;
     private Boolean done;
+    private Long teamId;
 }

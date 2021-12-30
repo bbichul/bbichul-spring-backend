@@ -1,18 +1,18 @@
-[14:12:05.568] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
-[14:12:11.064] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 33.67 seconds (JVM running for 39.358)  
-[14:27:55.279] [nio-8080-exec-1] [INFO ] [s.b.c.UserApiController:46] --  [USER : 삐출] Request POST /api/users/signup HTTP/1.1  
-[14:28:11.424] [nio-8080-exec-4] [INFO ] [s.b.c.UserApiController:36] --  [USER : 삐출] Request POST /api/users/login HTTP/1.1  
-[14:36:19.337] [nio-8080-exec-7] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user 삐출, setting security context  
-[14:36:19.342] [nio-8080-exec-7] [INFO ] [s.b.c.MyTeamController:41] --  [USER : 삐출] Request GET /api/users/resolution HTTP/1.1  
-[14:41:22.343] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
-[14:41:28.998] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 34.527 seconds (JVM running for 40.264)  
-[14:42:32.266] [nio-8080-exec-2] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user 삐출, setting security context  
-[14:42:32.289] [nio-8080-exec-2] [INFO ] [s.b.c.MyTeamController:41] --  [USER : 삐출] Request GET /api/users/resolution HTTP/1.1  
-[14:44:30.329] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
-[14:44:35.704] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 33.321 seconds (JVM running for 38.986)  
-[14:46:10.589] [nio-8080-exec-2] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user 삐출, setting security context  
-[14:46:10.615] [nio-8080-exec-2] [INFO ] [s.b.c.MyTeamController:41] --  [USER : 삐출] Request GET /api/users/resolution HTTP/1.1  
-[14:51:08.152] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
-[14:51:10.786] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 31.444 seconds (JVM running for 37.083)  
-[14:51:54.655] [nio-8080-exec-2] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user 삐출, setting security context  
-[14:51:54.675] [nio-8080-exec-2] [INFO ] [s.b.c.MyTeamController:41] --  [USER : 삐출] Request GET /api/users/resolution HTTP/1.1  
+[14:12:05.568] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default
+[14:12:11.064] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 33.67 seconds (JVM running for 39.358)
+[14:27:55.279] [nio-8080-exec-1] [INFO ] [s.b.c.UserApiController:46] --  [USER : 삐출] Request POST /api/users/signup HTTP/1.1
+[14:28:11.424] [nio-8080-exec-4] [INFO ] [s.b.c.UserApiController:36] --  [USER : 삐출] Request POST /api/users/login HTTP/1.1
+[14:36:19.337] [nio-8080-exec-7] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user 삐출, setting security context
+[14:36:19.342] [nio-8080-exec-7] [INFO ] [s.b.c.MyTeamController:41] --  [USER : 삐출] Request GET /api/users/resolution HTTP/1.1
+[14:41:22.343] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default
+[14:41:28.998] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 34.527 seconds (JVM running for 40.264)
+[14:42:32.266] [nio-8080-exec-2] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user 삐출, setting security context
+[14:42:32.289] [nio-8080-exec-2] [INFO ] [s.b.c.MyTeamController:41] --  [USER : 삐출] Request GET /api/users/resolution HTTP/1.1
+[14:44:30.329] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default
+[14:44:35.704] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 33.321 seconds (JVM running for 38.986)
+[14:46:10.589] [nio-8080-exec-2] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user 삐출, setting security context
+[14:46:10.615] [nio-8080-exec-2] [INFO ] [s.b.c.MyTeamController:41] --  [USER : 삐출] Request GET /api/users/resolution HTTP/1.1
+[14:51:08.152] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default
+[14:51:10.786] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 31.444 seconds (JVM running for 37.083)
+[14:51:54.655] [nio-8080-exec-2] [INFO ] [s.b.c.JwtAuthenticationFilter:60] --  authenticated user 삐출, setting security context
+[14:51:54.675] [nio-8080-exec-2] [INFO ] [s.b.c.MyTeamController:41] --  [USER : 삐출] Request GET /api/users/resolution HTTP/1.1

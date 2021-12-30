@@ -24,16 +24,16 @@ public class TeamService {
     private final UserRepository userRepository;
     private final TeamTaskRepository teamTaskRepository;
 
-    public String checkTeam(User user) {
+    public Object checkTeam(User user) {
         if (user.getTeam() == null) {
-            return "아직 소속된 팀이 없습니다.";
+            return false;
         }
 
-        return user.getTeam().getTeamname();
+        return user.getTeam();
     }
 
     @Transactional
-    public String createTeam(TeamRequestDto teamRequestDto, User user) {
+    public Team createTeam(TeamRequestDto teamRequestDto, User user) {
         String teamname = teamRequestDto.getTeamname();
 
         Optional<Team> found = teamRepository.findByTeamname(teamname);
@@ -46,20 +46,22 @@ public class TeamService {
 
         user.setTeam(team);
         userRepository.save(user);
-        return team.getTeamname();
+        return team;
     }
 
-    public TeamTask addTask(TeamTaskRequestDto teamTaskRequestDto, User user) {
+    public TeamTask addTask(TeamTaskRequestDto teamTaskRequestDto) {
         TeamTask teamTask = new TeamTask(teamTaskRequestDto);
+        Optional<Team> team = teamRepository.findById(teamTaskRequestDto.getTeamId());
+        team.orElseThrow(() -> new IllegalArgumentException("소속팀을 찾을 수 없습니다."));
+
         teamTask.setDone(false);
-        teamTask.setTeam(user.getTeam());
+        teamTask.setTeam(team.get());
         teamTaskRepository.save(teamTask);
 
         return teamTask;
     }
 
-    public List<TeamTask> showTask(User user) {
-        Long teamId = user.getTeam().getId();
+    public List<TeamTask> showTask(Long teamId) {
         List<TeamTask> teamTask = teamTaskRepository.findAllByTeamId(teamId);
         return teamTask;
     }
@@ -81,42 +83,37 @@ public class TeamService {
         }
     }
 
-    public List<User> checkStatus(User user) {
-        List<User> users = userRepository.findAllByTeamId(user.getTeam().getId());
+    public List<User> checkStatus(Long teamId) {
+        List<User> users = userRepository.findAllByTeamId(teamId);
         return users;
     }
 
-    public String signupTeam(TeamRequestDto teamRequestDto, User user) {
+    public Team signupTeam(TeamRequestDto teamRequestDto, User user) {
         String teamname = teamRequestDto.getTeamname();
-        String message;
 
         Optional<Team> found = teamRepository.findByTeamname(teamname);
         if (found.isPresent()) {
             user.setTeam(found.get());
             userRepository.save(user);
-            message = "초대받은 팀에 가입되었습니다.";
         }
         else {
-            message = "존재하지 않는 팀입니다. 팀 이름을 확인해주세요.";
+            throw new IllegalArgumentException("존재하지 않는 팀입니다. 팀 이름을 확인해주세요.");
         }
-        return message;
+        return user.getTeam();
     }
 
-    public String checkName(TeamRequestDto teamRequestDto) {
+    public Boolean checkName(TeamRequestDto teamRequestDto) {
         String teamname = teamRequestDto.getTeamname();
-        String message;
 
         Optional<Team> result = teamRepository.findByTeamname(teamname);
         if (result.isPresent()) {
-            message = "중복되는 팀 이름입니다. 다시 입력해주세요.";
-        } else {
-            message = "사용할 수 있는 팀 이름입니다.";
+            throw new IllegalArgumentException("중복되는 팀 이름입니다. 다시 입력해주세요.");
         }
-        return message;
+
+        return true;
     }
 
-    public TeamProgressbarResponseDto getTeamProgressbar(TeamProgressbarResponseDto teamProgressbarResponseDto, User user) {
-        Long teamId = user.getTeam().getId();
+    public TeamProgressbarResponseDto getTeamProgressbar(Long teamId, TeamProgressbarResponseDto teamProgressbarResponseDto) {
         Long doneCount = teamTaskRepository.countByTeamIdAndDone(teamId, true);
         Long notDoneCount = teamTaskRepository.countByTeamIdAndDone(teamId, false);
         Integer total = (int) (doneCount + notDoneCount);
@@ -136,7 +133,10 @@ public class TeamService {
     @Transactional
     public void updateTask(TeamTaskRequestDto teamTaskRequestDto) {
         Long id = teamTaskRequestDto.getId();
+
         Optional<TeamTask> teamtask = teamTaskRepository.findById(id);
+        teamtask.orElseThrow(() -> new IllegalArgumentException("해당 task를 찾을 수 없습니다."));
+
         teamtask.get().taskUpdate(teamTaskRequestDto);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import site.bbichul.dto.TeamProgressbarResponseDto;
 import site.bbichul.dto.TeamRequestDto;
 import site.bbichul.dto.TeamTaskRequestDto;
+import site.bbichul.models.Team;
 import site.bbichul.models.TeamTask;
 import site.bbichul.models.User;
 import site.bbichul.security.UserDetailsImpl;
@@ -25,23 +26,23 @@ public class TeamController {
 
     @Operation(description = "팀 소속 여부 확인", method = "GET")
     @GetMapping("/teams")
-    public String checkTeam(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public Object checkTeam(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("[USER : {}] Request GET /api/teams HTTP/1.1", userDetails.getUsername());
         return teamService.checkTeam(userDetails.getUser());
     }
 
     @Operation(description = "팀 만들기", method = "POST")
     @PostMapping("/teams")
-    public String createTeam(@RequestBody TeamRequestDto teamRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public Team createTeam(@RequestBody TeamRequestDto teamRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("[USER : {}] Request POST /api/teams HTTP/1.1", userDetails.getUsername());
         return teamService.createTeam(teamRequestDto, userDetails.getUser());
     }
 
     @Operation(description = "to do list의 task 저장", method = "POST")
     @PostMapping("/teams/task")
-    public TeamTask addTask(@RequestBody TeamTaskRequestDto teamTaskRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("[USER : {}] Request POST /api/teams/task HTTP/1.1", userDetails.getUsername());
-        return teamService.addTask(teamTaskRequestDto, userDetails.getUser());
+    public TeamTask addTask(@RequestBody TeamTaskRequestDto teamTaskRequestDto) {
+        log.info("[TEAMID : {}] Request POST /api/teams/task HTTP/1.1", teamTaskRequestDto.getTeamId());
+        return teamService.addTask(teamTaskRequestDto);
     }
 
     @Operation(description = "to do list의 task 내용 변경", method = "PUT")
@@ -53,9 +54,9 @@ public class TeamController {
 
     @Operation(description = "to do list의 task 조회", method = "GET")
     @GetMapping("/teams/task")
-    public List<TeamTask> showTask(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("[USER : {}] Request GET /api/teams/task HTTP/1.1", userDetails.getUsername());
-        return teamService.showTask(userDetails.getUser());
+    public List<TeamTask> showTask(@RequestParam("teamid") final Long teamId) {
+        log.info("[TEAMID : {}] Request GET /api/teams/task HTTP/1.1", teamId);
+        return teamService.showTask(teamId);
     }
 
     @Operation(description = "to do list의 task 삭제", method = "DELETE")
@@ -74,29 +75,29 @@ public class TeamController {
 
     @Operation(description = "팀원 출결 현황 조회", method = "GET")
     @GetMapping("/teams/status")
-    public List<User> checkStatus(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("[USER : {}] Request PUT /api/teams/tasks/status HTTP/1.1", userDetails.getUsername());
-        return teamService.checkStatus(userDetails.getUser());
+    public List<User> checkStatus(@RequestParam("teamid") final Long teamId) {
+        log.info("[TEAMID : {}] Request GET /api/teams/tasks/status HTTP/1.1", teamId);
+        return teamService.checkStatus(teamId);
     }
 
     @Operation(description = "팀 가입", method = "POST")
     @PostMapping("/teams/signup")
-    public String signupTeam(@RequestBody TeamRequestDto teamRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public Team signupTeam(@RequestBody TeamRequestDto teamRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("[USER : {} Request] POST /api/teams/signup HTTP/1.1", userDetails.getUsername());
         return teamService.signupTeam(teamRequestDto, userDetails.getUser());
     }
 
     @Operation(description = "팀명 중복 조회", method = "POST")
     @PostMapping("/teams/checkname")
-    public String checkName(@RequestBody TeamRequestDto teamRequestDto) {
+    public Boolean checkName(@RequestBody TeamRequestDto teamRequestDto) {
         log.info("POST /api/teams/checkname HTTP/1.1");
         return teamService.checkName(teamRequestDto);
     }
 
-    @Operation(description = "to do list의 전체 진행상황 그래프 조회", method = "POST")
-    @PostMapping("/teams/task/graph")
-    public TeamProgressbarResponseDto getTeamProgressbar(TeamProgressbarResponseDto teamProgressbarResponseDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("[USER : {}] Request POST /api/teams/task/graph HTTP/1.1", userDetails.getUsername());
-        return teamService.getTeamProgressbar(teamProgressbarResponseDto, userDetails.getUser());
+    @Operation(description = "to do list의 전체 진행상황 그래프 조회", method = "GET")
+    @GetMapping("/teams/task/graph")
+    public TeamProgressbarResponseDto getTeamProgressbar(@RequestParam("teamid") final Long teamId, TeamProgressbarResponseDto teamProgressbarResponseDto) {
+        log.info("[TEAMID : {}] Request GET /api/teams/task/graph HTTP/1.1", teamId);
+        return teamService.getTeamProgressbar(teamId, teamProgressbarResponseDto);
     }
 }
