@@ -18,3 +18,6 @@
 [14:51:54.675] [nio-8080-exec-2] [INFO ] [s.b.c.MyTeamController:41] --  [USER : 삐출] Request GET /api/users/resolution HTTP/1.1
 [15:52:47.015] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
 [15:52:51.786] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 11.422 seconds (JVM running for 12.375)  
+[16:12:06.018] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[16:12:43.317] [           main] [INFO ] [s.bbichul.BbichulApplication:670] --  No active profile set, falling back to default profiles: default  
+[16:12:48.095] [           main] [INFO ] [s.bbichul.BbichulApplication:61] --  Started BbichulApplication in 9.092 seconds (JVM running for 10.146)  
