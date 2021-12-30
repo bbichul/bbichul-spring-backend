@@ -82,14 +82,14 @@ public class TeamController {
 
     @Operation(description = "팀 가입", method = "POST")
     @PostMapping("/teams/signup")
-    public String signupTeam(@RequestBody TeamRequestDto teamRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public Team signupTeam(@RequestBody TeamRequestDto teamRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("[USER : {} Request] POST /api/teams/signup HTTP/1.1", userDetails.getUsername());
         return teamService.signupTeam(teamRequestDto, userDetails.getUser());
     }
 
     @Operation(description = "팀명 중복 조회", method = "POST")
     @PostMapping("/teams/checkname")
-    public String checkName(@RequestBody TeamRequestDto teamRequestDto) {
+    public Boolean checkName(@RequestBody TeamRequestDto teamRequestDto) {
         log.info("POST /api/teams/checkname HTTP/1.1");
         return teamService.checkName(teamRequestDto);
     }

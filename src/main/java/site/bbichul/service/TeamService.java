@@ -88,33 +88,29 @@ public class TeamService {
         return users;
     }
 
-    public String signupTeam(TeamRequestDto teamRequestDto, User user) {
+    public Team signupTeam(TeamRequestDto teamRequestDto, User user) {
         String teamname = teamRequestDto.getTeamname();
-        String message;
 
         Optional<Team> found = teamRepository.findByTeamname(teamname);
         if (found.isPresent()) {
             user.setTeam(found.get());
             userRepository.save(user);
-            message = "초대받은 팀에 가입되었습니다.";
         }
         else {
-            message = "존재하지 않는 팀입니다. 팀 이름을 확인해주세요.";
+            throw new IllegalArgumentException("존재하지 않는 팀입니다. 팀 이름을 확인해주세요.");
         }
-        return message;
+        return user.getTeam();
     }
 
-    public String checkName(TeamRequestDto teamRequestDto) {
+    public Boolean checkName(TeamRequestDto teamRequestDto) {
         String teamname = teamRequestDto.getTeamname();
-        String message;
 
         Optional<Team> result = teamRepository.findByTeamname(teamname);
         if (result.isPresent()) {
-            message = "중복되는 팀 이름입니다. 다시 입력해주세요.";
-        } else {
-            message = "사용할 수 있는 팀 이름입니다.";
+            throw new IllegalArgumentException("중복되는 팀 이름입니다. 다시 입력해주세요.");
         }
-        return message;
+
+        return true;
     }
 
     public TeamProgressbarResponseDto getTeamProgressbar(TeamProgressbarResponseDto teamProgressbarResponseDto, User user) {
