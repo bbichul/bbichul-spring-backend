@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import site.bbichul.dto.TeamProgressbarResponseDto;
 import site.bbichul.dto.TeamRequestDto;
 import site.bbichul.dto.TeamTaskRequestDto;
+import site.bbichul.models.Team;
 import site.bbichul.models.TeamTask;
 import site.bbichul.models.User;
 import site.bbichul.security.UserDetailsImpl;
@@ -32,7 +33,7 @@ public class TeamController {
 
     @Operation(description = "팀 만들기", method = "POST")
     @PostMapping("/teams")
-    public String createTeam(@RequestBody TeamRequestDto teamRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public Team createTeam(@RequestBody TeamRequestDto teamRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("[USER : {}] Request POST /api/teams HTTP/1.1", userDetails.getUsername());
         return teamService.createTeam(teamRequestDto, userDetails.getUser());
     }
@@ -74,9 +75,9 @@ public class TeamController {
 
     @Operation(description = "팀원 출결 현황 조회", method = "GET")
     @GetMapping("/teams/status")
-    public List<User> checkStatus(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        log.info("[USER : {}] Request PUT /api/teams/tasks/status HTTP/1.1", userDetails.getUsername());
-        return teamService.checkStatus(userDetails.getUser());
+    public List<User> checkStatus(@RequestParam("teamid") final Long teamId) {
+        log.info("[TEAMID : {}] Request PUT /api/teams/tasks/status HTTP/1.1", teamId);
+        return teamService.checkStatus(teamId);
     }
 
     @Operation(description = "팀 가입", method = "POST")

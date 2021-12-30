@@ -33,7 +33,7 @@ public class TeamService {
     }
 
     @Transactional
-    public String createTeam(TeamRequestDto teamRequestDto, User user) {
+    public Team createTeam(TeamRequestDto teamRequestDto, User user) {
         String teamname = teamRequestDto.getTeamname();
 
         Optional<Team> found = teamRepository.findByTeamname(teamname);
@@ -46,7 +46,7 @@ public class TeamService {
 
         user.setTeam(team);
         userRepository.save(user);
-        return team.getTeamname();
+        return team;
     }
 
     public TeamTask addTask(TeamTaskRequestDto teamTaskRequestDto) {
@@ -83,8 +83,8 @@ public class TeamService {
         }
     }
 
-    public List<User> checkStatus(User user) {
-        List<User> users = userRepository.findAllByTeamId(user.getTeam().getId());
+    public List<User> checkStatus(Long teamId) {
+        List<User> users = userRepository.findAllByTeamId(teamId);
         return users;
     }
 
